@@ -54,7 +54,7 @@ def set_background(image_path):
     )
 
 # ✅ Set your background image
-set_background("./lavender.png")
+set_background("static_files/lavender.png")
 
 
 # --- Structured Emergency Resources ---

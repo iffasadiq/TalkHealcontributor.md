@@ -32,7 +32,7 @@ try:
 except FileNotFoundError:
     yoga_data = {}
 
-background_image_path = "lavender.png"
+background_image_path = "static_files/lavender.png"
 base64_background_image = get_base64_of_bin_file(background_image_path)
 
 # --- Custom CSS ---
