@@ -265,7 +265,7 @@ if st.session_state.active_tool == "focus":
     }
     mood_scale = mood_scale_map.get(st.session_state.current_mood_val, 3)
     set_background_by_mood(mood_scale)
-    st.header("🧘 Focus Session")
+    
     render_focus_session()
 
 elif st.session_state.active_tool == "mood_dashboard":
@@ -278,7 +278,7 @@ elif st.session_state.active_tool == "mood_dashboard":
     }
     mood_scale = mood_scale_map.get(st.session_state.current_mood_val, 3)
     set_background_by_mood(mood_scale)
-    st.header("🧘 Focus Session")
+   
     render_mood_dashboard()
 
 elif st.session_state.active_tool == "mental_check":
