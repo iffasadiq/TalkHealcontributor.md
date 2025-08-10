@@ -246,4 +246,39 @@ def toggle_theme():
     initialize_theme_state()
     st.session_state.dark_mode = not st.session_state.dark_mode
     st.session_state.theme_changed = True
-    st.rerun() 
+    st.rerun()
+    import streamlit as st  # add this import if not already present
+
+def set_background_by_mood(mood_scale):
+    image_map = {
+        1: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/dark.png",
+        2: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/blue.png",
+        3: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/mint.png",
+        4: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/lavender.png",
+        5: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/Background.jpg"
+    }
+    color_map = {
+        1: "#2c3e50",
+        2: "#3498db",
+        3: "#a3f7bf",
+        4: "#b57edc",
+        5: "#fff9c4"
+    }
+    bg_image = image_map.get(mood_scale)
+    bg_color = color_map.get(mood_scale, "#bdc3c7")
+    st.markdown(
+        f"""
+        <style>
+        html, body, [data-testid="stApp"] {{
+            background-image: url('{bg_image}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: {bg_color} !important;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+   
