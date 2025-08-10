@@ -1,4 +1,4 @@
-<div align="center"><img src="TalkHealLogo.png" style="width: 220px; height: 220px;" /></div>
+<div align="center"><img src="/static_files/TalkHealLogo.png" style="width: 220px; height: 220px;" /></div>
 
 # <div align="center">TALKHEAL</div>
 
