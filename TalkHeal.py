@@ -54,12 +54,7 @@ from components.sidebar import render_sidebar
 from components.chat_interface import render_chat_interface, handle_chat_input
 
 from components.mood_dashboard import render_mood_dashboard
-# from components.emergency_page import render_emergency_page
 from components.focus_session import render_focus_session
-# from components.emergency_page import render_emergency_page
-from components.mood_dashboard import render_mood_dashboard
-from components.focus_session import render_focus_session
-
 from components.emergency_page import render_emergency_page
 from components.profile import apply_global_font_size
 
@@ -70,8 +65,6 @@ if "conversations" not in st.session_state:
     st.session_state.conversations = load_conversations()
 if "active_conversation" not in st.session_state:
     st.session_state.active_conversation = -1
-# if "show_emergency_page" not in st.session_state:
-#     st.session_state.show_emergency_page = False
 if "show_focus_session" not in st.session_state:
     st.session_state.show_focus_session = False
 if "show_mood_dashboard" not in st.session_state:
@@ -135,10 +128,6 @@ if not st.session_state.conversations:
     st.rerun()
 
 # --- 8. RENDER PAGE ---
-# if st.session_state.get("show_emergency_page"):
-#     with main_area:
-#         render_emergency_page()
-# else:
 if st.session_state.get("show_emergency_page"):
     with main_area:
         render_emergency_page()
@@ -152,83 +141,64 @@ else:
     with main_area:
         render_header()
         st.markdown(f"""
-<div style="text-align: center; margin: 20px 0;">
-    <h3>🗣️ Current Chatbot Tone: <strong>{st.session_state['selected_tone']}</strong></h3>
-</div>
-""", unsafe_allow_html=True)
-        
-        # --- Mood Slider with Keyboard Navigation ---
-        def mood_slider():
-            slider_html = """
-            <div>
-                <label for="mood-slider" class="sr-only">Select your mood</label>
-                <input type="range" id="mood-slider" min="1" max="5" value="3" step="1"
-                       aria-valuemin="1" aria-valuemax="5" aria-valuenow="3"
-                       onkeydown="handleKeydown(event)" onchange="updateSliderValue(this.value)">
-                <div id="mood-label">Neutral</div>
-                <script>
-                    function handleKeydown(event) {
-                        const slider = document.getElementById('mood-slider');
-                        let value = parseInt(slider.value);
-                        if (event.key === 'ArrowLeft' && value > 1) {
-                            value--;
-                        } else if (event.key === 'ArrowRight' && value < 5) {
-                            value++;
-                        }
-                        slider.value = value;
-                        slider.setAttribute('aria-valuenow', value);
-                        updateSliderValue(value);
-                    }
-                    function updateSliderValue(value) {
-                        const labels = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy'];
-                        document.getElementById('mood-label').innerText = labels[value - 1];
-                        Streamlit.setComponentValue(value);
-                    }
-                </script>
-                <style>
-                    #mood-slider {
-                        width: 100%;
-                        accent-color: #ff69b4; /* Matches the soft pink/magenta UI */
-                    }
-                    #mood-label {
-                        text-align: center;
-                        margin-top: 10px;
-                        font-size: 16px;
-                        color: #333;
-                    }
-                    .sr-only {
-                        position: absolute;
-                        width: 1px;
-                        height: 1px;
-                        padding: 0;
-                        margin: -1px;
-                        overflow: hidden;
-                        clip: rect(0, 0, 0, 0);
-                        border: 0;
-                    }
-                </style>
-            </div>
-            """
-            mood_value = st.components.v1.html(slider_html, height=100)
-            return mood_value
+        <div style="text-align: center; margin: 20px 0;">
+            <h3>🗣️ Current Chatbot Tone: <strong>{st.session_state['selected_tone']}</strong></h3>
+        </div>
+        """, unsafe_allow_html=True)
 
-        # --- Mood Slider ---
         st.subheader("😊 Track Your Mood")
         mood_options = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy']
         mood = st.slider(
             'Select your mood',
-            min_value=1, max_value=5, value=3, step=1
-)
+            min_value=1,
+            max_value=5,
+            value=3,
+            step=1
+        )
+        st.session_state['mood'] = mood
+
+        image_map = {
+            1: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/dark.png",
+            2: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/blue.png",
+            3: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/mint.png",
+            4: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/lavender.png",
+            5: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/Background.jpg"
+        }
+        color_map = {
+            1: "#2c3e50",
+            2: "#3498db",
+            3: "#a3f7bf",
+            4: "#b57edc",
+            5: "#e22bc4"
+        }
+
+        bg_image = image_map.get(mood, image_map[3])
+        bg_color = color_map.get(mood, "#bdc3c7")
+
+        st.markdown(f"""
+            <style>
+            body {{
+                background-image: url('{bg_image}');
+                background-color: {bg_color};
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center center;
+                transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
+            }}
+            </style>
+        """, unsafe_allow_html=True)
+
         coping_tips = {
-    1: "It’s okay to feel this way. Try some deep breathing exercises to find calm.",
-    2: "Consider writing down your thoughts in the journal to process your feelings.",
-    3: "A short walk or some light stretching might help you feel balanced.",
-    4: "Great to hear you’re feeling happy! Share something positive in your journal.",
-    5: "You’re shining today! Keep spreading that positivity with a kind act."
-}
+            1: "It’s okay to feel this way. Try some deep breathing exercises to find calm.",
+            2: "Consider writing down your thoughts in the journal to process your feelings.",
+            3: "A short walk or some light stretching might help you feel balanced.",
+            4: "Great to hear you’re feeling happy! Share something positive in your journal.",
+            5: "You’re shining today! Keep spreading that positivity with a kind act."
+        }
         st.write(f"Selected mood: {mood_options[mood-1]}")
         st.write(f"Coping tip: {coping_tips.get(mood, 'Let’s explore how you’re feeling.')}")
-        
+
         render_chat_interface()
         handle_chat_input(model, system_prompt=get_tone_prompt())
 
@@ -243,4 +213,4 @@ st.markdown("""
     }
     setTimeout(scrollToBottom, 100);
 </script>
-""", unsafe_allow_html=True) 
+""", unsafe_allow_html=True)
