@@ -89,11 +89,11 @@
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="light_ss.jpg" alt="Main Screenshot" width="600"/>
+  <img src="static_files/light_ss.jpg" alt="Main Screenshot" width="600"/>
   <br>
-  <img src="dark_ss.jpg" width="200"/></a>
-  <img src="blue_ss.jpg" width="200"/></a>
-  <img src="lav_ss.jpg" width="200"/></a>
+  <img src="static_files/dark_ss.jpg" width="200"/></a>
+  <img src="static_files/blue_ss.jpg" width="200"/></a>
+  <img src="static_files/lav_ss.jpg" width="200"/></a>
 </div>
 
 ## 📺 Video Explanation
