@@ -1,4 +1,5 @@
 import streamlit as st
+import google.generativeai as genai
 from auth.auth_utils import init_db
 from components.login_page import show_login_page
 
@@ -44,14 +45,13 @@ with header_col1:
     st.title(f"Welcome to TalkHeal, {st.session_state.user_name}! 💬")
     st.markdown("Navigate to other pages from the sidebar.")
 
-import google.generativeai as genai
 from core.utils import save_conversations, load_conversations
 from core.config import configure_gemini, PAGE_CONFIG
 from core.utils import get_current_time, create_new_conversation
 from css.styles import apply_custom_css
 from components.header import render_header
 from components.sidebar import render_sidebar
-from components.chat_interface import render_chat_interface, handle_chat_input
+from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
 
 from components.mood_dashboard import render_mood_dashboard
 # from components.emergency_page import render_emergency_page
@@ -228,6 +228,7 @@ else:
         
         render_chat_interface()
         handle_chat_input(model, system_prompt=get_tone_prompt())
+        render_session_controls()
 
 # --- 9. SCROLL SCRIPT ---
 st.markdown("""

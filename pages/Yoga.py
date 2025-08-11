@@ -3,8 +3,8 @@ import json
 import base64
 from streamlit_lottie import st_lottie
 from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.messages import HumanMessage, SystemMessage # Update this import
+from langchain_google import ChatGoogleGenerativeAI  # Changed from langchain_google_genai
 from langchain_core.output_parsers import JsonOutputParser
 from typing import List
 

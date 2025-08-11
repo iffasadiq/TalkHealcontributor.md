@@ -1,0 +1,123 @@
+[
+    {
+        "id": 5,
+        "title": "Need to vent about my day",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Need to vent about my day",
+                "time": "2:32 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I'm here to listen. Please tell me about your day. I understand that sometimes we just need to let it all out, and I'm happy to provide a safe and non-judgmental space for you to do so. Don't worry about making sense or being concise, just share whatever is on your mind. I'm ready when you are.",
+                "time": "2:32 PM"
+            },
+            {
+                "sender": "user",
+                "message": "i want to know morw",
+                "time": "2:39 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I'm happy to share more. What specifically are you curious about? Is there anything in particular about my role, how I work, or the kind of support I can offer that you'd like to know more about? I can also share some resources on mental health and well-being if you're interested. Just let me know what you'd like to explore.",
+                "time": "2:39 PM"
+            },
+            {
+                "sender": "user",
+                "message": "ohh",
+                "time": "3:40 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "\"Ohh,\" as in, you understand? Is there anything I can clarify or expand on? Sometimes just acknowledging a feeling or thought can be helpful. Let me know if there's anything else on your mind, whether it's related to mental well-being or just something you're curious about. I'm here to listen and offer support in whatever way I can.",
+                "time": "3:40 PM"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "title": "Tell me about anxiety",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Tell me about anxiety",
+                "time": "2:12 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "Anxiety can feel like a heavy weight on your chest, a racing heart, or a mind that won't quiet down. It's a natural human emotion, but when it becomes overwhelming or persistent, it can really interfere with daily life. It can manifest in different ways for different people. Some might experience panic attacks, while others might have constant worry or social anxiety. Physically, you might notice things like sweating, trembling, or digestive issues. Are you experiencing anxiety yourself, or are you just curious about it in general? Knowing a little more about your interest will help me share information that's most helpful to you. Remember, if anxiety is significantly impacting your life, reaching out to a mental health professional can be incredibly beneficial.",
+                "time": "2:12 PM"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Need to vent about my day",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Need to vent about my day",
+                "time": "2:12 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I'm here to listen. Please tell me about your day. I understand that sometimes we just need to get things off our chest, and I'm happy to provide a safe space for you to do that. Don't worry about holding back or trying to make it sound perfect. Just share what's on your mind. I'm ready when you are. Was there anything in particular that made your day difficult, or is it just a general feeling?",
+                "time": "2:12 PM"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "How to manage stress?",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "How to manage stress?",
+                "time": "2:07 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I understand you're looking for ways to manage stress. That's a really important step to take for your well-being. Stress can feel overwhelming, and it's great that you're being proactive about it. To help me give you the best suggestions, could you tell me a little more about what's causing you stress right now? Knowing more about the specific situation will help me share some relevant coping strategies. In the meantime, some general stress-reducing techniques include things like exercise, mindfulness, spending time in nature, connecting with loved ones, and ensuring you're getting enough sleep and proper nutrition. Remember, you're not alone, and taking small steps can make a big difference.",
+                "time": "2:07 PM"
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "title": "How to manage stress?",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "How to manage stress?",
+                "time": "12:45 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I understand you're looking for ways to manage stress. That's a really important step to take for your well-being. Stress can feel overwhelming, but there are things you can do to help. First, it might be helpful to understand what's causing your stress. Is it work, relationships, or something else? Knowing the source can help you target your efforts. Some general tips include practicing relaxation techniques like deep breathing or meditation, getting regular exercise, and ensuring you get enough sleep. It's also good to connect with supportive friends and family. Remember, I'm here to listen. If the stress feels unmanageable, it's always a good idea to reach out to a mental health professional for guidance. There are many resources available, and you don't have to go through this alone.",
+                "time": "12:45 PM"
+            },
+            {
+                "sender": "user",
+                "message": "ok but its not going from my head",
+                "time": "12:45 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I hear you. It sounds like you've tried some things to manage your stress, but it's still stuck in your head. That can be really frustrating. It's tough when stress just lingers. Could you tell me a bit more about what that feels like? Is it constant worry, racing thoughts, or something else? Sometimes, just describing it can help a little. Have you tried writing down your thoughts or talking to someone you trust about what's going on? Also, remember that seeking support from a mental health professional can provide you with personalized strategies and tools to cope. I am here to listen and help you find resources that could be of support.",
+                "time": "12:45 PM"
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "title": "New Conversation",
+        "date": "August 11, 2025",
+        "messages": []
+    }
+]
