@@ -60,6 +60,7 @@ def set_background(image_path):
     )
 import streamlit as st
 # ✅ Set your background image
+ background-update
 def set_background_by_mood(mood_scale):
     image_map = {
         1: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/dark.png",         # Very Bad
@@ -92,6 +93,9 @@ def set_background_by_mood(mood_scale):
         """,
         unsafe_allow_html=True
     )
+set_background("static_files/lavender.png")
+
+main
 
 # --- Structured Emergency Resources ---
 GLOBAL_RESOURCES = [

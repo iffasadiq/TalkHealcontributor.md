@@ -4,7 +4,7 @@ from typing import Dict, Any
 # Light theme (current default)
 LIGHT_THEME = {
     "name": "Light",
-    "background_image": "Background.jpg",
+    "background_image": "static_files/Background.jpg",
     "primary": "#6366f1",
     "primary_light": "#818cf8",
     "primary_dark": "#4f46e5",
@@ -38,7 +38,7 @@ LIGHT_THEME = {
 # Additional soothing palettes
 CALM_BLUE = {
     "name": "Calm Blue",
-    "background_image": "blue.png",
+    "background_image": "static_files/blue.png",
     "background_gradient": "linear-gradient(135deg, #3674B5 0%, #578FCA 40%, #A1E3F9 75%, #D1F8EF 100%)",
     "primary": "#3674B5",
     "primary_light": "#578FCA",
@@ -72,7 +72,7 @@ CALM_BLUE = {
 
 MINT = {
     "name": "Mint",
-    "background_image": "mint.png",
+    "background_image": "static_files/mint.png",
     "background_gradient": "linear-gradient(135deg, #3D8D7A 0%, #B3D8A8 40%, #FBFFE4 75%, #A3D1C6 100%)",
     "primary": "#3D8D7A",
     "primary_light": "#B3D8A8",
@@ -106,7 +106,7 @@ MINT = {
 
 LAVENDER = {
     "name": "Lavender",
-    "background_image": "lavender.png",
+    "background_image": "static_files/lavender.png",
     "background_gradient": "linear-gradient(135deg, #756AB6 0%, #AC87C5 40%, #E0AED0 75%, #FFE5E5 100%)",
     "primary": "#756AB6",
     "primary_light": "#AC87C5",
@@ -140,7 +140,7 @@ LAVENDER = {
 
 Pink = {
     "name": "Pink",
-    "background_image": "pink.png",
+    "background_image": "static_files/pink.png",
     "background_gradient": "linear-gradient(135deg, #921A40 0%, #C75B7A 40%, #D9ABAB 75%, #F4D9D0 100%)",
     "primary": "#921A40",
     "primary_light": "#C75B7A",
@@ -175,7 +175,7 @@ Pink = {
 # Dark theme
 DARK_THEME = {
     "name": "Dark",
-    "background_image": "dark.png",
+    "background_image": "static_files/dark.png",
     "primary": "#6366f1",
     "primary_light": "#818cf8",
     "primary_dark": "#4f46e5",
@@ -244,6 +244,7 @@ def set_palette(palette_name: str):
 def toggle_theme():
     """Toggle between light and dark themes."""
     initialize_theme_state()
+ background-update
     st.session_state.dark_mode = not st.session_state.dark_mode
     st.session_state.theme_changed = True
     st.rerun()
@@ -282,3 +283,11 @@ def set_background_by_mood(mood_scale):
         unsafe_allow_html=True
     )
    
+    new_state = not st.session_state.dark_mode
+
+    # Only change and rerun if state is different
+    if st.session_state.dark_mode != new_state:
+        st.session_state.dark_mode = new_state
+        st.session_state.theme_changed = True
+        st.rerun()
+ main
