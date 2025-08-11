@@ -99,7 +99,7 @@ def fetch_entries(email, sentiment_filter=None, start_date=None, end_date=None):
     return rows
 
 def journaling_app():
-    set_background("mint.png")  # Use your background image path or comment this line
+    set_background("static_files/mint.png")  # Use your background image path or comment this line
     st.markdown(
         """
         <style>

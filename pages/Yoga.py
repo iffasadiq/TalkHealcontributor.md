@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import json
 import base64
@@ -28,7 +29,15 @@ def get_base64_of_bin_file(bin_file):
         return ""
 
 lottie_yoga = load_lottiefile("assets/yoga_animation.json")
-background_image_path = "lavender.png"
+
+# --- Load Yoga Data ---
+try:
+    with open(os.path.join("data", "Yoga.json"), "r") as f:
+        yoga_data = json.load(f)
+except FileNotFoundError:
+    yoga_data = {}
+
+background_image_path = "static_files/lavender.png"
 base64_background_image = get_base64_of_bin_file(background_image_path)
 
 st.markdown(f"""
