@@ -185,7 +185,7 @@ with main_area:
                 st.experimental_rerun()
             except Exception:
                 pass
-
+  
     set_background_by_mood(st.session_state.mood)
 
     coping_tips = {
