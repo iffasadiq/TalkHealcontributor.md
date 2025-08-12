@@ -138,7 +138,7 @@ LAVENDER = {
     "input_text": "#2d3436"
 }
 
-Pink = {
+PINK = {
     "name": "Pink",
     "background_image": "static_files/pink.png",
     "background_gradient": "linear-gradient(135deg, #921A40 0%, #C75B7A 40%, #D9ABAB 75%, #F4D9D0 100%)",
@@ -211,7 +211,7 @@ PALETTES = [
     CALM_BLUE,
     MINT,
     LAVENDER,
-    Pink
+    PINK,
 ]
 
 PALETTE_NAME_TO_CONFIG = {p["name"]: p for p in PALETTES}
@@ -244,7 +244,6 @@ def set_palette(palette_name: str):
 def toggle_theme():
     """Toggle between light and dark themes."""
     initialize_theme_state()
- background-update
     st.session_state.dark_mode = not st.session_state.dark_mode
     st.session_state.theme_changed = True
     st.rerun()
@@ -290,4 +289,7 @@ def set_background_by_mood(mood_scale):
         st.session_state.dark_mode = new_state
         st.session_state.theme_changed = True
         st.rerun()
- main
+# Run if file executed directly
+if __name__ == "__main__":
+    initialize_theme_state()
+    print("Theme module loaded successfully")
