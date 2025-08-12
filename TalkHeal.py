@@ -176,7 +176,7 @@ with main_area:
     mood_options = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy']
     if 'mood' not in st.session_state:
         st.session_state.mood = 3  # Default mood neutral
-
+ 
     cols = st.columns(len(mood_options))
     for i, mood_label in enumerate(mood_options, start=1):
         if cols[i-1].button(mood_label, key=f"mood_btn_{i}"):
