@@ -7,8 +7,6 @@ from components.mood_dashboard import render_mood_dashboard_button, MoodTracker
 from components.profile import initialize_profile_state, render_profile_section
 from streamlit_js_eval import streamlit_js_eval
 import requests
-import random
-from datetime import datetime
 
 # --- Structured Emergency Resources ---
 GLOBAL_RESOURCES = [
@@ -140,38 +138,6 @@ mental_health_resources_full = {
     }
 }
 
-WELLNESS_TIPS = [
-    "Take 3 deep breaths right now. Feel your shoulders relax 🌬️",
-    "Drink a glass of water. Your brain needs hydration 💧", 
-    "Write down 3 things you're grateful for today 🙏",
-    "Stand up and stretch for 30 seconds 🤸",
-    "Send a kind message to someone you care about 💝",
-    "Look out a window and notice something beautiful in nature 🌿",
-    "Put your phone away for 10 minutes and just be present 📱",
-    "Smile at yourself in the mirror. You deserve kindness 😊"
-]
-
-def render_daily_tip():
-    """Show a random wellness tip"""
-    st.markdown("### 💡 Today's Wellness Tip")
-    
-    # Get a random tip
-    if "current_tip" not in st.session_state:
-        st.session_state.current_tip = random.choice(WELLNESS_TIPS)
-    
-    # Show the tip in a nice box
-    st.info(st.session_state.current_tip)
-    
-    # Buttons
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("💚 Helpful", key="tip_helpful"):
-            st.success("Glad it helped! 😊")
-    with col2:
-        if st.button("🔄 New Tip", key="new_tip"):
-            st.session_state.current_tip = random.choice(WELLNESS_TIPS)
-            st.rerun()
-
 
 def render_sidebar():
     """Renders the left and right sidebars."""
@@ -185,7 +151,7 @@ def render_sidebar():
         st.page_link("pages/Breathing_Exercise.py", label="🌬️ Breathing Exercise", use_container_width=True)
 
         st.markdown("---")
-        render_daily_tip()
+
         st.markdown("### 💬 Conversations")
 
         if "show_quick_start_prompts" not in st.session_state:
