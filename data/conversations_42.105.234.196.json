@@ -1,0 +1,113 @@
+[
+    {
+        "id": 5,
+        "title": "Tell me about anxiety",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Tell me about anxiety",
+                "time": "5:38 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "Anxiety is a natural human emotion that everyone experiences from time to time. It's that feeling of worry, nervousness, or unease, often about something that is going to happen or might happen in the future. While some anxiety is normal, it can become a problem when it's excessive, persistent, and interferes with your daily life. This could manifest in different ways for different people \u2013 maybe as constant worrying, physical symptoms like a racing heart, or avoiding situations that trigger fear. If you're finding that anxiety is significantly impacting your well-being, it's a good idea to explore it further. Would you like to talk more about how anxiety is affecting you specifically? Or perhaps I can share some general coping strategies or resources that might be helpful?",
+                "time": "5:38 PM"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "title": "Need to vent about my day",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Need to vent about my day",
+                "time": "4:43 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I'm here to listen. Please, tell me about your day. I understand that sometimes just getting things off your chest can be helpful. I'm ready to hear whatever you want to share, big or small, good or bad. There's no judgment here, just a listening ear. Take your time, and feel free to share as much or as little as you feel comfortable with. I hope talking about it will help you feel a bit better.",
+                "time": "4:43 PM"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "How to manage stress?",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "How to manage stress?",
+                "time": "4:40 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "It's completely understandable that you're looking for ways to manage stress. It's something we all deal with from time to time. To give you the best suggestions, could you tell me a little more about what's causing you stress right now? Is it work-related, personal relationships, or something else? In the meantime, some general stress-reducing techniques include deep breathing exercises, taking short breaks to stretch or walk, practicing mindfulness, and ensuring you're getting enough sleep and proper nutrition. Sometimes, even talking to a friend or family member can help lighten the load.",
+                "time": "4:40 PM"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "How to manage stress?",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "How to manage stress?",
+                "time": "4:35 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "It's completely understandable that you're looking for ways to manage stress. It's something we all experience from time to time. To give you the most helpful suggestions, could you tell me a little more about what's causing you stress right now? Is it work-related, relationship issues, something else, or a combination of things? In the meantime, some general strategies that can be helpful include: * Regular exercise, even a short walk can make a difference * Mindfulness and meditation techniques * Spending time in nature * Getting enough sleep * Connecting with supportive friends and family Learning to manage stress is a journey, and I'm here to support you. If you feel overwhelmed, remember that reaching out to a mental health professional can provide you with personalized strategies and support.",
+                "time": "4:35 PM"
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "title": "Tell me about anxiety",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Tell me about anxiety",
+                "time": "2:48 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "Anxiety is a natural human emotion that everyone experiences from time to time. It's often described as a feeling of worry, nervousness, or unease, typically about an event or something with an uncertain outcome. While occasional anxiety is normal, excessive or persistent anxiety that interferes with your daily life could be a sign of an anxiety disorder. These disorders can manifest in different ways, such as generalized anxiety, panic disorder, social anxiety, or specific phobias. If you're concerned about your anxiety, or if it's significantly impacting your well-being, reaching out to a mental health professional can be a helpful step. They can provide a proper assessment and recommend the most suitable course of action. Would you like to explore some coping strategies or resources related to anxiety?",
+                "time": "2:48 PM"
+            },
+            {
+                "sender": "user",
+                "message": "help me in sadness",
+                "time": "4:21 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I'm truly sorry to hear that you're feeling sad. It takes courage to reach out, and I want you to know that I'm here to listen without judgment. Sadness can be a heavy emotion, and it's important to acknowledge it. Would you be willing to share a bit more about what's making you feel sad? Knowing more might help me offer some relevant support. In the meantime, remember that it's okay to feel sad, and it won't last forever. Things like gentle exercise, listening to soothing music, or spending time in nature can sometimes provide a little comfort. If the sadness feels overwhelming or persistent, please remember that talking to a mental health professional can be incredibly helpful. They can provide guidance and support tailored to your specific needs.",
+                "time": "4:22 PM"
+            },
+            {
+                "sender": "user",
+                "message": "ok",
+                "time": "4:27 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "Okay. I understand. Is there anything specific on your mind that you'd like to talk about, or perhaps a question you have? I'm here to listen and offer support in any way I can. If you'd prefer, we could also explore some general coping strategies for dealing with difficult emotions, or even just sit in silence for a bit. Whatever feels right for you in this moment, I'm here for it. Remember, you're not alone, and it's okay to take things at your own pace.",
+                "time": "4:27 PM"
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "title": "New Conversation",
+        "date": "August 11, 2025",
+        "messages": []
+    }
+]

@@ -172,6 +172,89 @@ def render_daily_tip():
             st.session_state.current_tip = random.choice(WELLNESS_TIPS)
             st.rerun()
 
+def render_ambient_sounds():
+    """Render calming music player in sidebar with soothing melodies"""
+    with st.expander("🎵 Calming Music"):
+        st.markdown("**Choose peaceful music while you chat:**")
+        
+        # YouTube calming music videos - peaceful instrumental and meditation music
+        calming_music = {
+            "🎹 Peaceful Piano": {
+                "description": "Soft piano melodies for relaxation",
+                "embed_id": "1ZYbU82GVz4",  # Beautiful relaxing piano music
+                "duration": "3 hours"
+            },
+            "🧘 Meditation Music": {
+                "description": "Gentle meditation and mindfulness music",
+                "embed_id": "lFcSrYw-ARY",  # Relaxing meditation music
+                "duration": "1 hour"
+            },
+            "🎻 Calm Instrumental": {
+                "description": "Soothing instrumental music mix",
+                "embed_id": "M4QVYDTmjEg",  # Beautiful instrumental music
+                "duration": "2 hours"
+            },
+            "🌸 Zen Garden": {
+                "description": "Peaceful zen music for inner calm",
+                "embed_id": "5qap5aO4i9A",  # Zen music for relaxation
+                "duration": "3 hours"
+            },
+            "💤 Sleep Music": {
+                "description": "Ultra calming music for deep relaxation",
+                "embed_id": "YQaW2gkV1iM",  # Sleep music, calming music
+                "duration": "8 hours"
+            },
+            "🎶 Ambient Chillout": {
+                "description": "Soft ambient music for stress relief",
+                "embed_id": "rUxyKA_-grg",  # Chillout ambient music
+                "duration": "1 hour"
+            }
+        }
+        
+        selected_music = st.selectbox(
+            "Select calming music:",
+            ["🔇 Silence"] + list(calming_music.keys()),
+            key="ambient_sound_selector"
+        )
+        
+        if selected_music != "🔇 Silence":
+            music_data = calming_music[selected_music]
+            
+            st.markdown(f"**Now Playing: {selected_music}**")
+            st.markdown(f"*{music_data['description']} ({music_data['duration']})*")
+            
+            # Embed YouTube video as audio player
+            youtube_embed = f"""
+            <div style="text-align: center; margin: 10px 0;">
+                <iframe width="100%" height="80" 
+                        src="https://www.youtube.com/embed/{music_data['embed_id']}?autoplay=0&loop=1&playlist={music_data['embed_id']}&controls=1&modestbranding=1&rel=0&showinfo=0" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            """
+            
+            st.markdown(youtube_embed, unsafe_allow_html=True)
+            
+            st.info("💡 **Tip**: Click play above. Keep volume gentle (15-25%) to create a peaceful atmosphere during your conversation.")
+            
+            # Alternative: Direct links for manual opening
+            st.markdown("---")
+            st.markdown("**Alternative**: Open in new tab:")
+            youtube_url = f"https://www.youtube.com/watch?v={music_data['embed_id']}"
+            st.markdown(f"[🔗 Open {selected_music} on YouTube]({youtube_url})")
+        
+        else:
+            st.info("🔇 Select music above to create a calming atmosphere.")
+            st.markdown("---")
+            st.markdown("**Benefits of calming music:**")
+            st.markdown("• Reduces stress and anxiety naturally")
+            st.markdown("• Promotes emotional well-being")
+            st.markdown("• Enhances mindfulness and focus")
+            st.markdown("• Creates a therapeutic environment")
+            st.markdown("• Supports deeper self-reflection")
+
 
 def render_sidebar():
     """Renders the left and right sidebars."""
@@ -186,6 +269,7 @@ def render_sidebar():
 
         st.markdown("---")
         render_daily_tip()
+        render_ambient_sounds()
         st.markdown("### 💬 Conversations")
 
         if "show_quick_start_prompts" not in st.session_state:
@@ -288,207 +372,6 @@ def render_sidebar():
             st.session_state.show_emergency_page = True
             st.rerun()
 
-        # # --- FOCUS SESSION BUTTON ---
-        # if st.button("🧘 Focus Session", use_container_width=True, type="secondary", key="focus_session_button"):
-        #     st.session_state.show_focus_session = True
-        #     st.rerun()
-
-        # # --- MOOD DASHBOARD BUTTON ---
-        # render_mood_dashboard_button()
-
-        # --- 3. Dynamic Mood Tracker & Micro-Journal (Fixed Tip & New Button) ---
-        # with st.expander("🧠 Mental Health Check"):
-        #     st.markdown("**How are you feeling today?**")
-
-        #     mood_options_map = {
-        #         "😔 Very Low": "very_low",
-        #         "😐 Low": "low",
-        #         "😊 Okay": "okay",
-        #         "😄 Good": "good",
-        #         "🌟 Great": "great"
-        #     }
-        #     mood_labels = list(mood_options_map.keys())
-
-        #     selected_mood_label = st.radio(
-        #         "Mood Scale",
-        #         options=mood_labels,
-        #         index=mood_labels.index(
-        #             "😊 Okay") if "😊 Okay" in mood_labels else 2,
-        #         key="mood_selector_radio",
-        #         horizontal=True,
-        #         label_visibility="collapsed"
-        #     )
-
-        #     st.session_state.current_mood_val = mood_options_map[selected_mood_label]
-        #     if st.session_state.current_mood_val:
-        #         st.markdown("")
-        #         journal_prompt_text = {
-        #             "very_low": "What's weighing on your mind today?",
-        #             "low": "What are your thoughts right now?",
-        #             "okay": "Anything specific on your mind today?",
-        #             "good": "What made you feel good today?",
-        #             "great": "What's making you shine today?"
-        #         }.get(st.session_state.current_mood_val, "Reflect on your mood:")
-
-        #         # Initialize journal entry for the current session
-        #         if "mood_journal_entry" not in st.session_state:
-        #             st.session_state.mood_journal_entry = ""
-        #         # Initialize state for displaying tips and status
-        #         if "mood_tip_display" not in st.session_state:
-        #             st.session_state.mood_tip_display = ""
-        #         if "mood_entry_status" not in st.session_state:
-        #             st.session_state.mood_entry_status = ""
-
-        #         st.text_area(
-        #             f"✏️ {journal_prompt_text}",
-        #             key="mood_journal_area",
-        #             value=st.session_state.mood_journal_entry,
-        #             height=70
-        #         )
-
-        #         # Context reason dropdown
-        #         st.markdown("**Why are you feeling this way?**")
-        #         context_reasons = ["No specific reason", "Work", "Family", "Health", "Relationships", "Financial", "Social", "Personal goals", "Weather", "Other"]
-        #         selected_reason = st.selectbox(
-        #             "Select a reason (optional):",
-        #             options=context_reasons,
-        #             key="mood_context_reason",
-        #             label_visibility="collapsed"
-        #         )
-
-        #         # Activity checkboxes
-        #         st.markdown("**What did you do today?** (optional)")
-        #         activities = []
-        #         col1, col2 = st.columns(2)
-        #         with col1:
-        #             if st.checkbox("✅ Exercise", key="activity_exercise"):
-        #                 activities.append("Exercise")
-        #             if st.checkbox("✅ Socialized", key="activity_socialized"):
-        #                 activities.append("Socialized")
-        #         with col2:
-        #             if st.checkbox("✅ Ate healthy", key="activity_healthy_eating"):
-        #                 activities.append("Ate healthy")
-        #             if st.checkbox("✅ Slept well", key="activity_slept_well"):
-        #                 activities.append("Slept well")
-
-        #         tips_for_mood = {
-        #             "very_low": "Remember, it's okay not to be okay. Consider connecting with a professional.",
-        #             "low": "Even small steps help. Try a brief mindful moment or gentle activity.",
-        #             "okay": "Keep nurturing your well-being. What's one thing you can do to maintain this?",
-        #             "good": "That's wonderful! Savor this feeling and perhaps share your positivity.",
-        #             "great": "Fantastic! How can you carry this energy forward into your day?"
-        #         }.get(st.session_state.current_mood_val, "A general tip for your mood.")
-
-        #         st.markdown("")
-        #         col_tip_save, col_ask_TalkHeal = st.columns(2)
-
-        #         with col_tip_save:
-        #             if st.button("Get Tip & Save Entry", key="save_mood_entry", use_container_width=True):
-        #                 # Save to mood dashboard
-        #                 if "mood_tracker" not in st.session_state:
-        #                     st.session_state.mood_tracker = MoodTracker()
-                        
-        #                 mood_level = st.session_state.current_mood_val
-        #                 notes = st.session_state.get("mood_journal_area", "")
-        #                 context_reason = st.session_state.get("mood_context_reason", "No specific reason")
-        #                 activities = []
-        #                 if st.session_state.get("activity_exercise", False):
-        #                     activities.append("Exercise")
-        #                 if st.session_state.get("activity_socialized", False):
-        #                     activities.append("Socialized")
-        #                 if st.session_state.get("activity_healthy_eating", False):
-        #                     activities.append("Ate healthy")
-        #                 if st.session_state.get("activity_slept_well", False):
-        #                     activities.append("Slept well")
-                        
-        #                 st.session_state.mood_tracker.add_mood_entry(mood_level, notes, context_reason, activities)
-                        
-        #                 st.session_state.mood_tip_display = tips_for_mood
-        #                 st.session_state.mood_entry_status = f"Your mood entry for '{selected_mood_label}' has been saved to your dashboard!"
-        #                 st.session_state.mood_journal_entry = ""
-
-        #         with col_ask_TalkHeal:
-        #             if st.button("Ask TalkHeal", key="ask_peace_pulse_from_mood", use_container_width=True):
-        #                 if st.session_state.mood_journal_area.strip():
-        #                     st.session_state.pre_filled_chat_input = st.session_state.mood_journal_area
-        #                     st.session_state.send_chat_message = True
-        #                     st.session_state.mood_journal_entry = ""
-        #                     st.session_state.mood_tip_display = ""
-        #                     st.session_state.mood_entry_status = ""
-        #                     st.rerun()
-        #                 else:
-        #                     st.warning(
-        #                         "Please enter your thoughts before asking TalkHeal.")
-
-        #         if st.session_state.mood_tip_display:
-        #             st.success(st.session_state.mood_tip_display)
-        #             st.session_state.mood_tip_display = ""
-        #         if st.session_state.mood_entry_status:
-        #             st.info(st.session_state.mood_entry_status)
-        #             st.session_state.mood_entry_status = ""
-
-        # # --- 4. Resource Hub with Categories & Search ---
-        # with st.expander("📚 Resources & Knowledge Base"):
-        #     st.markdown("**Explore topics or search for help:**")
-
-        #     resource_search_query = st.text_input(
-        #         "Search resources...", key="resource_search", placeholder="e.g., 'anxiety tips', 'therapy'", label_visibility="collapsed")
-
-        #     if resource_search_query:
-        #         filtered_topics = [
-        #             topic for topic in mental_health_resources_full
-        #             if resource_search_query.lower() in topic.lower() or
-        #             any(resource_search_query.lower() in link['label'].lower() for link in mental_health_resources_full[topic]['links']) or
-        #             resource_search_query.lower(
-        #             ) in mental_health_resources_full[topic]['description'].lower()
-        #         ]
-
-        #         if not filtered_topics:
-        #             st.info("No resources found matching your search.")
-        #         else:
-        #             st.markdown("---")
-        #             st.markdown("**Matching Resources:**")
-        #             for topic in filtered_topics:
-        #                 st.markdown(f"**{topic}**")
-        #                 st.info(
-        #                     mental_health_resources_full[topic]['description'])
-        #                 for link in mental_health_resources_full[topic]['links']:
-        #                     st.markdown(f"• [{link['label']}]({link['url']})")
-        #                 st.markdown("---")
-        #     else:
-        #         resource_tabs = st.tabs(
-        #             list(mental_health_resources_full.keys()))
-
-        #         for i, tab_title in enumerate(mental_health_resources_full.keys()):
-        #             with resource_tabs[i]:
-        #                 topic_data = mental_health_resources_full[tab_title]
-        #                 st.markdown(f"**{tab_title}**")
-        #                 st.info(topic_data['description'])
-        #                 for link in topic_data['links']:
-        #                     st.markdown(f"• [{link['label']}]({link['url']})")
-        #                 st.markdown("---")
-
-        # with st.expander("☎️ Crisis Support"):
-        #     st.markdown("**24/7 Crisis Hotlines:**")
-        #     for resource in GLOBAL_RESOURCES:
-        #         st.markdown(
-        #             f"**{resource['name']}**: {resource['desc']} [Visit Website]({resource['url']})")
-            
-        #     # Provide localized helplines based on user's country
-        #     user_country = get_user_country()
-        #     country_label = user_country if user_country else "your country"
-        #     st.markdown("### 🚨 Emergency Help")
-        #     if user_country and user_country in country_helplines:
-        #         st.markdown(f"**Helplines for {country_label}:**")
-        #         for line in country_helplines[user_country]:
-        #             st.markdown(f"• {line}")
-        #     else:
-        #         st.markdown(
-        #             f"Couldn't detect a local helpline for {country_label}. [Find help worldwide via IASP]({IASP_LINK})"
-        #         )
-
-        #     st.markdown("---")
-
         # Theme toggle in sidebar
         with st.expander("🎨 Theme Settings"):
             current_theme = get_current_theme()
@@ -526,63 +409,3 @@ def render_sidebar():
                 type=button_color
             ):
                 toggle_theme()
-
-#         # Quizzes expander (no longer contains nested expander)
-#         with st.expander("🧪 Take PsyToolkit Verified Quizzes"):
-#             st.markdown("""
-#             Explore scientifically backed quizzes to better understand your mental well-being. These tools are for **self-awareness** and not clinical diagnosis.
-#             """)
-
-#             quizzes = [
-#                 {
-#                     "name": "GAD-7 (Anxiety Assessment)",
-#                     "desc": "Measures severity of generalized anxiety symptoms.",
-#                     "url": "https://www.psytoolkit.org/cgi-bin/3.6.0/survey?s=u8bAf",
-#                     "score_info": """
-#                     Score Interpretation:
-#                     GAD-7 score runs from 0 to 21
-#                     - 0–4: Minimal anxiety  
-#                     - 5–9: Mild anxiety  
-#                     - 10–14: Moderate anxiety  
-#                     - 15–21: Severe anxiety
-#                     """
-#                 },
-#                 {
-#                     "name": "PHQ-9 (Depression Assessment)",
-#                     "desc": "Screens for presence and severity of depression.",
-#                     "url": "https://www.psytoolkit.org/cgi-bin/3.6.0/survey?s=Hj32b",
-#                     "score_info": """
-#                     Score Interpretation:
-#                     - 0–4: Mild depression  
-#                     - 5–9: Moderate depression  
-#                     - 10–14: Moderately severe depression  
-#                     - 15–19: Severe depression 
-#                     """
-#                 },
-#                 {
-#                     "name": "The WHO-5 Well-Being Index",
-#                     "desc": "Five simple non-intrusive questions to assess well-being. Score ranges from 0 (poor) to 100 (excellent).",
-#                     "url": "https://www.psytoolkit.org/cgi-bin/3.6.0/survey?s=POqLJ",
-#                     "score_info": """
-#                     Score Interpretation:
-#                     -if your score is 50 or lower you should consider 
-#                     -further checks on whether you suffer 
-#                     -from clinical depression
-#                     """
-#                 },
-#                {
-#     "name": "Depression Anxiety Stress Scales (DASS)",
-#     "desc": "Measures depression, anxiety, and stress using one combined questionnaire.",
-#     "url": "https://www.psytoolkit.org/cgi-bin/3.6.0/survey?s=HvfDY",
-#     "score_info": "**Score Interpretation (per subscale):**\n\n- **Normal, Mild, Moderate, Severe, Extremely Severe**\n\n|          | Depression | Anxiety | Stress  |\n|----------|------------|---------|---------|\n| Normal   | 0-9        | 0-7     | 0-14    |\n| Mild     | 10-13      | 8-9     | 15-18   |\n| Moderate | 14-20      | 10-14   | 19-25   |\n| Severe   | 21-27      | 15-19   | 26-33   |\n| Extremely Severe | 28+ | 20+ | 34+ |"
-# }
-#             ]
-
-#             for quiz in quizzes:
-#                 st.markdown(f"""
-#                 **{quiz['name']}**  
-#                 *{quiz['desc']}*  
-#                 [🔗 Take Quiz]({quiz['url']})  
-#                 {quiz['score_info']}
-#                 """)
-
