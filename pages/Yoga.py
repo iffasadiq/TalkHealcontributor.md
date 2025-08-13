@@ -1,10 +1,11 @@
+import os
 import streamlit as st
 import json
 import base64
 from streamlit_lottie import st_lottie
 from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_core.messages import HumanMessage, SystemMessage # Update this import
-from langchain_google import ChatGoogleGenerativeAI  # Changed from langchain_google_genai
+from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import JsonOutputParser
 from typing import List
 
@@ -28,6 +29,14 @@ def get_base64_of_bin_file(bin_file):
         return ""
 
 lottie_yoga = load_lottiefile("assets/yoga_animation.json")
+
+# --- Load Yoga Data ---
+try:
+    with open(os.path.join("data", "Yoga.json"), "r") as f:
+        yoga_data = json.load(f)
+except FileNotFoundError:
+    yoga_data = {}
+
 background_image_path = "lavender.png"
 base64_background_image = get_base64_of_bin_file(background_image_path)
 

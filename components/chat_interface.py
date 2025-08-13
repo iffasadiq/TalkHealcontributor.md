@@ -197,7 +197,7 @@ def show_session_feedback():
         box-shadow:0 12px 36px rgba(255,107,157,0.25), 0 6px 18px rgba(0,0,0,0.08);
         border:2px solid rgba(255,107,157,0.35);
         position:relative; overflow:hidden;">
-        <div style="position:absolute; top:-22px; right:-22px; width:72px; height:72px; background:linear-gradient(45deg, #FF6B9D, #FE8BBE); border-radius:50%; opacity:0.15;"></div>
+        <div style="position:absolute; top:-22px; right:-22px; width:px; height:72px; background:linear-gradient(45deg, #FF6B9D, #FE8BBE); border-radius:50%; opacity:0.15;"></div>
         <div style="position:absolute; bottom:-26px; left:-26px; width:96px; height:96px; background:linear-gradient(45deg, #FE8BBE, #FF6B9D); border-radius:50%; opacity:0.12;"></div>
         <h4 style="color:#C2185B; margin-bottom:14px; font-size:22px; font-weight:700; letter-spacing:0.2px; text-shadow:0 2px 6px rgba(0,0,0,0.08);">💗 Your mental health journey matters to us</h4>
         <p style="color:#5C5C5C; line-height:1.7; font-size:16px; margin:0; text-shadow:0 1px 2px rgba(0,0,0,0.05);">
