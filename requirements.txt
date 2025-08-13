@@ -15,3 +15,6 @@ bcrypt
 pygame
 streamlit-modal
 streamlit_js_eval
+scikit-learn
+pandas
+numpy
