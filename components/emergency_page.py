@@ -1,7 +1,7 @@
 import streamlit as st
 from geopy.geocoders import Nominatim
 import urllib.parse
-from components.sidebar import GLOBAL_RESOURCES
+from .sidebar import GLOBAL_RESOURCES
 import geopy.exc
 import requests
 
