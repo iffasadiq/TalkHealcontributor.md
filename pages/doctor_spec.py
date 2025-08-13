@@ -9,22 +9,30 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 
-# Streamlit page config
-st.set_page_config(page_title="Disease Predictor", page_icon="🩺", layout="wide")
+# Force your own page config (overrides whatever main.py set)
+st.set_page_config(
+    page_title="Disease Predictor & Doctor Specialist Recommender",
+    page_icon="🩺",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# CSS styling
+# Force light mode styling regardless of global settings
 st.markdown("""
     <style>
-    .stApp { background: #f9f9f9; }
-    .stButton>button {
-        background: #4CAF50;
-        color: white;
-        border-radius: 10px;
-        font-size: 16px;
-        height: 3em;
-        width: 100%;
+    body, .stApp {
+        background-color: #f9f9f9 !important;
+        color: black !important;
     }
-    .stButton>button:hover { background: #45a049; }
+    .stButton>button {
+        background: #4CAF50 !important;
+        color: white !important;
+        border-radius: 10px !important;
+        font-size: 16px !important;
+        height: 3em !important;
+        width: 100% !important;
+    }
+    .stButton>button:hover { background: #45a049 !important; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -73,7 +81,7 @@ threshold = st.sidebar.slider("📊 Confidence threshold (%)", 0, 100, 20)
 show_chart = st.sidebar.checkbox("📈 Show Probability Chart", value=True)
 
 # Main title
-st.markdown("<h1 style='text-align: center;'>🩺 Disease Predictor & Doctor Specialist Recommender</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: black;'>🩺 Disease Predictor & Doctor Specialist Recommender</h1>", unsafe_allow_html=True)
 
 # Prediction button
 if st.sidebar.button("🔎 Predict Disease"):
