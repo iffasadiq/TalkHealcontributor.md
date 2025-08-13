@@ -1,0 +1,117 @@
+[
+    {
+        "id": 4,
+        "title": "Need to vent about my day",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Need to vent about my day",
+                "time": "12:20 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "I'm here to listen. Please, tell me about your day. I understand that sometimes just letting it all out can be helpful. I'm ready to hear whatever you want to share, without any judgment. What happened today that you'd like to talk about? I'm here to offer a safe space for you to express yourself.",
+                "time": "12:20 PM"
+            },
+            {
+                "sender": "user",
+                "message": "it was great day",
+                "time": "12:20 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "That's wonderful to hear! I'm so glad your day was great. It's always refreshing to have a good day. What made it so great? Was there something specific that happened, or was it just a generally positive experience? I'd love to hear more about it if you feel like sharing. Sometimes reflecting on positive experiences can help us appreciate them even more and maybe even find ways to bring more of that goodness into our lives.",
+                "time": "12:20 PM"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Tell me about anxiety",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Tell me about anxiety",
+                "time": "12:16 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "Anxiety is a natural human emotion that everyone experiences from time to time. It's often described as a feeling of worry, nervousness, or unease, typically about an event or something with an uncertain outcome. While occasional anxiety is normal, excessive or persistent anxiety that interferes with your daily life could be a sign of an anxiety disorder. There are different types of anxiety disorders, each with its own specific characteristics and symptoms. I'm here to listen if you'd like to share more about what you're experiencing. Remember, I'm not a substitute for professional help, but I can offer support and understanding. Is there anything specific about anxiety you'd like to discuss further?",
+                "time": "12:16 PM"
+            },
+            {
+                "sender": "user",
+                "message": "ts bad for health?",
+                "time": "12:16 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "Yes, prolonged or excessive anxiety can definitely have negative effects on your health, both physically and mentally. When you're constantly anxious, your body is in a state of heightened alert, which can lead to things like headaches, stomach problems, sleep disturbances, and a weakened immune system. Mentally, it can make it hard to concentrate, make you feel irritable, and even contribute to depression. It's important to find healthy ways to manage your anxiety. If you're concerned about the impact anxiety is having on your health, it's always a good idea to talk to a healthcare professional. They can help you explore coping strategies and treatment options that might be right for you. Would you like to talk about some ways to manage anxiety?",
+                "time": "12:16 PM"
+            }
+        ],
+        "session_ended": true
+    },
+    {
+        "id": 2,
+        "title": "How to manage stress?",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "How to manage stress?",
+                "time": "11:53 AM"
+            },
+            {
+                "sender": "bot",
+                "message": "It's completely understandable that you're looking for ways to manage stress. It's something we all experience at different times. To help me give you the most relevant suggestions, could you tell me a little more about what's causing you stress right now? In the meantime, some general techniques that many people find helpful include: practicing relaxation techniques like deep breathing or meditation, getting regular exercise, ensuring you're getting enough sleep, and connecting with supportive friends and family. Sometimes, even small changes to our daily routine can make a big difference. I'm here to listen if you want to share more, and remember, if stress is significantly impacting your life, reaching out to a mental health professional can provide valuable support and guidance.",
+                "time": "11:53 AM"
+            },
+            {
+                "sender": "user",
+                "message": "i understand",
+                "time": "11:53 AM"
+            },
+            {
+                "sender": "bot",
+                "message": "It's good that you understand. Sometimes just acknowledging that we understand something is a step forward. What specifically do you understand? Perhaps you understand the techniques I mentioned, or maybe you understand that you need to seek professional help if your stress is overwhelming. Whatever it is, recognizing it is important. Is there anything else you'd like to talk about regarding stress management or anything else on your mind? I'm here to listen without judgment and offer support in any way I can. Remember, you're not alone, and it's okay to ask for help when you need it.",
+                "time": "11:53 AM"
+            },
+            {
+                "sender": "user",
+                "message": "thanks",
+                "time": "11:53 AM"
+            },
+            {
+                "sender": "bot",
+                "message": "You're very welcome. I'm glad I could be of some help. Remember, I'm here whenever you need a listening ear or just someone to bounce ideas off of. Taking care of your mental well-being is an ongoing process, and it's okay to have good days and bad days. Just keep practicing self-compassion and reaching out when you need support. Is there anything else I can do for you right now? If not, that's perfectly fine too. Just know that I'm here for you.",
+                "time": "11:54 AM"
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "title": "Tell me about anxiety",
+        "date": "August 11, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "Tell me about anxiety",
+                "time": "11:29 AM"
+            },
+            {
+                "sender": "bot",
+                "message": "Anxiety is a natural human emotion that everyone experiences from time to time. It's often described as a feeling of worry, nervousness, or unease, typically about an event or something with an uncertain outcome. Sometimes, anxiety can become excessive and persistent, interfering with daily life. This could manifest as difficulty concentrating, sleep disturbances, or physical symptoms like a racing heart. If you're experiencing anxiety that feels overwhelming or is impacting your ability to function, it might be helpful to explore coping strategies or seek support from a mental health professional. Would you like to learn about some coping strategies for managing anxiety or explore resources for professional help?",
+                "time": "11:29 AM"
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "title": "New Conversation",
+        "date": "August 11, 2025",
+        "messages": []
+    }
+]
