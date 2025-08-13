@@ -138,6 +138,91 @@ mental_health_resources_full = {
     }
 }
 
+def render_ambient_sounds():
+    """Render calming music player in sidebar with soothing melodies"""
+    with st.expander("🎵 Calming Music"):
+        st.markdown("**Choose peaceful music while you chat:**")
+        
+        # YouTube calming music videos - peaceful instrumental and meditation music
+        calming_music = {
+            "🎹 Peaceful Piano": {
+                "description": "Soft piano melodies for relaxation",
+                "embed_id": "1ZYbU82GVz4",  # Beautiful relaxing piano music
+                "duration": "3 hours"
+            },
+            "🧘 Meditation Music": {
+                "description": "Gentle meditation and mindfulness music",
+                "embed_id": "lFcSrYw-ARY",  # Relaxing meditation music
+                "duration": "1 hour"
+            },
+            "🎻 Calm Instrumental": {
+                "description": "Soothing instrumental music mix",
+                "embed_id": "M4QVYDTmjEg",  # Beautiful instrumental music
+                "duration": "2 hours"
+            },
+            "🌸 Zen Garden": {
+                "description": "Peaceful zen music for inner calm",
+                "embed_id": "5qap5aO4i9A",  # Zen music for relaxation
+                "duration": "3 hours"
+            },
+            "💤 Sleep Music": {
+                "description": "Ultra calming music for deep relaxation",
+                "embed_id": "YQaW2gkV1iM",  # Sleep music, calming music
+                "duration": "8 hours"
+            },
+            "🎶 Ambient Chillout": {
+                "description": "Soft ambient music for stress relief",
+                "embed_id": "rUxyKA_-grg",  # Chillout ambient music
+                "duration": "1 hour"
+            }
+        }
+        
+        selected_music = st.selectbox(
+            "Select calming music:",
+            ["🔇 Silence"] + list(calming_music.keys()),
+            key="ambient_sound_selector"
+        )
+        
+        if selected_music != "🔇 Silence":
+            music_data = calming_music[selected_music]
+            
+            st.markdown(f"**Now Playing: {selected_music}**")
+            st.markdown(f"*{music_data['description']} ({music_data['duration']})*")
+            
+            # Embed YouTube video as audio player
+            youtube_embed = f"""
+            <div style="text-align: center; margin: 10px 0;">
+                <iframe width="100%" height="80" 
+                        src="https://www.youtube.com/embed/{music_data['embed_id']}?autoplay=0&loop=1&playlist={music_data['embed_id']}&controls=1&modestbranding=1&rel=0&showinfo=0" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            """
+            
+            st.markdown(youtube_embed, unsafe_allow_html=True)
+            
+            st.info("💡 **Tip**: Click play above. Keep volume gentle (15-25%) to create a peaceful atmosphere during your conversation.")
+            
+            # Alternative: Direct links for manual opening
+            st.markdown("---")
+            st.markdown("**Alternative**: Open in new tab:")
+            youtube_url = f"https://www.youtube.com/watch?v={music_data['embed_id']}"
+            st.markdown(f"[🔗 Open {selected_music} on YouTube]({youtube_url})")
+        
+        else:
+            st.info("🔇 Select music above to create a calming atmosphere.")
+            st.markdown("---")
+            st.markdown("**Benefits of calming music:**")
+            st.markdown("• Reduces stress and anxiety naturally")
+            st.markdown("• Promotes emotional well-being")
+            st.markdown("• Enhances mindfulness and focus")
+            st.markdown("• Creates a therapeutic environment")
+            st.markdown("• Supports deeper self-reflection")
+
+
+
 
 def render_sidebar():
     """Renders the left and right sidebars."""
@@ -151,6 +236,7 @@ def render_sidebar():
         st.page_link("pages/Breathing_Exercise.py", label="🌬️ Breathing Exercise", use_container_width=True)
 
         st.markdown("---")
+        render_ambient_sounds()
 
         st.markdown("### 💬 Conversations")
 
