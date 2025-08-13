@@ -134,6 +134,10 @@ if not st.session_state.conversations:
     st.rerun()
 
 # --- 8. RENDER PAGE ---
+# if st.session_state.get("show_emergency_page"):
+#     with main_area:
+#         render_emergency_page()
+# else:
 if st.session_state.get("show_emergency_page"):
     with main_area:
         render_emergency_page()

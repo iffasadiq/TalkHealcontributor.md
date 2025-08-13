@@ -148,7 +148,8 @@ def render_sidebar():
         st.markdown("### 📂 Explore")
         st.page_link("pages/Journaling.py", label="📝 Journaling", use_container_width=True)
         st.page_link("pages/Yoga.py", label="🧘 Yoga", use_container_width=True)
-        st.page_link("pages/Breathing_Exercise.py", label="😮‍💨 Breathing Exercise", use_container_width=True)
+        st.page_link("pages/Breathing_Exercise.py", label="🌬️ Breathing Exercise", use_container_width=True)
+
         st.markdown("---")
 
         st.markdown("### 💬 Conversations")

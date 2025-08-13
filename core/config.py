@@ -4,7 +4,7 @@ from pathlib import Path
 import requests
 
 # ---------- Logo and Page Config ----------
-logo_path = str(Path(__file__).resolve().parent.parent / "TalkHealLogo.png")
+logo_path = str(Path(__file__).resolve().parent.parent / "static_files" / "TalkHealLogo.png")
 
 PAGE_CONFIG = {
     "page_title": "TalkHeal - Mental Health Support",
