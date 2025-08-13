@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 
-# Force your own page config (overrides whatever main.py set)
+# Force your own page config
 st.set_page_config(
     page_title="Disease Predictor & Doctor Specialist Recommender",
     page_icon="🩺",
@@ -17,7 +17,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Force light mode styling regardless of global settings
+# Custom light mode styles
 st.markdown("""
     <style>
     body, .stApp {
@@ -33,6 +33,32 @@ st.markdown("""
         width: 100% !important;
     }
     .stButton>button:hover { background: #45a049 !important; }
+
+    /* Download button light mode */
+    .stDownloadButton>button {
+        background-color: #2196F3 !important;
+        color: white !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+    }
+    .stDownloadButton>button:hover {
+        background-color: #0b7dda !important;
+        color: white !important;
+    }
+
+    /* Dataframe container */
+    .stDataFrame {
+        background-color: white !important;
+        border-radius: 8px !important;
+        padding: 8px !important;
+    }
+
+    /* Chart container */
+    .stPlotlyChart, .stAltairChart, .stVegaLiteChart {
+        background-color: white !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -74,22 +100,21 @@ algorithms = {
 for model in algorithms.values():
     model.fit(X, y)
 
-# Sidebar for inputs
+# Sidebar
 st.sidebar.header("🛠️ Input Options")
 selected_symptoms = st.sidebar.multiselect("🔍 Search & Select Symptoms", symptoms_list)
 threshold = st.sidebar.slider("📊 Confidence threshold (%)", 0, 100, 20)
 show_chart = st.sidebar.checkbox("📈 Show Probability Chart", value=True)
 
-# Main title
+# Title
 st.markdown("<h1 style='text-align: center; color: black;'>🩺 Disease Predictor & Doctor Specialist Recommender</h1>", unsafe_allow_html=True)
 
-# Prediction button
+# Prediction
 if st.sidebar.button("🔎 Predict Disease"):
     if len(selected_symptoms) == 0:
         st.warning("⚠️ Please select at least one symptom!")
     else:
         with st.spinner("⏳ Analyzing symptoms and predicting..."):
-            # Prepare test data
             test_data = {col: 1 if col in selected_symptoms else 0 for col in X.columns}
             test_df = pd.DataFrame(test_data, index=[0])
 
@@ -104,7 +129,6 @@ if st.sidebar.button("🔎 Predict Disease"):
                 disease: (count / len(algorithms)) * 100 for disease, count in disease_counts.items()
             }
 
-            # Apply threshold filter
             percentage_per_disease = {d: p for d, p in percentage_per_disease.items() if p >= threshold}
 
             if len(percentage_per_disease) == 0:
@@ -117,10 +141,10 @@ if st.sidebar.button("🔎 Predict Disease"):
                 result_df = result_df.merge(doc_data, on='Disease', how='left')
                 result_df = result_df.merge(des_data, on='Disease', how='left')
 
-                st.subheader("📋 Prediction Results")
+                st.markdown("### 📋 Prediction Results", unsafe_allow_html=True)
                 st.dataframe(result_df, use_container_width=True)
 
-                # Download button first
+                # Download button
                 csv = result_df.to_csv(index=False).encode('utf-8')
                 st.download_button(
                     label="📥 Download Results as CSV",
@@ -129,7 +153,8 @@ if st.sidebar.button("🔎 Predict Disease"):
                     mime="text/csv"
                 )
 
-                # Show chart after the download button if enabled
+                # Probability chart
                 if show_chart:
-                    st.subheader("📊 Probability Chart")
+                    st.markdown("### 📊 Probability Chart", unsafe_allow_html=True)
                     st.bar_chart(result_df.set_index("Disease")["Chances (%)"])
+
