@@ -21,7 +21,7 @@ jobs:
       - name: Sync labels from linked issues to merged PRs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: eccentriccoder01/talkheal
+          REPO: ${{ github.repository }}
         run: |
           echo "📥 Fetching merged PRs for $REPO..."
           gh pr list --state merged --limit 100 --repo "$REPO" --json number,title,body > merged_prs.json
