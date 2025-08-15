@@ -15,3 +15,5 @@ bcrypt
 pygame
 streamlit-modal
 streamlit_js_eval
+streamlit==1.48.0
+google-generative-ai==0.8.3

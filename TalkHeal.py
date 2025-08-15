@@ -42,8 +42,12 @@ st.set_page_config(page_title="TalkHeal", page_icon="💬", layout="wide")
 
 # --- DB Initialization ---
 if "db_initialized" not in st.session_state:
-    init_db()
-    st.session_state["db_initialized"] = True
+    try:
+        init_db()
+        st.session_state["db_initialized"] = True
+    except Exception as e:
+        st.error(f"Database initialization failed: {e}")
+        st.stop()
 
 # --- Auth State Initialization ---
 if "authenticated" not in st.session_state:
@@ -85,7 +89,7 @@ if st.session_state.get("authenticated", False):
             for key in ["authenticated", "user_email", "user_name", "show_signup"]:
                 if key in st.session_state:
                     del st.session_state[key]
-            st.experimental_rerun()
+            st.rerun()
 
 # --- IMPORTS AFTER AUTH ---
 import google.generativeai as genai
