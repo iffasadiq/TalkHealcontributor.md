@@ -229,39 +229,69 @@ def render_quick_coping_cards():
             card_html = f"""
             <div style="display:flex;justify-content:center;margin:20px 0;">
                 <div style="
-                    width:380px;
-                    height:380px;
-                    border-radius:24px; /* Softer corners */
-                    padding:24px;
-                    background-color: #fcfdff; /* Cleaner, brighter white */
-                    border: 1px solid #eef2ff; /* Softer border */
-                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* Softer shadow */
+                    width:420px;
+                    height:450px;
+                    border-radius:20px;
+                    padding:0;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
                     display:flex;
                     flex-direction:column;
-                    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; /* Better font */
-                    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+                    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+                    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                    position: relative;
+                    overflow: hidden;
                 "
-                onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07)';"
-                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)';">
+                onmouseover="this.style.transform='scale(1.03) rotate(1deg)'; this.style.boxShadow='0 25px 50px rgba(102, 126, 234, 0.4)';"
+                onmouseout="this.style.transform='scale(1) rotate(0deg)'; this.style.boxShadow='0 20px 40px rgba(102, 126, 234, 0.3)';">
                     
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-                        <div style="display:flex;align-items:center;gap:12px;">
-                            <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg, #667eea, #764ba2);display:flex;align-items:center;justify-content:center;font-size:24px;color:white;">{icon}</div>
-                            <div style="line-height:1.3;">
-                                <div style="font-size:19px;color:#1e293b;font-weight:600;">{title}</div>
-                                <div style="font-size:14px;color:#64748b;margin-top:2px;">{card.get('category','General')}</div>
+                    <!-- Decorative background pattern -->
+                    <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; z-index: 1;"></div>
+                    <div style="position: absolute; bottom: -30px; left: -30px; width: 100px; height: 100px; background: rgba(255,255,255,0.05); border-radius: 50%; z-index: 1;"></div>
+                    
+                    <!-- Card Header -->
+                    <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 20px 20px 0 0; backdrop-filter: blur(10px); position: relative; z-index: 2;">
+                        <div style="display:flex;align-items:center;gap:15px;margin-bottom:10px;">
+                            <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow: 0 8px 16px rgba(0,0,0,0.1);">{icon}</div>
+                            <div style="flex:1;">
+                                <div style="font-size:22px;color:#ffffff;font-weight:700;text-shadow: 0 2px 4px rgba(0,0,0,0.3);line-height:1.2;">{title}</div>
+                                <div style="font-size:14px;color:rgba(255,255,255,0.9);margin-top:4px;font-weight:500;">{card.get('category','General')} Strategy</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.2);padding:8px 16px;border-radius:20px;backdrop-filter: blur(5px);">
+                                <div style="font-size:12px;color:#ffffff;font-weight:600;">{time_html}</div>
                             </div>
                         </div>
-                        <div style="font-size:13px;color:#475569;background:#f1f5f9;padding:6px 12px;border-radius:999px;font-weight:500;">{time_html}</div>
+                        
+                        <!-- Progress indicator -->
+                        <div style="background:rgba(255,255,255,0.2);height:4px;border-radius:2px;overflow:hidden;">
+                            <div style="background:#ffffff;height:100%;width:75%;border-radius:2px;"></div>
+                        </div>
                     </div>
 
-                    <div style="flex:1;overflow-y:auto;padding-right:10px; /* for scrollbar */">
-                        <div style="font-size:16px;color:#334155;line-height:1.65;margin-bottom:12px;">{text}</div>
-                        {steps_html}
+                    <!-- Card Body -->
+                    <div style="flex:1;padding:25px;background:#ffffff;position:relative;z-index:2;">
+                        <div style="background:linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);border-radius:12px;padding:20px;margin-bottom:15px;border-left:4px solid #667eea;">
+                            <div style="font-size:17px;color:#1e293b;line-height:1.7;font-weight:500;">{text}</div>
+                        </div>
+                        
+                        {steps_html if steps else '<div style="text-align:center;padding:15px;color:#64748b;font-style:italic;">Take a deep breath and begin when you are ready</div>'}
+                        
+                        <!-- Motivational quote -->
+                        <div style="background:rgba(102, 126, 234, 0.05);border-radius:8px;padding:15px;margin-top:15px;border:1px solid rgba(102, 126, 234, 0.1);">
+                            <div style="font-size:14px;color:#475569;text-align:center;font-style:italic;">"Small steps lead to big changes. You've got this! 💪"</div>
+                        </div>
                     </div>
 
-                    <div style="margin-top:16px;border-top: 1px solid #f1f5f9; padding-top: 16px; text-align:center;">
-                        <div style="font-size:13px;color:#64748b;">Take a moment for yourself.</div>
+                    <!-- Card Footer -->
+                    <div style="background:linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);padding:15px 25px;border-radius:0 0 20px 20px;position:relative;z-index:2;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div style="font-size:13px;color:#64748b;font-weight:500;">
+                                <span style="color:#22c55e;">●</span> Ready to try
+                            </div>
+                            <div style="font-size:12px;color:#64748b;background:#ffffff;padding:4px 8px;border-radius:12px;font-weight:600;">
+                                #{card.get('category','General').upper()}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
