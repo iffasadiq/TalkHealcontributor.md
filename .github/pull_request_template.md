@@ -1,38 +1,168 @@
-## Which issue does this PR close?
+## 🔗 Related Issue
 
 <!--
-We generally require a GitHub issue to be filed for all bug fixes and enhancements and this helps us generate change logs for our releases. You can link an issue to this PR using the GitHub syntax. For example `Closes #123` indicates that this PR will close issue #123.
+We generally require a GitHub issue to be filed for all bug fixes and enhancements. This helps us:
+- Generate comprehensive change logs for releases
+- Track feature requests and bug reports
+- Maintain project roadmap and priorities
+
+Link the related issue using GitHub's linking syntax:
+- "Closes #123" - for bug fixes and completed features
+- "Addresses #123" - for partial implementations
+- "Related to #123" - for tangentially related changes
 -->
 
-- Closes #.
+- Closes #
 
-## Rationale for this change
+## 🎯 Rationale
 
 <!--
- Why are you proposing this change? If this is already explained clearly in the issue then this section is not needed.
- Explaining clearly why changes are proposed helps reviewers understand your changes and offer better suggestions for fixes.  
+Explain the reasoning behind this change:
+- What problem does this solve?
+- Why is this the best approach?
+- How does this improve the project?
+
+If this is already well-explained in the linked issue, you can reference it briefly.
 -->
 
-## What changes are included in this PR?
+## 📝 Summary of Changes
 
 <!--
-There is no need to duplicate the description in the issue here but it is sometimes worth providing a summary of the individual changes in this PR.
+Provide a clear overview of what this PR includes:
+- High-level description of changes
+- Key files or components modified
+- New features or functionality added
+- Breaking changes (if any)
 -->
 
-## Are these changes tested?
+### 🔧 Technical Details
 
 <!--
-We typically require tests for all PRs in order to:
-1. Prevent the code from being accidentally broken by subsequent changes
-2. Serve as another way to document the expected behavior of the code
+Include relevant technical information:
+- Architecture decisions
+- Implementation approach
+- Dependencies added/removed
+- Performance implications
 -->
 
-## Are there any user-facing changes?
+## ✅ Testing
 
 <!--
-If there are user-facing changes then we may require documentation to be updated before approving the PR.
+Describe how these changes have been tested:
 -->
 
+### Test Coverage
+- [ ] Unit tests added/updated
+- [ ] Integration tests added/updated  
+- [ ] Manual testing completed
+- [ ] All existing tests pass
+
+### Test Details
 <!--
-If there are any breaking changes to public APIs, please add the `api change` label.
+Describe specific test scenarios:
+- What test cases were added?
+- How was the functionality verified?
+- Any edge cases considered?
+-->
+
+## 📚 Documentation
+
+<!--
+Documentation changes and updates:
+-->
+
+- [ ] Code comments added/updated
+- [ ] README updated (if needed)
+- [ ] API documentation updated (if needed)
+- [ ] Migration guide provided (for breaking changes)
+
+## 🔄 Breaking Changes
+
+<!--
+If this PR introduces breaking changes:
+- Clearly list what breaks
+- Provide migration instructions
+- Update version according to semantic versioning
+- Add the "breaking change" label
+-->
+
+- [ ] This PR contains breaking changes
+- [ ] Migration guide provided
+- [ ] Version updated appropriately
+
+## 🎨 User-Facing Changes
+
+<!--
+Describe any changes that affect end users:
+- New features or functionality
+- UI/UX modifications
+- API changes
+- Configuration changes
+- Deprecations
+-->
+
+### Frontend Changes
+- [ ] UI components modified
+- [ ] New user interactions added
+- [ ] Styling/theme changes
+
+### Backend/API Changes
+- [ ] New endpoints added
+- [ ] Existing endpoints modified
+- [ ] Response format changes
+
+## 📋 Checklist
+
+<!--
+Complete this checklist before requesting review:
+-->
+
+### Code Quality
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] No console.log or debug statements left
+- [ ] Error handling implemented appropriately
+
+### Review Readiness  
+- [ ] PR title is descriptive and follows conventions
+- [ ] PR description is complete and accurate
+- [ ] Commits are atomic and well-documented
+- [ ] Branch is up to date with target branch
+
+### Security & Performance
+- [ ] No sensitive information exposed
+- [ ] Performance impact considered
+- [ ] Security implications reviewed
+
+## 🚀 Deployment Notes
+
+<!--
+Any special considerations for deployment:
+- Database migrations required
+- Configuration changes needed
+- Deployment order dependencies
+- Rollback procedures
+-->
+
+## 📸 Screenshots/Demo
+
+<!--
+For UI changes, include before/after screenshots or demo links:
+-->
+
+## 🙏 Reviewer Notes
+
+<!--
+Specific guidance for reviewers:
+- Areas that need special attention
+- Known limitations or trade-offs
+- Questions for the reviewer
+-->
+
+---
+
+<!-- 
+Thank you for contributing! 🎉
+
+Please ensure you've filled out all relevant sections above. The maintainers will review your changes and provide feedback as soon as possible.
 -->
