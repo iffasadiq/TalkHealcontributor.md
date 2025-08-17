@@ -12,6 +12,7 @@ from core.theme import get_current_theme, toggle_theme, set_palette, PALETTES
 from components.mood_dashboard import render_mood_dashboard, MoodTracker
 from components.profile import initialize_profile_state, render_profile_section
 from components.focus_session import render_focus_session
+from components.quick_coping_cards import render_quick_coping_cards
 from streamlit_js_eval import streamlit_js_eval
 import requests
 import base64
@@ -253,6 +254,11 @@ with col6:
     if st.button("🧪 PsyToolkit Quizzes", use_container_width=True):
         st.session_state.active_tool = "quizzes"
 
+col7, col8 = st.columns(3)[0:2]
+with col7:
+    if st.button("🃏 Quick Coping Cards", use_container_width=True):
+        st.session_state.active_tool = "quick_coping"
+
 st.markdown("---")
 
 # --- RENDER SELECTED TOOL ---
@@ -475,3 +481,6 @@ elif st.session_state.active_tool == "quizzes":
     for q in quizzes:
         st.markdown(f"**{q['name']}**\n\n*{q['desc']}*\n\n[Take Quiz]({q['url']})\n\nScore Info: {q['score']}")
         st.markdown("---")
+
+elif st.session_state.active_tool == "quick_coping":
+    render_quick_coping_cards()

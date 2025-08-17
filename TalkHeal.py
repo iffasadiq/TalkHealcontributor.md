@@ -1,6 +1,18 @@
 import streamlit as st
+import google.generativeai as genai
 from auth.auth_utils import init_db
 from components.login_page import show_login_page
+from core.utils import save_conversations, load_conversations
+from core.config import configure_gemini, PAGE_CONFIG
+from core.utils import get_current_time, create_new_conversation
+from css.styles import apply_custom_css
+from components.header import render_header
+from components.sidebar import render_sidebar
+from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
+from components.mood_dashboard import render_mood_dashboard
+from components.emergency_page import render_emergency_page
+from components.focus_session import render_focus_session
+from components.profile import apply_global_font_size
 
 def set_background_by_mood(mood_scale):
     image_map = {
@@ -91,19 +103,11 @@ if st.session_state.get("authenticated", False):
                     del st.session_state[key]
             st.rerun()
 
-# --- IMPORTS AFTER AUTH ---
-import google.generativeai as genai
-from core.utils import save_conversations, load_conversations
-from core.config import configure_gemini, PAGE_CONFIG
-from core.utils import get_current_time, create_new_conversation
-from css.styles import apply_custom_css
-from components.header import render_header
-from components.sidebar import render_sidebar
-from components.chat_interface import render_chat_interface, handle_chat_input
-from components.mood_dashboard import render_mood_dashboard
-from components.focus_session import render_focus_session
-from components.emergency_page import render_emergency_page
-from components.profile import apply_global_font_size
+# --- MAIN UI (only after login) ---
+header_col1, header_col2, header_col3 = st.columns([6, 1, 1])
+with header_col1:
+    st.title(f"Welcome to TalkHeal, {st.session_state.user_name}! 💬")
+    st.markdown("Navigate to other pages from the sidebar.")
 
 # --- INITIALIZE SESSION STATE ---
 if "chat_history" not in st.session_state:
@@ -112,6 +116,8 @@ if "conversations" not in st.session_state:
     st.session_state.conversations = load_conversations()
 if "active_conversation" not in st.session_state:
     st.session_state.active_conversation = -1
+if "show_emergency_page" not in st.session_state:
+    st.session_state.show_emergency_page = False
 if "show_focus_session" not in st.session_state:
     st.session_state.show_focus_session = False
 if "show_mood_dashboard" not in st.session_state:
@@ -218,8 +224,9 @@ with main_area:
             </div>
         """, unsafe_allow_html=True)
 
-    render_chat_interface()
-    handle_chat_input(model, system_prompt=get_tone_prompt())
+        render_chat_interface()
+        handle_chat_input(model, system_prompt=get_tone_prompt())
+        render_session_controls()
 
 # --- SCROLL TO BOTTOM SCRIPT ---
 st.markdown("""

@@ -96,6 +96,26 @@
   <img src="static_files/lav_ss.jpg" width="200"/></a>
 </div>
 
+## 🗄️ Database Setup
+
+The application uses SQLite databases for user management and journaling. These databases are automatically created when you first run the application, but you can also set them up manually:
+
+### Automatic Setup (Recommended)
+The databases will be created automatically when you run the application for the first time.
+
+### Manual Setup (Optional)
+If you want to set up the databases manually, run:
+
+```bash
+python setup_database.py
+```
+
+This will create:
+- `users.db` - User authentication and profile data
+- `journals.db` - User journal entries and mood tracking data
+
+**Note**: Database files (`.db`) are automatically ignored by git to prevent conflicts and protect user data.
+
 ## 📺 Video Explanation
 
 For a detailed walkthrough of TalkHeal's features and how to use them, check out this video:
