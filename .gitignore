@@ -1,4 +1,5 @@
 .streamlit/
+streamlit.toml
 
 # pycache
 __pycache__/
