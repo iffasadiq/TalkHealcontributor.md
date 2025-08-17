@@ -5,7 +5,8 @@ langchain-core==0.3.74
 langchain-community==0.3.27
 pydantic==2.11.7
 python-dotenv==1.1.1
-google-generativeai==0.8.5
+google-generativeai==0.8.2
+google-ai-generativelanguage==0.6.20
 geopy==2.4.1
 requests==2.32.4
 Pillow==11.3.0
@@ -18,7 +19,6 @@ streamlit-js-eval==0.1.7
 altair==5.5.0
 numpy==2.3.2
 pyarrow==21.0.0
-google-ai-generativelanguage  # Removed ==0.6.15
 google-api-core==2.25.1
 google-api-python-client==2.178.0
 google-auth==2.40.3
