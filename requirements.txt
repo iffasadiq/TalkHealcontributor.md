@@ -18,7 +18,7 @@ streamlit-js-eval==0.1.7
 altair==5.5.0
 numpy==2.3.2
 pyarrow==21.0.0
-google-ai-generativelanguage==0.6.15
+google-ai-generativelanguage  # Removed ==0.6.15
 google-api-core==2.25.1
 google-api-python-client==2.178.0
 google-auth==2.40.3
