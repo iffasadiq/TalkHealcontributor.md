@@ -1,6 +1,4 @@
-
-# Streamlit secrets and configuration
-/.streamlit/
+.streamlit/
 
 # pycache
 __pycache__/
