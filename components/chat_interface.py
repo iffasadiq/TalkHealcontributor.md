@@ -151,6 +151,52 @@ def inject_custom_css():
         box-shadow: 0 8px 25px rgba(194,24,91,0.5), 0 4px 15px rgba(0,0,0,0.2) !important;
         border-color: rgba(255,255,255,0.5) !important;
     }
+
+    .chat-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-message, .bot-message {
+        max-width: 65%;
+        padding: 12px 16px;
+        border-radius: 16px;
+        margin: 8px 0;
+        word-wrap: break-word;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    /* ✅ User bubble (blue like pic 2, but shaped like pic 1) */
+    .user-message {
+        color: #fff;
+        background: linear-gradient(130deg, #6366f1 70%, #818cf8 100%);
+        border: 1.5px solid rgba(129,140,248,0.21);
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+    }
+
+    /* ✅ Bot bubble (white like pic 2, but shaped like pic 1) */
+    .bot-message {
+        background: var(--glass-effect);
+        background-color: var(--surface-alt);
+        color: #efeef9;
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+    }
+
+    /* Timestamp */
+    .message-time {
+        font-size: 12px;
+        color: #c4d0e0;
+        opacity: .76;
+        margin-top: 4px;
+        text-align: right;
+    }
+
     </style>
     """, unsafe_allow_html=True)
 
@@ -391,21 +437,26 @@ def render_chat_interface():
         
         if not active_convo["messages"]:
             st.markdown(f"""
-            <div class="welcome-message">
-                <strong>Hello! I'm TalkHeal, your mental health companion 🤗</strong><br>
-                How are you feeling today? You can write below or start a new topic.
-                <div class="message-time">{get_current_time()}</div>
-            </div>
+<div class="welcome-message">
+    <strong>Hello! I'm TalkHeal, your mental health companion 🤗</strong><br>
+    How are you feeling today? You can write below or start a new topic.
+    <div class="message-time">{get_current_time()}</div>
+</div>
             """, unsafe_allow_html=True)
+        
+        chat_html = '<div class="chat-container">'
 
         for msg in active_convo["messages"]:
             css_class = "user-message" if msg["sender"] == "user" else "bot-message"
-            st.markdown(f"""
-            <div class="{css_class}">
-                {msg["message"]}
-                <div class="message-time">{msg["time"]}</div>
-            </div>
-            """, unsafe_allow_html=True)
+            chat_html += f"""
+<div class="{css_class}">
+    {msg["message"]}
+    <div class="message-time">{msg["time"]}</div>
+</div>
+"""
+        chat_html += '</div>'
+        st.markdown(chat_html, unsafe_allow_html=True)
+
 
 
 def render_session_controls():
