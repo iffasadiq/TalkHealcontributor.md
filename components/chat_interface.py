@@ -170,7 +170,7 @@ def inject_custom_css():
         line-height: 1.5;
     }
 
-    /* ✅ User bubble (blue like pic 2, but shaped like pic 1) */
+    /* User bubble */
     .user-message {
         color: #fff;
         background: linear-gradient(130deg, #6366f1 70%, #818cf8 100%);
@@ -179,7 +179,7 @@ def inject_custom_css():
         border-bottom-right-radius: 4px;
     }
 
-    /* ✅ Bot bubble (white like pic 2, but shaped like pic 1) */
+    /* Bot bubble */
     .bot-message {
         background: var(--glass-effect);
         background-color: var(--surface-alt);
