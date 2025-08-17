@@ -2,17 +2,6 @@ import streamlit as st
 import google.generativeai as genai
 from auth.auth_utils import init_db
 from components.login_page import show_login_page
-from core.utils import save_conversations, load_conversations
-from core.config import configure_gemini, PAGE_CONFIG
-from core.utils import get_current_time, create_new_conversation
-from css.styles import apply_custom_css
-from components.header import render_header
-from components.sidebar import render_sidebar
-from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
-from components.mood_dashboard import render_mood_dashboard
-from components.emergency_page import render_emergency_page
-from components.focus_session import render_focus_session
-from components.profile import apply_global_font_size
 
 def set_background_by_mood(mood_scale):
     image_map = {
@@ -72,36 +61,51 @@ if not st.session_state.authenticated:
     # Login page fixed background image
     st.markdown("""
     <style>
-    body {
+    html, body, [data-testid="stApp"] {
         background-image: url('https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/Background.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        background-attachment: fixed;
         height: 100vh;
     }
     </style>
     """, unsafe_allow_html=True)
 
     show_login_page()
-    st.stop()
+    st.stop()  # This prevents any code below from executing
+
+# --- EVERYTHING BELOW ONLY RUNS AFTER AUTHENTICATION ---
+
+# Import modules only after authentication
+from core.utils import save_conversations, load_conversations
+from core.config import configure_gemini, PAGE_CONFIG
+from core.utils import get_current_time, create_new_conversation
+from css.styles import apply_custom_css
+from components.header import render_header
+from components.sidebar import render_sidebar
+from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
+from components.mood_dashboard import render_mood_dashboard
+from components.emergency_page import render_emergency_page
+from components.focus_session import render_focus_session
+from components.profile import apply_global_font_size
 
 # --- TOP RIGHT BUTTONS: THEME TOGGLE & LOGOUT ---
-if st.session_state.get("authenticated", False):
-    col_spacer, col_theme, col_logout = st.columns([5, 0.5, 0.7])
-    with col_spacer:
-        pass
-    with col_theme:
-        is_dark = st.session_state.get('dark_mode', False)
-        if st.button("🌙" if is_dark else "☀️", key="top_theme_toggle", help="Toggle Light/Dark Mode", use_container_width=True):
-            st.session_state.dark_mode = not is_dark
-            st.session_state.theme_changed = True
-            st.experimental_rerun()
-    with col_logout:
-        if st.button("Logout", key="logout_btn", use_container_width=True):
-            for key in ["authenticated", "user_email", "user_name", "show_signup"]:
-                if key in st.session_state:
-                    del st.session_state[key]
-            st.rerun()
+col_spacer, col_theme, col_logout = st.columns([5, 0.5, 0.7])
+with col_spacer:
+    pass
+with col_theme:
+    is_dark = st.session_state.get('dark_mode', False)
+    if st.button("🌙" if is_dark else "☀️", key="top_theme_toggle", help="Toggle Light/Dark Mode", use_container_width=True):
+        st.session_state.dark_mode = not is_dark
+        st.session_state.theme_changed = True
+        st.experimental_rerun()
+with col_logout:
+    if st.button("Logout", key="logout_btn", use_container_width=True):
+        for key in ["authenticated", "user_email", "user_name", "show_signup"]:
+            if key in st.session_state:
+                del st.session_state[key]
+        st.rerun()
 
 # --- MAIN UI (only after login) ---
 header_col1, header_col2, header_col3 = st.columns([6, 1, 1])
@@ -199,11 +203,11 @@ with main_area:
     set_background_by_mood(st.session_state.mood)
 
     coping_tips = {
-        1: "It’s okay to feel this way. Try some deep breathing exercises to find calm.",
+        1: "It's okay to feel this way. Try some deep breathing exercises to find calm.",
         2: "Consider writing down your thoughts in the journal to process your feelings.",
         3: "A short walk or some light stretching might help you feel balanced.",
-        4: "Great to hear you’re feeling happy! Share something positive in your journal.",
-        5: "You’re shining today! Keep spreading that positivity with a kind act."
+        4: "Great to hear you're feeling happy! Share something positive in your journal.",
+        5: "You're shining today! Keep spreading that positivity with a kind act."
     }
 
     st.write(f"Selected mood: {mood_options[st.session_state.mood - 1]}")
