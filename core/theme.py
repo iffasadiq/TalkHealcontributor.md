@@ -138,7 +138,7 @@ LAVENDER = {
     "input_text": "#2d3436"
 }
 
-Pink = {
+PINK = {
     "name": "Pink",
     "background_image": "static_files/pink.png",
     "background_gradient": "linear-gradient(135deg, #921A40 0%, #C75B7A 40%, #D9ABAB 75%, #F4D9D0 100%)",
@@ -211,7 +211,7 @@ PALETTES = [
     CALM_BLUE,
     MINT,
     LAVENDER,
-    Pink
+    PINK,
 ]
 
 PALETTE_NAME_TO_CONFIG = {p["name"]: p for p in PALETTES}
@@ -244,6 +244,44 @@ def set_palette(palette_name: str):
 def toggle_theme():
     """Toggle between light and dark themes."""
     initialize_theme_state()
+    st.session_state.dark_mode = not st.session_state.dark_mode
+    st.session_state.theme_changed = True
+    st.rerun()
+    import streamlit as st  # add this import if not already present
+
+def set_background_by_mood(mood_scale):
+    image_map = {
+        1: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/dark.png",
+        2: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/blue.png",
+        3: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/mint.png",
+        4: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/lavender.png",
+        5: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/Background.jpg"
+    }
+    color_map = {
+        1: "#2c3e50",
+        2: "#3498db",
+        3: "#a3f7bf",
+        4: "#b57edc",
+        5: "#fff9c4"
+    }
+    bg_image = image_map.get(mood_scale)
+    bg_color = color_map.get(mood_scale, "#bdc3c7")
+    st.markdown(
+        f"""
+        <style>
+        html, body, [data-testid="stApp"] {{
+            background-image: url('{bg_image}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: {bg_color} !important;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+   
     new_state = not st.session_state.dark_mode
 
     # Only change and rerun if state is different
@@ -251,4 +289,7 @@ def toggle_theme():
         st.session_state.dark_mode = new_state
         st.session_state.theme_changed = True
         st.rerun()
- 
+# Run if file executed directly
+if __name__ == "__main__":
+    initialize_theme_state()
+    print("Theme module loaded successfully")

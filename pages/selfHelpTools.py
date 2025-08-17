@@ -1,5 +1,11 @@
 import streamlit as st
 import webbrowser
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core.utils import create_new_conversation, get_current_time
 from datetime import datetime
 from core.utils import create_new_conversation, get_current_time
 from core.theme import get_current_theme, toggle_theme, set_palette, PALETTES
@@ -53,10 +59,41 @@ def set_background(image_path):
         """,
         unsafe_allow_html=True
     )
-
+import streamlit as st
 # ✅ Set your background image
+def set_background_by_mood(mood_scale):
+    image_map = {
+        1: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/dark.png",         # Very Bad
+        2: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/blue.png",         # Neutral
+        3: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/mint.png",         # Bad
+        4: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/lavender.png",     # Good
+        5: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/Background.jpg"    # Very Good
+    }
+    color_map = {
+        1: "#2c3e50",   # dark blue (matches dark.png)
+        2: "#3498db",   # blue (matches blue.png)
+        3: "#a3f7bf",   # mint green (matches mint.png)
+        4: "#b57edc",   # lavender (matches lavender.png)
+        5: "#e22bc4"    # pinkish purple(matches Background.jpg)
+    }
+    bg_image = image_map.get(mood_scale)
+    bg_color = color_map.get(mood_scale, "#bdc3c7")
+    st.markdown(
+        f"""
+        <style>
+        html, body, [data-testid="stApp"] {{
+            background-image: url('{bg_image}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: {bg_color} !important;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 set_background("static_files/lavender.png")
-
 
 # --- Structured Emergency Resources ---
 GLOBAL_RESOURCES = [
@@ -226,12 +263,29 @@ st.markdown("---")
 
 # --- RENDER SELECTED TOOL ---
 if st.session_state.active_tool == "focus":
-    st.header("🧘 Focus Session")
-    render_focus_session()
-    # st.session_state.show_focus_session = True
+    mood_scale_map = {
+        "very_low": 1,
+        "low": 2,
+        "okay": 3,
+        "good": 4,
+        "great": 5
+    }
+    mood_scale = mood_scale_map.get(st.session_state.current_mood_val, 3)
+    set_background_by_mood(mood_scale)
     
+    render_focus_session()
 
 elif st.session_state.active_tool == "mood_dashboard":
+    mood_scale_map = {
+        "very_low": 1,
+        "low": 2,
+        "okay": 3,
+        "good": 4,
+        "great": 5
+    }
+    mood_scale = mood_scale_map.get(st.session_state.current_mood_val, 3)
+    set_background_by_mood(mood_scale)
+   
     render_mood_dashboard()
 
 elif st.session_state.active_tool == "mental_check":
@@ -247,6 +301,16 @@ elif st.session_state.active_tool == "mental_check":
     selected_mood_label = st.radio("Mood Scale", options=mood_labels, index=mood_labels.index("😊 Okay"), horizontal=True)
     st.session_state.current_mood_val = mood_options_map[selected_mood_label]
 
+    mood_scale_map = {
+        "very_low": 1,
+        "low": 2,
+        "okay": 3,
+        "good": 4,
+        "great": 5
+    }
+    mood_scale = mood_scale_map[st.session_state.current_mood_val]
+    set_background_by_mood(mood_scale)
+  
     journal_prompt_text = {
         "very_low": "What's weighing on your mind today?",
         "low": "What are your thoughts right now?",
@@ -313,7 +377,7 @@ elif st.session_state.active_tool == "mental_check":
                 st.session_state.mood_journal_entry = ""
                 st.session_state.mood_tip_display = ""
                 st.session_state.mood_entry_status = ""
-                st.rerun()
+                st.experimental_rerun()
             else:
                 st.warning("Please enter your thoughts before asking TalkHeal.")
 
@@ -323,6 +387,16 @@ elif st.session_state.active_tool == "mental_check":
         st.info(st.session_state.mood_entry_status)
 
 elif st.session_state.active_tool == "knowledge":
+    mood_scale_map = {
+        "very_low": 1,
+        "low": 2,
+        "okay": 3,
+        "good": 4,
+        "great": 5
+    }
+    mood_scale = mood_scale_map.get(st.session_state.current_mood_val, 3)
+    set_background_by_mood(mood_scale)
+
     st.header("📚 Resources & Knowledge Base")
     query = st.text_input("Search resources...", placeholder="e.g., anxiety tips, therapy")
     if query:
@@ -345,6 +419,16 @@ elif st.session_state.active_tool == "knowledge":
                     st.markdown(f"• [{link['label']}]({link['url']})")
 
 elif st.session_state.active_tool == "crisis":
+    mood_scale_map = {
+        "very_low": 1,
+        "low": 2,
+        "okay": 3,
+        "good": 4,
+        "great": 5
+    }
+    mood_scale = mood_scale_map.get(st.session_state.current_mood_val, 3)
+    set_background_by_mood(mood_scale)
+
     st.header("☎️ Crisis Support")
     for r in GLOBAL_RESOURCES:
         st.markdown(f"**{r['name']}**: {r['desc']} [Visit Website]({r['url']})")
@@ -358,6 +442,15 @@ elif st.session_state.active_tool == "crisis":
         st.markdown(f"[Find help worldwide via IASP]({IASP_LINK})")
 
 elif st.session_state.active_tool == "quizzes":
+    mood_scale_map = {
+        "very_low": 1,
+        "low": 2,
+        "okay": 3,
+        "good": 4,
+        "great": 5
+    }
+    mood_scale = mood_scale_map.get(st.session_state.current_mood_val, 3)
+    set_background_by_mood(mood_scale)
     st.header("🧪 Take PsyToolkit Verified Quizzes")
     quizzes = [
         {

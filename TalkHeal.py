@@ -2,13 +2,64 @@ import streamlit as st
 import google.generativeai as genai
 from auth.auth_utils import init_db
 from components.login_page import show_login_page
+from core.utils import save_conversations, load_conversations
+from core.config import configure_gemini, PAGE_CONFIG
+from core.utils import get_current_time, create_new_conversation
+from css.styles import apply_custom_css
+from components.header import render_header
+from components.sidebar import render_sidebar
+from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
+from components.mood_dashboard import render_mood_dashboard
+from components.emergency_page import render_emergency_page
+from components.focus_session import render_focus_session
+from components.profile import apply_global_font_size
+
+def set_background_by_mood(mood_scale):
+    image_map = {
+        1: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/dark.png",       # Very Sad
+        2: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/blue.png",       # Sad
+        3: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/mint.png",       # Neutral
+        4: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/lavender.png",   # Happy
+        5: "https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/Background.jpg"  # Very Happy
+    }
+    color_map = {
+        1: "#2c3e50",   # dark blue
+        2: "#3498db",   # blue
+        3: "#a3f7bf",   # mint green
+        4: "#b57edc",   # lavender
+        5: "#e22bc4"    # pinkish purple
+    }
+
+    bg_image = image_map.get(mood_scale, image_map[3])
+    bg_color = color_map.get(mood_scale, "#bdc3c7")
+
+    st.markdown(
+        f"""
+        <style>
+        html, body, [data-testid="stApp"] {{
+            background-image: url('{bg_image}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: {bg_color} !important;
+            transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 st.set_page_config(page_title="TalkHeal", page_icon="💬", layout="wide")
 
 # --- DB Initialization ---
 if "db_initialized" not in st.session_state:
-    init_db()
-    st.session_state["db_initialized"] = True
+    try:
+        init_db()
+        st.session_state["db_initialized"] = True
+    except Exception as e:
+        st.error(f"Database initialization failed: {e}")
+        st.stop()
 
 # --- Auth State Initialization ---
 if "authenticated" not in st.session_state:
@@ -16,8 +67,21 @@ if "authenticated" not in st.session_state:
 if "show_signup" not in st.session_state:
     st.session_state.show_signup = False
 
-# --- LOGIN PAGE ---
+# --- LOGIN PAGE & BACKGROUND ---
 if not st.session_state.authenticated:
+    # Login page fixed background image
+    st.markdown("""
+    <style>
+    body {
+        background-image: url('https://raw.githubusercontent.com/Martina-stack/TalkHeal-MartinaN/main/Background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     show_login_page()
     st.stop()
 
@@ -25,13 +89,13 @@ if not st.session_state.authenticated:
 if st.session_state.get("authenticated", False):
     col_spacer, col_theme, col_logout = st.columns([5, 0.5, 0.7])
     with col_spacer:
-        pass  # empty spacer to push buttons right
+        pass
     with col_theme:
         is_dark = st.session_state.get('dark_mode', False)
         if st.button("🌙" if is_dark else "☀️", key="top_theme_toggle", help="Toggle Light/Dark Mode", use_container_width=True):
             st.session_state.dark_mode = not is_dark
             st.session_state.theme_changed = True
-            st.rerun()
+            st.experimental_rerun()
     with col_logout:
         if st.button("Logout", key="logout_btn", use_container_width=True):
             for key in ["authenticated", "user_email", "user_name", "show_signup"]:
@@ -45,24 +109,7 @@ with header_col1:
     st.title(f"Welcome to TalkHeal, {st.session_state.user_name}! 💬")
     st.markdown("Navigate to other pages from the sidebar.")
 
-from core.utils import save_conversations, load_conversations
-from core.config import configure_gemini, PAGE_CONFIG
-from core.utils import get_current_time, create_new_conversation
-from css.styles import apply_custom_css
-from components.header import render_header
-from components.sidebar import render_sidebar
-from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
-
-from components.mood_dashboard import render_mood_dashboard
-from components.emergency_page import render_emergency_page
-from components.focus_session import render_focus_session
-from components.mood_dashboard import render_mood_dashboard
-from components.focus_session import render_focus_session
-
-from components.emergency_page import render_emergency_page
-from components.profile import apply_global_font_size
-
-# --- 1. INITIALIZE SESSION STATE ---
+# --- INITIALIZE SESSION STATE ---
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 if "conversations" not in st.session_state:
@@ -86,15 +133,17 @@ if "mental_disorders" not in st.session_state:
     ]
 if "selected_tone" not in st.session_state:
     st.session_state.selected_tone = "Compassionate Listener"
+if "mood" not in st.session_state:
+    st.session_state.mood = 3  # Default mood neutral
 
-# --- 2. SET PAGE CONFIG ---
+# --- PAGE CONFIG ---
 apply_global_font_size()
 
-# --- 3. APPLY STYLES & CONFIGURATIONS ---
+# --- APPLY CUSTOM CSS ---
 apply_custom_css()
 model = configure_gemini()
 
-# --- 4. TONE SELECTION DROPDOWN IN SIDEBAR ---
+# --- TONE OPTIONS ---
 TONE_OPTIONS = {
     "Compassionate Listener": "You are a compassionate listener — soft, empathetic, patient — like a therapist who listens without judgment.",
     "Motivating Coach": "You are a motivating coach — energetic, encouraging, and action-focused — helping the user push through rough days.",
@@ -112,14 +161,12 @@ with st.sidebar:
     )
     st.session_state.selected_tone = selected_tone
 
-# --- 5. DEFINE FUNCTION TO GET TONE PROMPT ---
 def get_tone_prompt():
     return TONE_OPTIONS.get(st.session_state.get("selected_tone", "Compassionate Listener"), TONE_OPTIONS["Compassionate Listener"])
 
-# --- 6. RENDER SIDEBAR ---
 render_sidebar()
 
-# --- 7. PAGE ROUTING ---
+# --- PAGE ROUTING ---
 main_area = st.container()
 
 if not st.session_state.conversations:
@@ -131,108 +178,57 @@ if not st.session_state.conversations:
     else:
         create_new_conversation()
         st.session_state.active_conversation = 0
-    st.rerun()
 
-# --- 8. RENDER PAGE ---
-# if st.session_state.get("show_emergency_page"):
-#     with main_area:
-#         render_emergency_page()
-# else:
-if st.session_state.get("show_emergency_page"):
-    with main_area:
+# --- MOOD BUTTONS & DYNAMIC BACKGROUND ---
+with main_area:
+    st.subheader("😊 Track Your Mood")
+
+    mood_options = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy']
+    if 'mood' not in st.session_state:
+        st.session_state.mood = 3  # Default mood neutral
+ 
+    cols = st.columns(len(mood_options))
+    for i, mood_label in enumerate(mood_options, start=1):
+        if cols[i-1].button(mood_label, key=f"mood_btn_{i}"):
+            st.session_state.mood = i
+            try:
+                st.experimental_rerun()
+            except Exception:
+                pass
+  
+    set_background_by_mood(st.session_state.mood)
+
+    coping_tips = {
+        1: "It’s okay to feel this way. Try some deep breathing exercises to find calm.",
+        2: "Consider writing down your thoughts in the journal to process your feelings.",
+        3: "A short walk or some light stretching might help you feel balanced.",
+        4: "Great to hear you’re feeling happy! Share something positive in your journal.",
+        5: "You’re shining today! Keep spreading that positivity with a kind act."
+    }
+
+    st.write(f"Selected mood: {mood_options[st.session_state.mood - 1]}")
+    st.write(f"Coping tip: {coping_tips[st.session_state.mood]}")
+
+    # Render main UI pages based on flags
+    if st.session_state.get("show_emergency_page"):
         render_emergency_page()
-elif st.session_state.get("show_focus_session"):
-    with main_area:
+    elif st.session_state.get("show_focus_session"):
         render_focus_session()
-elif st.session_state.get("show_mood_dashboard"):
-    with main_area:
+    elif st.session_state.get("show_mood_dashboard"):
         render_mood_dashboard()
-else:
-    with main_area:
+    else:
         render_header()
         st.markdown(f"""
-<div style="text-align: center; margin: 20px 0;">
-    <h3>🗣️ Current Chatbot Tone: <strong>{st.session_state['selected_tone']}</strong></h3>
-</div>
-""", unsafe_allow_html=True)
-        
-        # --- Mood Slider with Keyboard Navigation ---
-        def mood_slider():
-            slider_html = """
-            <div>
-                <label for="mood-slider" class="sr-only">Select your mood</label>
-                <input type="range" id="mood-slider" min="1" max="5" value="3" step="1"
-                       aria-valuemin="1" aria-valuemax="5" aria-valuenow="3"
-                       onkeydown="handleKeydown(event)" onchange="updateSliderValue(this.value)">
-                <div id="mood-label">Neutral</div>
-                <script>
-                    function handleKeydown(event) {
-                        const slider = document.getElementById('mood-slider');
-                        let value = parseInt(slider.value);
-                        if (event.key === 'ArrowLeft' && value > 1) {
-                            value--;
-                        } else if (event.key === 'ArrowRight' && value < 5) {
-                            value++;
-                        }
-                        slider.value = value;
-                        slider.setAttribute('aria-valuenow', value);
-                        updateSliderValue(value);
-                    }
-                    function updateSliderValue(value) {
-                        const labels = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy'];
-                        document.getElementById('mood-label').innerText = labels[value - 1];
-                        Streamlit.setComponentValue(value);
-                    }
-                </script>
-                <style>
-                    #mood-slider {
-                        width: 100%;
-                        accent-color: #ff69b4; /* Matches the soft pink/magenta UI */
-                    }
-                    #mood-label {
-                        text-align: center;
-                        margin-top: 10px;
-                        font-size: 16px;
-                        color: #333;
-                    }
-                    .sr-only {
-                        position: absolute;
-                        width: 1px;
-                        height: 1px;
-                        padding: 0;
-                        margin: -1px;
-                        overflow: hidden;
-                        clip: rect(0, 0, 0, 0);
-                        border: 0;
-                    }
-                </style>
+            <div style="text-align: center; margin: 20px 0;">
+                <h3>🗣️ Current Chatbot Tone: <strong>{st.session_state['selected_tone']}</strong></h3>
             </div>
-            """
-            mood_value = st.components.v1.html(slider_html, height=100)
-            return mood_value
+        """, unsafe_allow_html=True)
 
-        # --- Mood Slider ---
-        st.subheader("😊 Track Your Mood")
-        mood_options = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy']
-        mood = st.slider(
-            'Select your mood',
-            min_value=1, max_value=5, value=3, step=1
-)
-        coping_tips = {
-    1: "It’s okay to feel this way. Try some deep breathing exercises to find calm.",
-    2: "Consider writing down your thoughts in the journal to process your feelings.",
-    3: "A short walk or some light stretching might help you feel balanced.",
-    4: "Great to hear you’re feeling happy! Share something positive in your journal.",
-    5: "You’re shining today! Keep spreading that positivity with a kind act."
-}
-        st.write(f"Selected mood: {mood_options[mood-1]}")
-        st.write(f"Coping tip: {coping_tips.get(mood, 'Let’s explore how you’re feeling.')}")
-        
         render_chat_interface()
         handle_chat_input(model, system_prompt=get_tone_prompt())
         render_session_controls()
 
-# --- 9. SCROLL SCRIPT ---
+# --- SCROLL TO BOTTOM SCRIPT ---
 st.markdown("""
 <script>
     function scrollToBottom() {
@@ -243,4 +239,4 @@ st.markdown("""
     }
     setTimeout(scrollToBottom, 100);
 </script>
-""", unsafe_allow_html=True) 
+""", unsafe_allow_html=True)

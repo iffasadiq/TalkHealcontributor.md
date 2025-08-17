@@ -29,8 +29,8 @@ def apply_custom_css():
         'background_overlay': 'linear-gradient(120deg, rgba(34,37,74,0.53) 0%, rgba(34,41,79,0.68) 100%)'
     }
     theme_config.update(theme_overrides)
-
-    background_image_path = theme_config.get('background_image', 'static_files/Background.jpg')
+    
+    background_image_path = theme_config.get('background_image', 'Background.jpg')
     base64_image = get_base64_of_bin_file(background_image_path) if background_image_path else None
     st.markdown(f"""
     <style>
