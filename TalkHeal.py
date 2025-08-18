@@ -155,16 +155,24 @@ def render_feature_cards():
         if st.button("🧘‍♀️ Start Yoga", key="yoga_btn", use_container_width=True):
             st.switch_page("pages/Yoga.py")
     
-    with col2:
+    with col2:  # This is for the breathing card position
+        # Create a clickable container
+        if st.button("", key="breathing_card_btn", use_container_width=True, help="Click to start breathing exercises"):
+            st.switch_page("pages/Breathing_Exercise.py")
+        
+        # Use the button's container to display the card content
         st.markdown("""
-        <div class="feature-card primary-card breathing-card">
+        <div class="feature-card primary-card breathing-card clickable-card" style="margin-top: -60px; pointer-events: none;">
             <div class="card-icon">🌬️</div>
             <h3>Breathing Exercises</h3>
+            <p>Therapeutic breathing techniques to calm your mind instantly</p>
+            <div class="card-features">
+                <span>• 4-7-8 Breathing</span>
+                <span>• Box Breathing</span>
+                <span>• Anxiety Relief</span>
+            </div>
         </div>
         """, unsafe_allow_html=True)
-        
-        if st.button("🌬️ Start Breathing", key="breathing_btn", use_container_width=True):
-            st.switch_page("pages/Breathing_Exercise.py")
     
     with col3:
         st.markdown("""
