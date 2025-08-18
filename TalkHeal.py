@@ -352,7 +352,7 @@ else:
                 5: "You're shining today! Keep spreading that positivity with a kind act."
             }
             st.write(f"Selected mood: {mood_options[mood-1]}")
-            st.write(f"Coping tip: {coping_tips.get(mood, 'Let's explore how you're feeling.')}")
+            st.write(f"Coping tip: {coping_tips.get(mood, 'Let us explore how you are feeling.')}")
             
             render_chat_interface()
             handle_chat_input(model, system_prompt=get_tone_prompt())
