@@ -272,8 +272,6 @@ def render_sidebar():
         
         st.markdown("---")
         
-        st.markdown("---")
-        
         # Daily Wellness Tip
         render_daily_tip()
         
@@ -378,21 +376,6 @@ def render_sidebar():
                     st.session_state.cancel_clicked = False
         else:
             st.info("No conversations yet. Start a new chat!")
-
-        st.markdown("---")
-
-        # Emergency Support Section
-        st.markdown("""
-        <div class="emergency-sidebar-section">
-            <div class="emergency-icon">🚨</div>
-            <h4>Emergency Support</h4>
-            <p>Immediate crisis resources and helplines</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🚨 Get Help Now", use_container_width=True, type="secondary"):
-            st.session_state.show_emergency_page = True
-            st.rerun()
 
         st.markdown("---")
 
