@@ -124,24 +124,22 @@ if not st.session_state.conversations:
         st.session_state.active_conversation = 0
     st.rerun()
 
-# --- 8. FEATURE CARDS FUNCTION ---
 def render_feature_cards():
     """Render beautiful feature cards showcasing app capabilities"""
     
-    # Hero Welcome Section
+    # Hero Welcome Section that encompasses everything
     st.markdown(f"""
     <div class="hero-welcome-section">
         <div class="hero-content">
             <h1 class="hero-title">Welcome to TalkHeal, {st.session_state.user_name}! 💬</h1>
             <p class="hero-subtitle">Your Mental Health Companion 💙</p>
         </div>
-    </div>
+        
+        <!-- Feature Cards Grid Container inside Hero -->
+        <div class="features-grid-container">
     """, unsafe_allow_html=True)
     
-    # Main Feature Cards Grid
-    st.markdown('<div class="features-grid-container">', unsafe_allow_html=True)
-    
-    # Row 1: Primary Features
+    # Row 1: Primary Features (now inside the hero section)
     col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1])
     
     with col1:
@@ -198,8 +196,12 @@ def render_feature_cards():
         
         if st.button("🛠️ Explore Tools", key="tools_btn", use_container_width=True):
             st.switch_page("pages/selfHelpTools.py")
-        
-    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Close the hero section
+    st.markdown("""
+        </div> <!-- Close features-grid-container -->
+    </div> <!-- Close hero-welcome-section -->
+    """, unsafe_allow_html=True)
 
 # --- 9. RENDER PAGE ---
 if st.session_state.get("show_emergency_page"):
