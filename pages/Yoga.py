@@ -1,4 +1,5 @@
 import os
+import os
 import streamlit as st
 import json
 import base64
@@ -9,51 +10,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import JsonOutputParser
 from typing import List
 
-# Import necessary functions and components
-from components.sidebar import render_sidebar
-from core.utils import create_new_conversation, load_conversations, save_conversations
-
 st.set_page_config(page_title="🧘 Yoga for Mental Health", layout="centered")
 
-# --- Initialize session state for sidebar functionality ---
-if "sidebar_state" not in st.session_state:
-    st.session_state.sidebar_state = "expanded"
-if "conversations" not in st.session_state:
-    st.session_state.conversations = load_conversations()
-if "active_conversation" not in st.session_state:
-    st.session_state.active_conversation = -1
-if "show_emergency_page" not in st.session_state:
-    st.session_state.show_emergency_page = False
-if "show_focus_session" not in st.session_state:
-    st.session_state.show_focus_session = False
-if "show_mood_dashboard" not in st.session_state:
-    st.session_state.show_mood_dashboard = False
-if "show_quick_start_prompts" not in st.session_state:
-    st.session_state.show_quick_start_prompts = False
-if "pre_filled_chat_input" not in st.session_state:
-    st.session_state.pre_filled_chat_input = ""
-if "send_chat_message" not in st.session_state:
-    st.session_state.send_chat_message = False
-if "current_tip" not in st.session_state:
-    st.session_state.current_tip = ""
-if "user_name" not in st.session_state:
-    st.session_state.user_name = "User"
-if "user_email" not in st.session_state:
-    st.session_state.user_email = ""
-
-# --- Navigation handlers for sidebar buttons ---
-def handle_navigation():
-    """Handle navigation from sidebar buttons"""
-    if st.session_state.get("show_emergency_page"):
-        st.switch_page("TalkHeal.py")
-    elif st.session_state.get("show_focus_session"):
-        st.switch_page("TalkHeal.py")
-    elif st.session_state.get("show_mood_dashboard"):
-        st.switch_page("TalkHeal.py")
-
-# Check for navigation requests
-handle_navigation()
-    
 def load_lottiefile(filepath: str):
     try:
         with open(filepath, "r") as f:
@@ -72,13 +30,6 @@ def get_base64_of_bin_file(bin_file):
         return ""
 
 lottie_yoga = load_lottiefile("assets/yoga_animation.json")
-
-# --- Render the sidebar (now properly initialized) ---
-render_sidebar()
-
-# --- Add navigation button back to main app ---
-if st.button("← Back to TalkHeal Main", key="back_to_main", use_container_width=True):
-    st.switch_page("TalkHeal.py")
 
 # --- Load Yoga Data ---
 try:
@@ -153,28 +104,6 @@ div[data-testid="stVerticalBlock"]:has(div.stTextArea)
     border-right: 2px solid rgba(245, 167, 208, 0.6) !important;
     backdrop-filter: blur(12px) brightness(1.1) !important;
     box-shadow: 4px 0 24px rgba(0,0,0,0.15) !important;
-}}
-
-/* Sidebar content styling */
-[data-testid="stSidebar"] * {{
-    color: #4a148c !important;
-}}
-
-[data-testid="stSidebar"] .stButton > button {{
-    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%) !important;
-    color: #4a148c !important;
-    border: 1px solid rgba(180, 51, 162, 0.3) !important;
-    border-radius: 12px !important;
-    font-weight: 600 !important;
-    transition: all 0.3s ease !important;
-    backdrop-filter: blur(10px) !important;
-}}
-
-[data-testid="stSidebar"] .stButton > button:hover {{
-    background: linear-gradient(135deg, rgba(180, 51, 162, 0.9) 0%, rgba(180, 51, 162, 0.7) 100%) !important;
-    color: white !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(180, 51, 162, 0.4) !important;
 }}
 
 header[data-testid="stHeader"] {{
@@ -325,29 +254,14 @@ p, li, strong, div {{
     text-shadow: none !important;
 }}
 
-/* Back button special styling */
-button[key="back_to_main"] {{
-    background: linear-gradient(135deg, rgba(180, 51, 162, 0.9) 0%, rgba(180, 51, 162, 0.7) 100%) !important;
-    color: white !important;
-    border: 1px solid rgba(180, 51, 162, 0.8) !important;
-    font-weight: 600 !important;
-    margin-bottom: 20px !important;
-}}
-
-button[key="back_to_main"]:hover {{
-    background: linear-gradient(135deg, rgba(180, 51, 162, 1) 0%, rgba(180, 51, 162, 0.9) 100%) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(180, 51, 162, 0.4) !important;
-}}
-
 </style>
 """, unsafe_allow_html=True)
-
 class YogaAsana(BaseModel):
     sanskrit_name: str = Field(description="The Sanskrit name of the yoga pose.")
     english_name: str = Field(description="The English name of the yoga pose.")
     benefit: str = Field(description="A brief description of the mental health benefits of the pose.")
     steps: list[str] = Field(description="A list of step-by-step instructions to perform the pose.")
+
 
 class YogaResponse(BaseModel):
     asanas: List[YogaAsana] = Field(description="A list of recommended yoga asanas.")
