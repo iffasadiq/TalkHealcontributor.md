@@ -270,11 +270,51 @@ def render_sidebar():
         # Profile section at top
         render_profile_section()
         
+        # Theme Settings Section
+        with st.expander("🎨 Appearance Settings", expanded=False):
+            current_theme = get_current_theme()
+            is_dark = current_theme["name"] == "Dark"
+
+            # Palette selector (only for light mode)
+            if not is_dark:
+                palette_names = [p["name"] for p in PALETTES]
+                selected_palette = st.selectbox(
+                    "Choose a soothing color palette:",
+                    palette_names,
+                    index=palette_names.index(
+                        st.session_state.get("palette_name", "Light")),
+                    key="palette_selector",
+                )
+                if selected_palette != st.session_state.get("palette_name", "Light"):
+                    set_palette(selected_palette)
+
+            # Current theme display
+            st.markdown(f"""
+            <div class="theme-info-display">
+                <strong>Current Theme:</strong><br>
+                <span class="theme-name">{current_theme['name']} Mode</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Theme toggle button
+            button_text = "🌙 Switch to Dark" if not is_dark else "☀️ Switch to Light"
+            button_type = "primary" if not is_dark else "secondary"
+
+            if st.button(
+                button_text,
+                key="sidebar_theme_toggle",
+                use_container_width=True,
+                type=button_type
+            ):
+                toggle_theme()
+                
         # Daily Wellness Tip
         render_daily_tip()
         
         # Ambient Sounds
         render_ambient_sounds()
+        
+        st.markdown("---")
         
         # Chat Management Section
         st.markdown("""
@@ -370,41 +410,3 @@ def render_sidebar():
                     st.session_state.cancel_clicked = False
         else:
             st.info("No conversations yet. Start a new chat!")
-
-        # Theme Settings Section
-        with st.expander("🎨 Appearance Settings", expanded=False):
-            current_theme = get_current_theme()
-            is_dark = current_theme["name"] == "Dark"
-
-            # Palette selector (only for light mode)
-            if not is_dark:
-                palette_names = [p["name"] for p in PALETTES]
-                selected_palette = st.selectbox(
-                    "Choose a soothing color palette:",
-                    palette_names,
-                    index=palette_names.index(
-                        st.session_state.get("palette_name", "Light")),
-                    key="palette_selector",
-                )
-                if selected_palette != st.session_state.get("palette_name", "Light"):
-                    set_palette(selected_palette)
-
-            # Current theme display
-            st.markdown(f"""
-            <div class="theme-info-display">
-                <strong>Current Theme:</strong><br>
-                <span class="theme-name">{current_theme['name']} Mode</span>
-            </div>
-            """, unsafe_allow_html=True)
-
-            # Theme toggle button
-            button_text = "🌙 Switch to Dark" if not is_dark else "☀️ Switch to Light"
-            button_type = "primary" if not is_dark else "secondary"
-
-            if st.button(
-                button_text,
-                key="sidebar_theme_toggle",
-                use_container_width=True,
-                type=button_type
-            ):
-                toggle_theme()
