@@ -122,7 +122,7 @@ def render_feature_cards():
     <div class="hero-welcome-section">
         <div class="hero-content">
             <h1 class="hero-title">Welcome to TalkHeal, {st.session_state.user_name}! 💬</h1>
-            <p class="hero-subtitle">Your comprehensive mental wellness companion with AI-powered support and therapeutic tools</p>
+            <p class="hero-subtitle">Your Mental Health Companion 💙</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -360,7 +360,7 @@ else:
         st.markdown("---")
         
         # Chat Interface
-        render_header()
+        # render_header()
         render_chat_interface()
         handle_chat_input(model, system_prompt=get_tone_prompt())
         render_session_controls()
