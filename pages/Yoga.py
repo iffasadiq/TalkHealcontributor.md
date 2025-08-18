@@ -9,9 +9,13 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import JsonOutputParser
 from typing import List
+from components.sidebar import render_sidebar
 
 st.set_page_config(page_title="🧘 Yoga for Mental Health", layout="centered")
 
+if "sidebar_state" not in st.session_state:
+    st.session_state.sidebar_state = "expanded"
+    
 def load_lottiefile(filepath: str):
     try:
         with open(filepath, "r") as f:
@@ -30,6 +34,8 @@ def get_base64_of_bin_file(bin_file):
         return ""
 
 lottie_yoga = load_lottiefile("assets/yoga_animation.json")
+
+render_sidebar()
 
 # --- Load Yoga Data ---
 try:
