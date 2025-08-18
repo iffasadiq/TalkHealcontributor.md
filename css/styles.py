@@ -120,7 +120,7 @@ def apply_custom_css():
         .hero-welcome-section {{
             background: rgba(255,255,255,0.1);
             border-radius: var(--radius-xl);
-            padding: 40px 30px 30px 30px;
+            padding: 40px 30px;
             margin-bottom: 30px;
             text-align: center;
             backdrop-filter: blur(6px);
@@ -143,26 +143,6 @@ def apply_custom_css():
             background-size: 200% 200%;
             z-index: 2; /* ← Ensure it's above other content */
             border-radius: var(--radius-xl) var(--radius-xl) 0 0; /* ← Match container's top radius */
-        }}
-        
-        /* Features Grid Container inside Hero */
-        .hero-welcome-section .features-grid-container {{
-            margin: 30px 0 0 0; /* Remove bottom margin since it's inside hero */
-            padding-top: 20px;
-        }}
-
-        /* Feature cards inside hero section */
-        .hero-welcome-section .feature-card {{
-            background: linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.10) 100%);
-            /* Slightly more opaque since they're inside the hero background */
-            border: 1px solid rgba(255,255,255,0.3);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        }}
-
-        .hero-welcome-section .feature-card:hover {{
-            background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
         }}
 
         @keyframes gradientFlow {{
