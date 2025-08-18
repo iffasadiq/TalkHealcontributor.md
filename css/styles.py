@@ -118,18 +118,38 @@ def apply_custom_css():
         
         /* Hero Welcome Section */
         .hero-welcome-section {{
-            background: rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(236,72,153,0.15) 100%);
             border-radius: var(--radius-xl);
             padding: 40px 30px;
             margin-bottom: 30px;
             text-align: center;
-            backdrop-filter: blur(6px);
-            margin-bottom: 32px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-light);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
+            --gradient: linear-gradient(100deg, var(--primary-color), var(--secondary-color)); /* ← Define gradient here */
         }}
+
+        .hero-welcome-section::before {{
+            content: '';
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            height: 4px; /* ← Made thicker for better visibility */
+            background: var(--gradient);
+            animation: gradientFlow 7s linear infinite;
+            background-size: 200% 200%;
+            z-index: 2; /* ← Ensure it's above other content */
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0; /* ← Match container's top radius */
+        }}
+
+        @keyframes gradientFlow {{
+            0% {{ background-position: 0% 50%; }}
+            50% {{ background-position: 100% 50%; }}
+            100% {{ background-position: 0% 50%; }}
+        }} 
         
         .hero-title {{
             font-size: 2.5em;
@@ -569,7 +589,7 @@ def apply_custom_css():
         }}
         
         /* Header gradient animation */
-        .hero-welcome-section::before, .main-header::before {{
+        .main-header::before {{
             content: '';
             position: absolute; top: 0; left: 0; right: 0; height: 3px;
             background: var(--gradient);
