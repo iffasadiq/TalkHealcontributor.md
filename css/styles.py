@@ -118,12 +118,12 @@ def apply_custom_css():
         
         /* Hero Welcome Section */
         .hero-welcome-section {{
-            background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(236,72,153,0.15) 100%);
+            background: rgba(255,255,255,0.1);
             border-radius: var(--radius-xl);
             padding: 40px 30px;
             margin-bottom: 30px;
             text-align: center;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(6px);
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             position: relative;
