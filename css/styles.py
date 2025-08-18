@@ -34,6 +34,16 @@ def apply_custom_css():
     base64_image = get_base64_of_bin_file(background_image_path) if background_image_path else None
     st.markdown(f"""
     <style>
+        .stSelectbox[data-baseweb="select"] > div:first-child,
+        section[data-testid="stSidebar"] > div > div > div > div > div > div:first-child,
+        [data-testid="stSidebar"] > div > div:first-child > div:first-child,
+        .stSelectbox:has(option[value*="pages/"]),
+        div[data-baseweb="select"]:has(option[value*="pages/"]) {{
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            overflow: hidden !important;
+        }}
         /* Font imports */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
