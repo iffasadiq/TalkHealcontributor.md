@@ -680,7 +680,7 @@ def apply_custom_css():
         /* Sidebar styling */
         [data-testid="stSidebar"] {{
             background: linear-gradient(120deg, rgba(236,72,153,0.45), rgba(219,39,119,0.25), rgba(236,72,153,0.15)) !important;
-            backdrop-filter: blur(15px) !important;
+            backdrop-filter: blur(6px) !important;
             border-right: 2px solid rgba(236,72,153,0.35) !important;
             box-shadow: 8px 0 48px rgba(236,72,153,0.25) !important;
             color: #e2e8f0 !important;
