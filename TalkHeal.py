@@ -319,8 +319,6 @@ elif st.session_state.get("show_mood_dashboard"):
         render_mood_dashboard()
 else:
     with main_area:
-        # Render the beautiful feature cards layout
-        render_feature_cards()
         
         # AI Tone Selection in main area
         with st.expander("🧠 Customize Your AI Companion", expanded=False):
@@ -336,9 +334,11 @@ else:
                 st.rerun()
             
             st.info(f"**Current Style**: {TONE_OPTIONS[selected_tone]}")
+            
+        # Render the beautiful feature cards layout
+        render_feature_cards()
         
         # Mood Tracking Section
-        st.markdown("---")
         st.markdown("""
         <div class="mood-tracking-section">
             <h3>😊 How are you feeling today?</h3>
