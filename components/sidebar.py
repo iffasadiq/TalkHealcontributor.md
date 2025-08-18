@@ -166,7 +166,7 @@ def render_daily_tip():
         if st.button("💚 Helpful", key="tip_helpful"):
             st.success("Glad it helped! 😊")
     with col2:
-        if st.button("🔄 New Daily Tip", key="new_tip"):
+        if st.button("🔄 New Tip", key="new_tip"):
             st.session_state.current_tip = random.choice(WELLNESS_TIPS)
             st.rerun()
 
