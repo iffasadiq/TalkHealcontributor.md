@@ -155,14 +155,9 @@ def render_feature_cards():
         if st.button("🧘‍♀️ Start Yoga", key="yoga_btn", use_container_width=True):
             st.switch_page("pages/Yoga.py")
     
-    with col2:  # This is for the breathing card position
-        # Create a clickable container
-        if st.button("", key="breathing_card_btn", use_container_width=True, help="Click to start breathing exercises"):
-            st.switch_page("pages/Breathing_Exercise.py")
-        
-        # Use the button's container to display the card content
+    with col2:
         st.markdown("""
-        <div class="feature-card primary-card breathing-card clickable-card" style="margin-top: -60px; pointer-events: none;">
+        <div class="feature-card primary-card breathing-card clickable-card" onclick="navigateToBreathing()" style="cursor: pointer;">
             <div class="card-icon">🌬️</div>
             <h3>Breathing Exercises</h3>
             <p>Therapeutic breathing techniques to calm your mind instantly</p>
@@ -172,7 +167,23 @@ def render_feature_cards():
                 <span>• Anxiety Relief</span>
             </div>
         </div>
+
+        <script>
+        function navigateToBreathing() {
+            // Use Streamlit's rerun mechanism to trigger navigation
+            window.parent.postMessage({
+                type: 'streamlit:setComponentValue',
+                key: 'breathing_card_clicked',
+                value: true
+            }, '*');
+        }
+        </script>
         """, unsafe_allow_html=True)
+
+        # Check if card was clicked
+        if st.session_state.get('breathing_card_clicked', False):
+            st.session_state.breathing_card_clicked = False  # Reset the flag
+            st.switch_page("pages/Breathing_Exercise.py")
     
     with col3:
         st.markdown("""
