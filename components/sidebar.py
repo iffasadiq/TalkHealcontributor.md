@@ -152,11 +152,6 @@ WELLNESS_TIPS = [
 
 def render_daily_tip():
     """Show a random wellness tip"""
-    st.markdown("""
-    <div class="sidebar-tip-card">
-        <div class="tip-header">💡 Daily Wellness</div>
-    </div>
-    """, unsafe_allow_html=True)
     
     # Get a random tip
     if "current_tip" not in st.session_state:
@@ -171,7 +166,7 @@ def render_daily_tip():
         if st.button("💚 Helpful", key="tip_helpful"):
             st.success("Glad it helped! 😊")
     with col2:
-        if st.button("🔄 New Tip", key="new_tip"):
+        if st.button("🔄 New Daily Tip", key="new_tip"):
             st.session_state.current_tip = random.choice(WELLNESS_TIPS)
             st.rerun()
 
