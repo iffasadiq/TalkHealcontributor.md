@@ -123,7 +123,7 @@ def apply_custom_css():
             padding: 40px 30px;
             margin-bottom: 30px;
             text-align: center;
-
+            backdrop-filter: blur(2px);
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             position: relative;
