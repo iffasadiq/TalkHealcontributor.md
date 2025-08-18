@@ -34,9 +34,6 @@ def apply_custom_css():
     base64_image = get_base64_of_bin_file(background_image_path) if background_image_path else None
     st.markdown(f"""
     <style>
-        [data-testid="stSidebar"] > div > div > div:first-child {{
-            display: none !important;
-        }}
         /* Font imports */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
