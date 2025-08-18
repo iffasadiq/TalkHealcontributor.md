@@ -270,17 +270,11 @@ def render_sidebar():
         # Profile section at top
         render_profile_section()
         
-        st.markdown("---")
-        
         # Daily Wellness Tip
         render_daily_tip()
         
-        st.markdown("---")
-        
         # Ambient Sounds
         render_ambient_sounds()
-        
-        st.markdown("---")
         
         # Chat Management Section
         st.markdown("""
@@ -376,8 +370,6 @@ def render_sidebar():
                     st.session_state.cancel_clicked = False
         else:
             st.info("No conversations yet. Start a new chat!")
-
-        st.markdown("---")
 
         # Theme Settings Section
         with st.expander("🎨 Appearance Settings", expanded=False):
