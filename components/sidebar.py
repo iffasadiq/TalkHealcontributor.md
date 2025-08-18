@@ -263,34 +263,6 @@ def render_ambient_sounds():
             st.markdown("• Enhances mindfulness and focus")
             st.markdown("• Creates a therapeutic environment")
 
-def render_quick_access_features():
-    """Render quick access feature buttons in sidebar"""
-    st.markdown("""
-    <div class="sidebar-section-header">
-        <h3>🚀 Quick Access</h3>
-        <p>Jump directly to your favorite tools</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Feature buttons with icons and descriptions
-    quick_features = [
-        {"page": "pages/Yoga.py", "icon": "🧘‍♀️", "label": "Yoga Sessions", "desc": "Mindful movement"},
-        {"page": "pages/Breathing_Exercise.py", "icon": "🌬️", "label": "Breathing", "desc": "Instant calm"},
-        {"page": "pages/Journaling.py", "icon": "📝", "label": "Journal", "desc": "Express thoughts"},
-        {"page": "pages/doctor_spec.py", "icon": "👨‍⚕️", "label": "Find Doctors", "desc": "Get professional help"}
-    ]
-    
-    for feature in quick_features:
-        col_icon, col_content = st.columns([1, 4])
-        with col_icon:
-            st.markdown(f"""
-            <div class="feature-icon-sidebar">{feature['icon']}</div>
-            """, unsafe_allow_html=True)
-        with col_content:
-            if st.button(f"{feature['label']}", key=f"quick_{feature['label']}", use_container_width=True):
-                st.switch_page(feature['page'])
-            st.caption(feature['desc'])
-
 def render_sidebar():
     """Renders the left sidebar with organized sections."""
     
@@ -299,9 +271,6 @@ def render_sidebar():
         render_profile_section()
         
         st.markdown("---")
-        
-        # Quick Access Features
-        render_quick_access_features()
         
         st.markdown("---")
         
