@@ -23,7 +23,7 @@ if not st.session_state.authenticated:
 
 # --- TOP RIGHT BUTTONS: THEME TOGGLE & LOGOUT ---
 if st.session_state.get("authenticated", False):
-    col_spacer, col_theme, col_emergency, col_logout = st.columns([1, 0.1, 0.7, 0.2])
+    col_spacer, col_theme, col_emergency, col_logout = st.columns([0.8, 0.1, 0.7, 0.2])
     with col_spacer:
         pass
     with col_theme:
