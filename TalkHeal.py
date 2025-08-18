@@ -23,9 +23,7 @@ if not st.session_state.authenticated:
 
 # --- TOP RIGHT BUTTONS: THEME TOGGLE & LOGOUT ---
 if st.session_state.get("authenticated", False):
-    col_spacer, col_theme, col_logout = st.columns([5, 0.5, 0.7])
-    with col_spacer:
-        pass  # empty spacer to push buttons right
+    col_theme, col_logout = st.columns([0.5, 0.7])
     with col_theme:
         is_dark = st.session_state.get('dark_mode', False)
         if st.button("🌙" if is_dark else "☀️", key="top_theme_toggle", help="Toggle Light/Dark Mode", use_container_width=True):
@@ -283,18 +281,18 @@ def render_feature_cards():
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Emergency Support Section
-    st.markdown("""
-    <div class="emergency-support-section">
-        <div class="emergency-content">
-            <h3>🚨 Need Immediate Support?</h3>
-            <p>Get instant access to crisis resources and emergency mental health support</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    # st.markdown("""
+    # <div class="emergency-support-section">
+    #     <div class="emergency-content">
+    #         <h3>🚨 Need Immediate Support?</h3>
+    #         <p>Get instant access to crisis resources and emergency mental health support</p>
+    #     </div>
+    # </div>
+    # """, unsafe_allow_html=True)
     
-    if st.button("🚨 Emergency Resources", key="emergency_main_btn", use_container_width=True, type="secondary"):
-        st.session_state.show_emergency_page = True
-        st.rerun()
+    # if st.button("🚨 Emergency Resources", key="emergency_main_btn", use_container_width=True, type="secondary"):
+    #     st.session_state.show_emergency_page = True
+    #     st.rerun()
 
 # --- 9. RENDER PAGE ---
 if st.session_state.get("show_emergency_page"):
