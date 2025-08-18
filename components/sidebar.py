@@ -267,9 +267,6 @@ def render_sidebar():
     """Renders the left sidebar with organized sections."""
     
     with st.sidebar:
-        # Profile section at top
-        render_profile_section()
-        
         # Theme Settings Section
         with st.expander("🎨 Appearance Settings", expanded=False):
             current_theme = get_current_theme()
@@ -307,7 +304,9 @@ def render_sidebar():
                 type=button_type
             ):
                 toggle_theme()
-                
+
+        render_profile_section()
+
         # Daily Wellness Tip
         render_daily_tip()
         
