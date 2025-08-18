@@ -1031,45 +1031,5 @@ def apply_custom_css():
             outline: 2px solid var(--primary-color) !important;
             outline-offset: 2px !important;
         }}
-        
-        /* Style the breathing card button to look like the original card */
-        button[key="breathing_card_btn"] {{
-            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%) !important;
-            border-radius: var(--radius-xl) !important;
-            padding: 25px 20px !important;
-            margin-bottom: 20px !important;
-            backdrop-filter: blur(15px) !important;
-            border: 1px solid rgba(255,255,255,0.2) !important;
-            border-left: 4px solid #3b82f6 !important;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            position: relative !important;
-            overflow: hidden !important;
-            cursor: pointer !important;
-            text-align: center !important;
-            color: white !important;
-            font-family: 'Poppins', sans-serif !important;
-            min-height: 200px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: center !important;
-            white-space: pre-line !important;
-        }}
-
-        button[key="breathing_card_btn"]:hover {{
-            transform: translateY(-8px) scale(1.02) !important;
-            box-shadow: 0 16px 48px rgba(0,0,0,0.2) !important;
-            border-color: rgba(255,255,255,0.3) !important;
-        }}
-
-        /* Style the text within the button */
-        button[key="breathing_card_btn"] strong {{
-            font-size: 1.4em !important;
-            font-weight: 600 !important;
-            margin: 10px 0 !important;
-            color: white !important;
-        }}
-
     </style>
     """, unsafe_allow_html=True)

@@ -156,18 +156,14 @@ def render_feature_cards():
             st.switch_page("pages/Yoga.py")
     
     with col2:
-        # Make the card clickable using st.button with custom styling
-        if st.button("""
-        🌬️
-
-        **Breathing Exercises**
-
-        Therapeutic breathing techniques to calm your mind instantly
-
-        • 4-7-8 Breathing
-        • Box Breathing  
-        • Anxiety Relief
-        """, key="breathing_card_btn", use_container_width=True):
+        st.markdown("""
+        <div class="feature-card primary-card breathing-card">
+            <div class="card-icon">🌬️</div>
+            <h3>Breathing Exercises</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🌬️ Start Breathing", key="breathing_btn", use_container_width=True):
             st.switch_page("pages/Breathing_Exercise.py")
     
     with col3:
