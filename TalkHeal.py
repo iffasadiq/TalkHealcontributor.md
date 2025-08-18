@@ -23,7 +23,9 @@ if not st.session_state.authenticated:
 
 # --- TOP RIGHT BUTTONS: THEME TOGGLE & LOGOUT ---
 if st.session_state.get("authenticated", False):
-    col_theme, col_emergency, col_logout = st.columns([0.1, 0.7, 0.2])
+    col_spacer, col_theme, col_emergency, col_logout = st.columns([3, 0.1, 0.7, 0.2])
+    with col_spacer:
+        pass
     with col_theme:
         is_dark = st.session_state.get('dark_mode', False)
         if st.button("🌙" if is_dark else "☀️", key="top_theme_toggle", help="Toggle Light/Dark Mode", use_container_width=True):
