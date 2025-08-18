@@ -182,12 +182,6 @@ def render_feature_cards():
         <div class="feature-card secondary-card doctor-card">
             <div class="card-icon">👨‍⚕️</div>
             <h3>Doctor Specialist Finder</h3>
-            <p>Connect with mental health professionals in your area</p>
-            <div class="card-features">
-                <span>• Specialist Directory</span>
-                <span>• Location-based Search</span>
-                <span>• Professional Profiles</span>
-            </div>
         </div>
         """, unsafe_allow_html=True)
         
@@ -199,12 +193,6 @@ def render_feature_cards():
         <div class="feature-card secondary-card tools-card">
             <div class="card-icon">🛠️</div>
             <h3>Self-Help Tools</h3>
-            <p>Comprehensive toolkit for mental wellness and self-care</p>
-            <div class="card-features">
-                <span>• Coping Strategies</span>
-                <span>• Wellness Activities</span>
-                <span>• Resource Library</span>
-            </div>
         </div>
         """, unsafe_allow_html=True)
         
