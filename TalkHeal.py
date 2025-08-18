@@ -149,12 +149,6 @@ def render_feature_cards():
         <div class="feature-card primary-card yoga-card">
             <div class="card-icon">🧘‍♀️</div>
             <h3>Yoga & Meditation</h3>
-            <p>Guided yoga sessions and mindfulness practices for inner peace</p>
-            <div class="card-features">
-                <span>• Guided Sessions</span>
-                <span>• Mindfulness Training</span>
-                <span>• Stress Relief</span>
-            </div>
         </div>
         """, unsafe_allow_html=True)
         
@@ -166,12 +160,6 @@ def render_feature_cards():
         <div class="feature-card primary-card breathing-card">
             <div class="card-icon">🌬️</div>
             <h3>Breathing Exercises</h3>
-            <p>Therapeutic breathing techniques to calm your mind instantly</p>
-            <div class="card-features">
-                <span>• 4-7-8 Breathing</span>
-                <span>• Box Breathing</span>
-                <span>• Anxiety Relief</span>
-            </div>
         </div>
         """, unsafe_allow_html=True)
         
@@ -183,12 +171,6 @@ def render_feature_cards():
         <div class="feature-card primary-card journal-card">
             <div class="card-icon">📝</div>
             <h3>Personal Journaling</h3>
-            <p>Express your thoughts and track your emotional journey</p>
-            <div class="card-features">
-                <span>• Daily Reflections</span>
-                <span>• Mood Tracking</span>
-                <span>• Progress Insights</span>
-            </div>
         </div>
         """, unsafe_allow_html=True)
         
