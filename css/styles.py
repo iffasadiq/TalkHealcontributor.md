@@ -997,7 +997,7 @@ def apply_custom_css():
             padding: 20px 14px !important;
             margin-bottom: 18px;
             border: 1px solid var(--light-transparent-border, rgba(255,255,255,.23)) !important;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(4px);
             box-shadow: 0 3px 14px rgba(0,0,0,0.07);
         }}
 
