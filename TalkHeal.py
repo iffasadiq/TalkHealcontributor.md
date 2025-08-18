@@ -156,33 +156,18 @@ def render_feature_cards():
             st.switch_page("pages/Yoga.py")
     
     with col2:
-        st.markdown("""
-        <div class="feature-card primary-card breathing-card clickable-card" onclick="navigateToBreathing()" style="cursor: pointer;">
-            <div class="card-icon">🌬️</div>
-            <h3>Breathing Exercises</h3>
-            <p>Therapeutic breathing techniques to calm your mind instantly</p>
-            <div class="card-features">
-                <span>• 4-7-8 Breathing</span>
-                <span>• Box Breathing</span>
-                <span>• Anxiety Relief</span>
-            </div>
-        </div>
+        # Make the card clickable using st.button with custom styling
+        if st.button("""
+        🌬️
 
-        <script>
-        function navigateToBreathing() {
-            // Use Streamlit's rerun mechanism to trigger navigation
-            window.parent.postMessage({
-                type: 'streamlit:setComponentValue',
-                key: 'breathing_card_clicked',
-                value: true
-            }, '*');
-        }
-        </script>
-        """, unsafe_allow_html=True)
+        **Breathing Exercises**
 
-        # Check if card was clicked
-        if st.session_state.get('breathing_card_clicked', False):
-            st.session_state.breathing_card_clicked = False  # Reset the flag
+        Therapeutic breathing techniques to calm your mind instantly
+
+        • 4-7-8 Breathing
+        • Box Breathing  
+        • Anxiety Relief
+        """, key="breathing_card_btn", use_container_width=True):
             st.switch_page("pages/Breathing_Exercise.py")
     
     with col3:
