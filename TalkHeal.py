@@ -138,16 +138,6 @@ def render_feature_cards():
     </div>
     """, unsafe_allow_html=True)
     
-    # Current AI Tone Display
-    st.markdown(f"""
-    <div class="current-tone-display">
-        <div class="tone-content">
-            <span class="tone-label">🧠 Current AI Personality:</span>
-            <span class="tone-value">{st.session_state['selected_tone']}</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
     # Main Feature Cards Grid
     st.markdown('<div class="features-grid-container">', unsafe_allow_html=True)
     
@@ -319,6 +309,8 @@ elif st.session_state.get("show_mood_dashboard"):
         render_mood_dashboard()
 else:
     with main_area:
+        # Render the beautiful feature cards layout
+        render_feature_cards()
         
         # AI Tone Selection in main area
         with st.expander("🧠 Customize Your AI Companion", expanded=False):
@@ -335,9 +327,16 @@ else:
             
             st.info(f"**Current Style**: {TONE_OPTIONS[selected_tone]}")
             
-        # Render the beautiful feature cards layout
-        render_feature_cards()
-        
+        # Current AI Tone Display
+        st.markdown(f"""
+        <div class="current-tone-display">
+            <div class="tone-content">
+                <span class="tone-label">🧠 Current AI Personality:</span>
+                <span class="tone-value">{st.session_state['selected_tone']}</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
         # Mood Tracking Section
         st.markdown("""
         <div class="mood-tracking-section">
