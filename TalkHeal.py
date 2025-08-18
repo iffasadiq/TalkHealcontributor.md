@@ -179,7 +179,7 @@ def render_feature_cards():
     
     with col4:
         st.markdown("""
-        <div class="feature-card secondary-card doctor-card">
+        <div class="feature-card primary-card doctor-card">
             <div class="card-icon">👨‍⚕️</div>
             <h3>Doctor Specialist</h3>
         </div>
@@ -190,7 +190,7 @@ def render_feature_cards():
     
     with col5:
         st.markdown("""
-        <div class="feature-card secondary-card tools-card">
+        <div class="feature-card primary-card tools-card">
             <div class="card-icon">🛠️</div>
             <h3>Self-Help Tools</h3>
         </div>
