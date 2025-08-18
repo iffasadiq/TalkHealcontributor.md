@@ -247,7 +247,7 @@ venv/
 env/
 
 # JSON files
-*.json
+data
 
 # Database files
 *.db
