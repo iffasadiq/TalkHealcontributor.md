@@ -142,7 +142,7 @@ def render_feature_cards():
     st.markdown('<div class="features-grid-container">', unsafe_allow_html=True)
     
     # Row 1: Primary Features
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 2, 2])
     
     with col1:
         st.markdown("""
@@ -176,9 +176,6 @@ def render_feature_cards():
         
         if st.button("📝 Open Journal", key="journal_btn", use_container_width=True):
             st.switch_page("pages/Journaling.py")
-    
-    # Row 2: Secondary Features
-    col4, col5 = st.columns([1, 1])
     
     with col4:
         st.markdown("""
