@@ -213,71 +213,8 @@ def render_feature_cards():
         
         if st.button("🛠️ Explore Tools", key="tools_btn", use_container_width=True):
             st.switch_page("pages/selfHelpTools.py")
-    
-    # Row 3: Dashboard Features (Wider Cards)
-    col6, col7 = st.columns([1, 1])
-    
-    with col6:
-        st.markdown("""
-        <div class="feature-card dashboard-card mood-card">
-            <div class="card-icon-large">📊</div>
-            <h3>Mood Dashboard</h3>
-            <p>Visualize your emotional patterns and mental health progress</p>
-            <div class="card-stats">
-                <div class="stat">
-                    <span class="stat-number">7</span>
-                    <span class="stat-label">Day Tracking</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">∞</span>
-                    <span class="stat-label">Insights</span>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
         
-        if st.button("📊 View Dashboard", key="mood_dashboard_btn", use_container_width=True):
-            st.session_state.show_mood_dashboard = True
-            st.rerun()
-    
-    with col7:
-        st.markdown("""
-        <div class="feature-card dashboard-card focus-card">
-            <div class="card-icon-large">🎯</div>
-            <h3>Focus Sessions</h3>
-            <p>Structured mindfulness and concentration exercises</p>
-            <div class="card-stats">
-                <div class="stat">
-                    <span class="stat-number">25</span>
-                    <span class="stat-label">Min Sessions</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">+</span>
-                    <span class="stat-label">Focus Boost</span>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🎯 Start Focus", key="focus_btn", use_container_width=True):
-            st.session_state.show_focus_session = True
-            st.rerun()
-    
     st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Emergency Support Section
-    # st.markdown("""
-    # <div class="emergency-support-section">
-    #     <div class="emergency-content">
-    #         <h3>🚨 Need Immediate Support?</h3>
-    #         <p>Get instant access to crisis resources and emergency mental health support</p>
-    #     </div>
-    # </div>
-    # """, unsafe_allow_html=True)
-    
-    # if st.button("🚨 Emergency Resources", key="emergency_main_btn", use_container_width=True, type="secondary"):
-    #     st.session_state.show_emergency_page = True
-    #     st.rerun()
 
 # --- 9. RENDER PAGE ---
 if st.session_state.get("show_emergency_page"):
