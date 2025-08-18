@@ -131,14 +131,6 @@ def apply_custom_css():
             overflow: hidden;
         }}
         
-        .hero-welcome-section::before {{
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(45deg, rgba(99,102,241,0.1), rgba(236,72,153,0.1));
-            z-index: -1;
-        }}
-        
         .hero-title {{
             font-size: 2.5em;
             font-weight: 700;
@@ -577,7 +569,7 @@ def apply_custom_css():
         }}
         
         /* Header gradient animation */
-        .main-header::before {{
+        .hero-welcome-section::before, .main-header::before {{
             content: '';
             position: absolute; top: 0; left: 0; right: 0; height: 3px;
             background: var(--gradient);
