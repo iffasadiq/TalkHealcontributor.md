@@ -39,7 +39,6 @@ if st.session_state.get("authenticated", False):
                     del st.session_state[key]
             st.rerun()
 
-# --- IMPORTS ---
 from core.utils import save_conversations, load_conversations
 from core.config import configure_gemini, PAGE_CONFIG
 from core.utils import get_current_time, create_new_conversation
@@ -114,209 +113,190 @@ if not st.session_state.conversations:
         st.session_state.active_conversation = 0
     st.rerun()
 
-# --- 8. FEATURE CARDS LAYOUT FUNCTION ---
+# --- 8. FEATURE CARDS FUNCTION ---
 def render_feature_cards():
-    """Render beautiful feature cards for navigation"""
+    """Render beautiful feature cards showcasing app capabilities"""
     
-    # Hero Section
+    # Hero Welcome Section
     st.markdown(f"""
-    <div class="hero-section">
-        <h1>🌟 Welcome to TalkHeal, {st.session_state.user_name}!</h1>
-        <p>Your comprehensive mental wellness companion with AI-powered support, mindfulness tools, and professional resources.</p>
+    <div class="hero-welcome-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to TalkHeal, {st.session_state.user_name}! 💬</h1>
+            <p class="hero-subtitle">Your comprehensive mental wellness companion with AI-powered support and therapeutic tools</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
-    # Quick Actions Row
-    st.markdown("### 🚀 Quick Actions")
-    col1, col2, col3, col4 = st.columns(4)
+    # Current AI Tone Display
+    st.markdown(f"""
+    <div class="current-tone-display">
+        <div class="tone-content">
+            <span class="tone-label">🧠 Current AI Personality:</span>
+            <span class="tone-value">{st.session_state['selected_tone']}</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     
-    with col1:
-        if st.button("🆘 Emergency Help", key="emergency_quick", use_container_width=True, type="secondary"):
-            st.session_state.show_emergency_page = True
-            st.rerun()
+    # Main Feature Cards Grid
+    st.markdown('<div class="features-grid-container">', unsafe_allow_html=True)
     
-    with col2:
-        if st.button("💬 Start Chat", key="chat_quick", use_container_width=True):
-            st.session_state.show_emergency_page = False
-            st.session_state.show_focus_session = False
-            st.session_state.show_mood_dashboard = False
-            st.rerun()
-    
-    with col3:
-        if st.button("📊 Mood Tracker", key="mood_quick", use_container_width=True):
-            st.session_state.show_mood_dashboard = True
-            st.rerun()
-    
-    with col4:
-        if st.button("🧘 Focus Session", key="focus_quick", use_container_width=True):
-            st.session_state.show_focus_session = True
-            st.rerun()
-    
-    st.markdown("---")
-    
-    # Main Feature Categories
-    st.markdown("### 🌈 Explore Our Wellness Tools")
-    
-    # Mindfulness & Relaxation Section
-    st.markdown("#### 🧘‍♀️ Mindfulness & Relaxation")
-    col1, col2, col3 = st.columns(3)
+    # Row 1: Primary Features
+    col1, col2, col3 = st.columns([1, 1, 1])
     
     with col1:
         st.markdown("""
-        <div class="feature-card mindfulness-card">
-            <div class="card-icon">🧘</div>
-            <h3>Yoga Sessions</h3>
-            <p>Guided yoga practices for stress relief and mental clarity</p>
+        <div class="feature-card primary-card yoga-card">
+            <div class="card-icon">🧘‍♀️</div>
+            <h3>Yoga & Meditation</h3>
+            <p>Guided yoga sessions and mindfulness practices for inner peace</p>
             <div class="card-features">
-                <span>• Beginner friendly</span><br>
-                <span>• Video guides</span><br>
-                <span>• Different styles</span>
+                <span>• Guided Sessions</span>
+                <span>• Mindfulness Training</span>
+                <span>• Stress Relief</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Start Yoga", key="yoga_btn", use_container_width=True):
+        
+        if st.button("🧘‍♀️ Start Yoga", key="yoga_btn", use_container_width=True):
             st.switch_page("pages/Yoga.py")
     
     with col2:
         st.markdown("""
-        <div class="feature-card breathing-card">
+        <div class="feature-card primary-card breathing-card">
             <div class="card-icon">🌬️</div>
             <h3>Breathing Exercises</h3>
-            <p>Scientifically-backed breathing techniques for anxiety relief</p>
+            <p>Therapeutic breathing techniques to calm your mind instantly</p>
             <div class="card-features">
-                <span>• 4-7-8 Technique</span><br>
-                <span>• Box Breathing</span><br>
-                <span>• Guided sessions</span>
+                <span>• 4-7-8 Breathing</span>
+                <span>• Box Breathing</span>
+                <span>• Anxiety Relief</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Start Breathing", key="breathing_btn", use_container_width=True):
+        
+        if st.button("🌬️ Start Breathing", key="breathing_btn", use_container_width=True):
             st.switch_page("pages/Breathing_Exercise.py")
     
     with col3:
         st.markdown("""
-        <div class="feature-card focus-card">
-            <div class="card-icon">🎯</div>
-            <h3>Focus Sessions</h3>
-            <p>Structured meditation and concentration exercises</p>
-            <div class="card-features">
-                <span>• Timed sessions</span><br>
-                <span>• Background sounds</span><br>
-                <span>• Progress tracking</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Start Focus", key="focus_main_btn", use_container_width=True):
-            st.session_state.show_focus_session = True
-            st.rerun()
-    
-    # Self-Care & Tracking Section
-    st.markdown("#### 📝 Self-Care & Tracking")
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-        <div class="feature-card journaling-card">
-            <div class="card-icon">📔</div>
-            <h3>Digital Journaling</h3>
+        <div class="feature-card primary-card journal-card">
+            <div class="card-icon">📝</div>
+            <h3>Personal Journaling</h3>
             <p>Express your thoughts and track your emotional journey</p>
             <div class="card-features">
-                <span>• Private & secure</span><br>
-                <span>• Mood analysis</span><br>
-                <span>• Daily prompts</span>
+                <span>• Daily Reflections</span>
+                <span>• Mood Tracking</span>
+                <span>• Progress Insights</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Open Journal", key="journal_btn", use_container_width=True):
+        
+        if st.button("📝 Open Journal", key="journal_btn", use_container_width=True):
             st.switch_page("pages/Journaling.py")
     
-    with col2:
+    # Row 2: Secondary Features
+    col4, col5 = st.columns([1, 1])
+    
+    with col4:
         st.markdown("""
-        <div class="feature-card mood-card">
-            <div class="card-icon">📊</div>
-            <h3>Mood Dashboard</h3>
-            <p>Visualize your emotional patterns and progress over time</p>
+        <div class="feature-card secondary-card doctor-card">
+            <div class="card-icon">👨‍⚕️</div>
+            <h3>Doctor Specialist Finder</h3>
+            <p>Connect with mental health professionals in your area</p>
             <div class="card-features">
-                <span>• Weekly reports</span><br>
-                <span>• Trend analysis</span><br>
-                <span>• Insights & tips</span>
+                <span>• Specialist Directory</span>
+                <span>• Location-based Search</span>
+                <span>• Professional Profiles</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("View Dashboard", key="dashboard_btn", use_container_width=True):
+        
+        if st.button("👨‍⚕️ Find Specialists", key="doctor_btn", use_container_width=True):
+            st.switch_page("pages/doctor_spec.py")
+    
+    with col5:
+        st.markdown("""
+        <div class="feature-card secondary-card tools-card">
+            <div class="card-icon">🛠️</div>
+            <h3>Self-Help Tools</h3>
+            <p>Comprehensive toolkit for mental wellness and self-care</p>
+            <div class="card-features">
+                <span>• Coping Strategies</span>
+                <span>• Wellness Activities</span>
+                <span>• Resource Library</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🛠️ Explore Tools", key="tools_btn", use_container_width=True):
+            st.switch_page("pages/selfHelpTools.py")
+    
+    # Row 3: Dashboard Features (Wider Cards)
+    col6, col7 = st.columns([1, 1])
+    
+    with col6:
+        st.markdown("""
+        <div class="feature-card dashboard-card mood-card">
+            <div class="card-icon-large">📊</div>
+            <h3>Mood Dashboard</h3>
+            <p>Visualize your emotional patterns and mental health progress</p>
+            <div class="card-stats">
+                <div class="stat">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Day Tracking</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Insights</span>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("📊 View Dashboard", key="mood_dashboard_btn", use_container_width=True):
             st.session_state.show_mood_dashboard = True
             st.rerun()
     
-    with col3:
+    with col7:
         st.markdown("""
-        <div class="feature-card selfhelp-card">
-            <div class="card-icon">🛠️</div>
-            <h3>Self-Help Tools</h3>
-            <p>Practical strategies and coping mechanisms for daily challenges</p>
-            <div class="card-features">
-                <span>• CBT techniques</span><br>
-                <span>• Stress management</span><br>
-                <span>• Crisis resources</span>
+        <div class="feature-card dashboard-card focus-card">
+            <div class="card-icon-large">🎯</div>
+            <h3>Focus Sessions</h3>
+            <p>Structured mindfulness and concentration exercises</p>
+            <div class="card-stats">
+                <div class="stat">
+                    <span class="stat-number">25</span>
+                    <span class="stat-label">Min Sessions</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">+</span>
+                    <span class="stat-label">Focus Boost</span>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Explore Tools", key="selfhelp_btn", use_container_width=True):
-            st.switch_page("pages/selfHelpTools.py")
-    
-    # Professional Support Section
-    st.markdown("#### 👨‍⚕️ Professional Support")
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-        <div class="feature-card doctor-card">
-            <div class="card-icon">🩺</div>
-            <h3>Find Specialists</h3>
-            <p>Connect with mental health professionals in your area</p>
-            <div class="card-features">
-                <span>• Verified doctors</span><br>
-                <span>• Specialty matching</span><br>
-                <span>• Contact information</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Find Doctors", key="doctor_btn", use_container_width=True):
-            st.switch_page("pages/doctor_spec.py")
-    
-    with col2:
-        st.markdown("""
-        <div class="feature-card emergency-card">
-            <div class="card-icon">🆘</div>
-            <h3>Crisis Support</h3>
-            <p>Immediate help and resources for mental health emergencies</p>
-            <div class="card-features">
-                <span>• 24/7 hotlines</span><br>
-                <span>• Local resources</span><br>
-                <span>• Safety planning</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Get Help Now", key="crisis_btn", use_container_width=True, type="secondary"):
-            st.session_state.show_emergency_page = True
+        
+        if st.button("🎯 Start Focus", key="focus_btn", use_container_width=True):
+            st.session_state.show_focus_session = True
             st.rerun()
     
-    with col3:
-        st.markdown("""
-        <div class="feature-card about-card">
-            <div class="card-icon">ℹ️</div>
-            <h3>About TalkHeal</h3>
-            <p>Learn more about our mission and the science behind our tools</p>
-            <div class="card-features">
-                <span>• Our story</span><br>
-                <span>• Research backing</span><br>
-                <span>• Team & vision</span>
-            </div>
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Emergency Support Section
+    st.markdown("""
+    <div class="emergency-support-section">
+        <div class="emergency-content">
+            <h3>🚨 Need Immediate Support?</h3>
+            <p>Get instant access to crisis resources and emergency mental health support</p>
         </div>
-        """, unsafe_allow_html=True)
-        if st.button("Learn More", key="about_btn", use_container_width=True):
-            st.switch_page("pages/About.py")
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("🚨 Emergency Resources", key="emergency_main_btn", use_container_width=True, type="secondary"):
+        st.session_state.show_emergency_page = True
+        st.rerun()
 
-# --- 9. RENDER PAGE CONTENT ---
+# --- 9. RENDER PAGE ---
 if st.session_state.get("show_emergency_page"):
     with main_area:
         render_emergency_page()
@@ -328,37 +308,62 @@ elif st.session_state.get("show_mood_dashboard"):
         render_mood_dashboard()
 else:
     with main_area:
-        # Show feature cards layout instead of chat by default
-        if st.session_state.get("show_chat_interface", False):
-            render_header()
-            st.markdown(f"""
-            <div style="text-align: center; margin: 20px 0;">
-                <h3>🗣️ Current Chatbot Tone: <strong>{st.session_state['selected_tone']}</strong></h3>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # --- Mood Slider ---
-            st.subheader("😊 Track Your Mood")
-            mood_options = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy']
-            mood = st.slider(
-                'Select your mood',
-                min_value=1, max_value=5, value=3, step=1
+        # Render the beautiful feature cards layout
+        render_feature_cards()
+        
+        # AI Tone Selection in main area
+        with st.expander("🧠 Customize Your AI Companion", expanded=False):
+            st.markdown("**Choose how your AI companion should respond to you:**")
+            selected_tone = st.selectbox(
+                "Select AI personality:",
+                options=list(TONE_OPTIONS.keys()),
+                index=list(TONE_OPTIONS.keys()).index(st.session_state.selected_tone),
+                help="Different tones provide different therapeutic approaches"
             )
-            coping_tips = {
-                1: "It's okay to feel this way. Try some deep breathing exercises to find calm.",
-                2: "Consider writing down your thoughts in the journal to process your feelings.",
-                3: "A short walk or some light stretching might help you feel balanced.",
-                4: "Great to hear you're feeling happy! Share something positive in your journal.",
-                5: "You're shining today! Keep spreading that positivity with a kind act."
-            }
-            st.write(f"Selected mood: {mood_options[mood-1]}")
-            st.write(f"Coping tip: {coping_tips.get(mood, 'Let us explore how you are feeling.')}")
+            if selected_tone != st.session_state.selected_tone:
+                st.session_state.selected_tone = selected_tone
+                st.rerun()
             
-            render_chat_interface()
-            handle_chat_input(model, system_prompt=get_tone_prompt())
-            render_session_controls()
-        else:
-            render_feature_cards()
+            st.info(f"**Current Style**: {TONE_OPTIONS[selected_tone]}")
+        
+        # Mood Tracking Section
+        st.markdown("---")
+        st.markdown("""
+        <div class="mood-tracking-section">
+            <h3>😊 How are you feeling today?</h3>
+            <p>Track your mood to help your AI companion provide better support</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        mood_options = ['Very Sad 😢', 'Sad 😔', 'Neutral 😐', 'Happy 😊', 'Very Happy 😄']
+        mood = st.slider(
+            'Select your current mood',
+            min_value=1, max_value=5, value=3, step=1,
+            format="",
+            help="This helps personalize your AI conversation"
+        )
+        
+        coping_tips = {
+            1: "🤗 It's okay to feel this way. Try some deep breathing exercises to find calm.",
+            2: "📝 Consider writing down your thoughts in the journal to process your feelings.",
+            3: "🚶‍♀️ A short walk or some light stretching might help you feel balanced.",
+            4: "✨ Great to hear you're feeling happy! Share something positive in your journal.",
+            5: "🌟 You're shining today! Keep spreading that positivity with a kind act."
+        }
+        
+        col_mood, col_tip = st.columns([1, 2])
+        with col_mood:
+            st.markdown(f"**Current mood**: {mood_options[mood-1]}")
+        with col_tip:
+            st.info(coping_tips.get(mood, 'Let\'s explore how you\'re feeling.'))
+        
+        st.markdown("---")
+        
+        # Chat Interface
+        render_header()
+        render_chat_interface()
+        handle_chat_input(model, system_prompt=get_tone_prompt())
+        render_session_controls()
 
 # --- 10. SCROLL SCRIPT ---
 st.markdown("""

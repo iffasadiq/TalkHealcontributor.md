@@ -86,6 +86,59 @@ country_helplines = {
 }
 IASP_LINK = "https://findahelpline.com/"
 
+mental_health_resources_full = {
+    "Depression & Mood Disorders": {
+        "description": "Information on understanding and coping with depression, persistent depressive disorder, and other mood-related challenges.",
+        "links": [
+            {"label": "NIMH - Depression",
+                "url": "https://www.nimh.nih.gov/health/topics/depression"},
+            {"label": "Mayo Clinic - Depression",
+                "url": "https://www.mayoclinic.org/diseases-conditions/depression/symptoms-causes/syc-20356007"}
+        ]
+    },
+    "Anxiety & Panic Disorders": {
+        "description": "Guidance on managing generalized anxiety, social anxiety, panic attacks, and phobias.",
+        "links": [
+            {"label": "ADAA - Anxiety & Depression", "url": "https://adaa.org/"},
+            {"label": "NIMH - Anxiety Disorders",
+                "url": "https://www.nimh.nih.gov/health/topics/anxiety-disorders"}
+        ]
+    },
+    "Bipolar Disorder": {
+        "description": "Understanding the complexities of bipolar disorder, including mood swings and treatment options.",
+        "links": [
+            {"label": "NIMH - Bipolar Disorder",
+                "url": "https://www.nimh.nih.gov/health/topics/bipolar-disorder"}
+        ]
+    },
+    "PTSD & Trauma": {
+        "description": "Resources for individuals experiencing post-traumatic stress disorder and other trauma-related conditions.",
+        "links": [
+            {"label": "PTSD: National Center", "url": "https://www.ptsd.va.gov/"}
+        ]
+    },
+    "OCD & Related Disorders": {
+        "description": "Support and information for obsessive-compulsive disorder, body dysmorphic disorder, and hoarding disorder.",
+        "links": [
+            {"label": "IOCDF - OCD", "url": "https://iocdf.org/"}
+        ]
+    },
+    "Coping Skills & Self-Care": {
+        "description": "Practical strategies and techniques for stress management, emotional regulation, and daily well-being.",
+        "links": [
+            {"label": "HelpGuide - Stress Management",
+                "url": "https://www.helpguide.org/articles/stress/stress-management.htm"}
+        ]
+    },
+    "Therapy & Treatment Options": {
+        "description": "Overview of various therapeutic approaches, including CBT, DBT, and finding a therapist.",
+        "links": [
+            {"label": "APA - Finding a Therapist",
+                "url": "https://www.apa.org/helpcenter/choose-therapist"}
+        ]
+    }
+}
+
 WELLNESS_TIPS = [
     "Take 3 deep breaths right now. Feel your shoulders relax 🌬️",
     "Drink a glass of water. Your brain needs hydration 💧", 
@@ -99,28 +152,39 @@ WELLNESS_TIPS = [
 
 def render_daily_tip():
     """Show a random wellness tip"""
-    with st.expander("💡 Daily Wellness Tip", expanded=False):
-        # Get a random tip
-        if "current_tip" not in st.session_state:
+    st.markdown("""
+    <div class="sidebar-tip-card">
+        <div class="tip-header">💡 Daily Wellness</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Get a random tip
+    if "current_tip" not in st.session_state:
+        st.session_state.current_tip = random.choice(WELLNESS_TIPS)
+    
+    # Show the tip in a nice box
+    st.info(st.session_state.current_tip)
+    
+    # Buttons
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("💚 Helpful", key="tip_helpful"):
+            st.success("Glad it helped! 😊")
+    with col2:
+        if st.button("🔄 New Tip", key="new_tip"):
             st.session_state.current_tip = random.choice(WELLNESS_TIPS)
-        
-        # Show the tip in a nice box
-        st.info(st.session_state.current_tip)
-        
-        # Buttons
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("💚 Helpful", key="tip_helpful"):
-                st.success("Glad it helped! 😊")
-        with col2:
-            if st.button("🔄 New Tip", key="new_tip"):
-                st.session_state.current_tip = random.choice(WELLNESS_TIPS)
-                st.rerun()
+            st.rerun()
 
 def render_ambient_sounds():
     """Render calming music player in sidebar with soothing melodies"""
-    with st.expander("🎵 Calming Music", expanded=False):
-        st.markdown("**Choose peaceful music while you chat:**")
+    st.markdown("""
+    <div class="sidebar-music-section">
+        <div class="music-header">🎵 Calming Sounds</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    with st.expander("🎵 Choose Background Music", expanded=False):
+        st.markdown("**Create a peaceful atmosphere:**")
         
         # YouTube calming music videos - peaceful instrumental and meditation music
         calming_music = {
@@ -182,7 +246,7 @@ def render_ambient_sounds():
             
             st.markdown(youtube_embed, unsafe_allow_html=True)
             
-            st.info("💡 **Tip**: Click play above. Keep volume gentle (15-25%) to create a peaceful atmosphere during your conversation.")
+            st.info("💡 **Tip**: Keep volume gentle (15-25%) for a peaceful atmosphere.")
             
             # Alternative: Direct links for manual opening
             st.markdown("---")
@@ -195,89 +259,69 @@ def render_ambient_sounds():
             st.markdown("---")
             st.markdown("**Benefits of calming music:**")
             st.markdown("• Reduces stress and anxiety naturally")
-            st.markdown("• Promotes emotional well-being")
+            st.markdown("• Promotes emotional well-being")  
             st.markdown("• Enhances mindfulness and focus")
             st.markdown("• Creates a therapeutic environment")
-            st.markdown("• Supports deeper self-reflection")
+
+def render_quick_access_features():
+    """Render quick access feature buttons in sidebar"""
+    st.markdown("""
+    <div class="sidebar-section-header">
+        <h3>🚀 Quick Access</h3>
+        <p>Jump directly to your favorite tools</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Feature buttons with icons and descriptions
+    quick_features = [
+        {"page": "pages/Yoga.py", "icon": "🧘‍♀️", "label": "Yoga Sessions", "desc": "Mindful movement"},
+        {"page": "pages/Breathing_Exercise.py", "icon": "🌬️", "label": "Breathing", "desc": "Instant calm"},
+        {"page": "pages/Journaling.py", "icon": "📝", "label": "Journal", "desc": "Express thoughts"},
+        {"page": "pages/doctor_spec.py", "icon": "👨‍⚕️", "label": "Find Doctors", "desc": "Get professional help"}
+    ]
+    
+    for feature in quick_features:
+        col_icon, col_content = st.columns([1, 4])
+        with col_icon:
+            st.markdown(f"""
+            <div class="feature-icon-sidebar">{feature['icon']}</div>
+            """, unsafe_allow_html=True)
+        with col_content:
+            if st.button(f"{feature['label']}", key=f"quick_{feature['label']}", use_container_width=True):
+                st.switch_page(feature['page'])
+            st.caption(feature['desc'])
 
 def render_sidebar():
-    """Renders the enhanced sidebar with better organization."""
+    """Renders the left sidebar with organized sections."""
     
     with st.sidebar:
-        # Profile Section
+        # Profile section at top
         render_profile_section()
         
-        # AI Tone Selection
-        st.markdown("### 🧠 AI Companion")
-        TONE_OPTIONS = {
-            "Compassionate Listener": "You are a compassionate listener — soft, empathetic, patient — like a therapist who listens without judgment.",
-            "Motivating Coach": "You are a motivating coach — energetic, encouraging, and action-focused — helping the user push through rough days.",
-            "Wise Friend": "You are a wise friend — thoughtful, poetic, and reflective — giving soulful responses and timeless advice.",
-            "Neutral Therapist": "You are a neutral therapist — balanced, logical, and non-intrusive — asking guiding questions using CBT techniques.",
-            "Mindfulness Guide": "You are a mindfulness guide — calm, slow, and grounding — focused on breathing, presence, and awareness."
-        }
+        st.markdown("---")
         
-        selected_tone = st.selectbox(
-            "Choose AI personality:",
-            options=list(TONE_OPTIONS.keys()),
-            index=0,
-            key="sidebar_tone_selector"
-        )
-        st.session_state.selected_tone = selected_tone
-        
-        # Chat Interface Toggle
-        if st.button("💬 Open Chat Interface", key="show_chat", use_container_width=True):
-            st.session_state.show_chat_interface = True
-            st.session_state.show_emergency_page = False
-            st.session_state.show_focus_session = False
-            st.session_state.show_mood_dashboard = False
-            st.rerun()
-        
-        if st.button("🏠 Back to Dashboard", key="show_dashboard", use_container_width=True):
-            st.session_state.show_chat_interface = False
-            st.session_state.show_emergency_page = False
-            st.session_state.show_focus_session = False
-            st.session_state.show_mood_dashboard = False
-            st.rerun()
+        # Quick Access Features
+        render_quick_access_features()
         
         st.markdown("---")
         
-        # Quick Access Tools
-        st.markdown("### 🛠️ Quick Tools")
-        
-        # Create two columns for better layout
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            if st.button("📊 Mood", key="quick_mood", use_container_width=True):
-                st.session_state.show_mood_dashboard = True
-                st.rerun()
-                
-            if st.button("🧘 Yoga", key="quick_yoga", use_container_width=True):
-                st.switch_page("pages/Yoga.py")
-        
-        with col2:
-            if st.button("🌬️ Breathe", key="quick_breathe", use_container_width=True):
-                st.switch_page("pages/Breathing_Exercise.py")
-                
-            if st.button("📝 Journal", key="quick_journal", use_container_width=True):
-                st.switch_page("pages/Journaling.py")
-        
-        # Emergency button - full width for importance
-        if st.button("🆘 Crisis Support", key="emergency_sidebar", use_container_width=True, type="secondary"):
-            st.session_state.show_emergency_page = True
-            st.rerun()
-        
-        st.markdown("---")
-        
-        # Wellness Features
+        # Daily Wellness Tip
         render_daily_tip()
+        
+        st.markdown("---")
+        
+        # Ambient Sounds
         render_ambient_sounds()
         
         st.markdown("---")
         
-        # Conversations Section
-        st.markdown("### 💬 Chat History")
+        # Chat Management Section
+        st.markdown("""
+        <div class="sidebar-section-header">
+            <h3>💬 Chat Sessions</h3>
+            <p>Manage your AI conversations</p>
+        </div>
+        """, unsafe_allow_html=True)
 
         if "show_quick_start_prompts" not in st.session_state:
             st.session_state.show_quick_start_prompts = False
@@ -289,33 +333,34 @@ def render_sidebar():
         if st.button("➕ New Chat", key="new_chat", use_container_width=True, type="primary"):
             create_new_conversation()
             st.session_state.show_quick_start_prompts = True
-            st.session_state.show_chat_interface = True
             st.rerun()
 
         if st.session_state.show_quick_start_prompts:
             st.markdown("**💭 Quick Start Topics:**")
             quick_prompts = [
                 "Feeling overwhelmed",
-                "Need to vent about my day",
+                "Need to vent about my day", 
                 "How to manage stress?",
                 "Tell me about anxiety"
             ]
+            qp_cols = st.columns(2)
             for i, prompt in enumerate(quick_prompts):
-                if st.button(f"✨ {prompt}", key=f"qp_{i}", use_container_width=True):
-                    st.session_state.pre_filled_chat_input = prompt
-                    st.session_state.send_chat_message = True
-                    st.session_state.show_quick_start_prompts = False
-                    st.session_state.show_chat_interface = True
-                    st.rerun()
+                with qp_cols[i % 2]:
+                    if st.button(f"✨ {prompt}", key=f"qp_{i}", use_container_width=True):
+                        st.session_state.pre_filled_chat_input = prompt
+                        st.session_state.send_chat_message = True
+                        st.session_state.show_quick_start_prompts = False
+                        st.rerun()
 
-        # Conversation List
+        # Conversation History
         if st.session_state.conversations:
+            st.markdown("**📚 Recent Conversations:**")
             if "delete_candidate" not in st.session_state:
                 for i, convo in enumerate(st.session_state.conversations):
                     is_active = i == st.session_state.active_conversation
                     button_style_icon = "🟢" if is_active else "📝"
 
-                    col1, col2 = st.columns([4, 1])
+                    col1, col2 = st.columns([5, 1])
                     with col1:
                         if st.button(
                             f"{button_style_icon} {convo['title'][:20]}...",
@@ -324,38 +369,66 @@ def render_sidebar():
                             use_container_width=True
                         ):
                             st.session_state.active_conversation = i
-                            st.session_state.show_chat_interface = True
                             st.rerun()
                     with col2:
                         if convo["messages"]:
-                            if st.button("🗑️", key=f"delete_{i}", use_container_width=True):
+                            if st.button("🗑️", key=f"delete_{i}", type="primary", use_container_width=True):
                                 st.session_state.delete_candidate = i
                                 st.rerun()
                         else:
-                            st.button("🗑️", key=f"delete_{i}", use_container_width=True, disabled=True)
-
+                            st.button(
+                                "🗑️",
+                                key=f"delete_{i}",
+                                type="primary",
+                                use_container_width=True,
+                                disabled=not convo["messages"]
+                            )
             else:
-                st.warning("⚠️ Delete this conversation?")
+                st.warning("⚠️ Are you sure you want to delete this conversation?")
                 col_confirm, col_cancel = st.columns(2)
 
-                if col_confirm.button("Yes", key="confirm_delete"):
+                if col_confirm.button("Yes, delete", key="confirm_delete"):
                     del st.session_state.conversations[st.session_state.delete_candidate]
+
                     from core.utils import save_conversations
                     save_conversations(st.session_state.conversations)
+
                     del st.session_state.delete_candidate
                     st.session_state.active_conversation = -1
                     st.rerun()
 
+                if "cancel_clicked" not in st.session_state:
+                    st.session_state.cancel_clicked = False
+
                 if col_cancel.button("Cancel", key="cancel_delete"):
-                    del st.session_state.delete_candidate
-                    st.rerun()
+                    if not st.session_state.cancel_clicked:
+                        st.session_state.cancel_clicked = True
+                        del st.session_state.delete_candidate
+                        st.rerun()
+                else:
+                    st.session_state.cancel_clicked = False
         else:
             st.info("No conversations yet. Start a new chat!")
 
         st.markdown("---")
+
+        # Emergency Support Section
+        st.markdown("""
+        <div class="emergency-sidebar-section">
+            <div class="emergency-icon">🚨</div>
+            <h4>Emergency Support</h4>
+            <p>Immediate crisis resources and helplines</p>
+        </div>
+        """, unsafe_allow_html=True)
         
-        # Theme Settings
-        with st.expander("🎨 Theme Settings", expanded=False):
+        if st.button("🚨 Get Help Now", use_container_width=True, type="secondary"):
+            st.session_state.show_emergency_page = True
+            st.rerun()
+
+        st.markdown("---")
+
+        # Theme Settings Section
+        with st.expander("🎨 Appearance Settings", expanded=False):
             current_theme = get_current_theme()
             is_dark = current_theme["name"] == "Dark"
 
@@ -363,7 +436,7 @@ def render_sidebar():
             if not is_dark:
                 palette_names = [p["name"] for p in PALETTES]
                 selected_palette = st.selectbox(
-                    "Choose color palette:",
+                    "Choose a soothing color palette:",
                     palette_names,
                     index=palette_names.index(
                         st.session_state.get("palette_name", "Light")),
@@ -374,14 +447,20 @@ def render_sidebar():
 
             # Current theme display
             st.markdown(f"""
-            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; text-align: center;">
-                <strong>Current: {current_theme['name']} Mode</strong>
+            <div class="theme-info-display">
+                <strong>Current Theme:</strong><br>
+                <span class="theme-name">{current_theme['name']} Mode</span>
             </div>
             """, unsafe_allow_html=True)
 
             # Theme toggle button
             button_text = "🌙 Switch to Dark" if not is_dark else "☀️ Switch to Light"
-            button_color = "primary" if not is_dark else "secondary"
+            button_type = "primary" if not is_dark else "secondary"
 
-            if st.button(button_text, key="sidebar_theme_toggle", use_container_width=True, type=button_color):
+            if st.button(
+                button_text,
+                key="sidebar_theme_toggle",
+                use_container_width=True,
+                type=button_type
+            ):
                 toggle_theme()
