@@ -181,7 +181,7 @@ def render_feature_cards():
         st.markdown("""
         <div class="feature-card secondary-card doctor-card">
             <div class="card-icon">👨‍⚕️</div>
-            <h3>Doctor Specialist Finder</h3>
+            <h3>Doctor Specialist</h3>
         </div>
         """, unsafe_allow_html=True)
         
