@@ -35,7 +35,7 @@ if st.session_state.get("authenticated", False):
             st.session_state.show_emergency_page = True
             st.rerun()
     with col_logout:
-        if st.button("Logout", key="logout_btn", use_container_width=True):
+        if st.button("Logout", key="top_theme_toggle", use_container_width=True):
             for key in ["authenticated", "user_email", "user_name", "show_signup"]:
                 if key in st.session_state:
                     del st.session_state[key]
