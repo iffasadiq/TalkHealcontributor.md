@@ -13,8 +13,41 @@ from components.sidebar import render_sidebar
 
 st.set_page_config(page_title="🧘 Yoga for Mental Health", layout="centered")
 
+from core.utils import save_conversations, load_conversations
+from core.config import configure_gemini, PAGE_CONFIG
+from core.utils import get_current_time, create_new_conversation
+from css.styles import apply_custom_css
+from components.header import render_header
+from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
+from components.mood_dashboard import render_mood_dashboard
+from components.emergency_page import render_emergency_page
+from components.focus_session import render_focus_session
+from components.profile import apply_global_font_size
+
+# --- 1. INITIALIZE SESSION STATE ---
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+if "conversations" not in st.session_state:
+    st.session_state.conversations = load_conversations()
+if "active_conversation" not in st.session_state:
+    st.session_state.active_conversation = -1
+if "show_emergency_page" not in st.session_state:
+    st.session_state.show_emergency_page = False
+if "show_focus_session" not in st.session_state:
+    st.session_state.show_focus_session = False
+if "show_mood_dashboard" not in st.session_state:
+    st.session_state.show_mood_dashboard = False
 if "sidebar_state" not in st.session_state:
     st.session_state.sidebar_state = "expanded"
+if "mental_disorders" not in st.session_state:
+    st.session_state.mental_disorders = [
+        "Depression & Mood Disorders", "Anxiety & Panic Disorders", "Bipolar Disorder",
+        "PTSD & Trauma", "OCD & Related Disorders", "Eating Disorders",
+        "Substance Use Disorders", "ADHD & Neurodevelopmental", "Personality Disorders",
+        "Sleep Disorders"
+    ]
+if "selected_tone" not in st.session_state:
+    st.session_state.selected_tone = "Compassionate Listener"
     
 def load_lottiefile(filepath: str):
     try:
