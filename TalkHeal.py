@@ -142,7 +142,7 @@ def render_feature_cards():
     st.markdown('<div class="features-grid-container">', unsafe_allow_html=True)
     
     # Row 1: Primary Features
-    col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1])
+    col1, col2, col3, col4, col5, col6 = st.columns([1, 1, 1, 1, 1, 1])
     
     with col1:
         st.markdown("""
@@ -151,7 +151,6 @@ def render_feature_cards():
             <h3>Yoga & Meditation</h3>
         </div>
         """, unsafe_allow_html=True)
-        
         if st.button("🧘‍♀️ Start Yoga", key="yoga_btn", use_container_width=True):
             st.switch_page("pages/Yoga.py")
     
@@ -162,7 +161,6 @@ def render_feature_cards():
             <h3>Breathing Exercises</h3>
         </div>
         """, unsafe_allow_html=True)
-        
         if st.button("🌬️ Start Breathing", key="breathing_btn", use_container_width=True):
             st.switch_page("pages/Breathing_Exercise.py")
     
@@ -173,7 +171,6 @@ def render_feature_cards():
             <h3>Personal Journaling</h3>
         </div>
         """, unsafe_allow_html=True)
-        
         if st.button("📝 Open Journal", key="journal_btn", use_container_width=True):
             st.switch_page("pages/Journaling.py")
     
@@ -184,7 +181,6 @@ def render_feature_cards():
             <h3>Doctor Specialist</h3>
         </div>
         """, unsafe_allow_html=True)
-        
         if st.button("👨‍⚕️ Find Specialists", key="doctor_btn", use_container_width=True):
             st.switch_page("pages/doctor_spec.py")
     
@@ -195,11 +191,21 @@ def render_feature_cards():
             <h3>Self-Help Tools</h3>
         </div>
         """, unsafe_allow_html=True)
-        
         if st.button("🛠️ Explore Tools", key="tools_btn", use_container_width=True):
             st.switch_page("pages/selfHelpTools.py")
-        
+    
+    with col6:
+        st.markdown("""
+        <div class="feature-card secondary-card wellness-card">
+            <div class="card-icon">🌿</div>
+            <h3>Wellness Hub</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🌿 Open Wellness Hub", key="wellness_btn", use_container_width=True):
+            st.switch_page("pages/WellnessResourceHub.py")
+    
     st.markdown('</div>', unsafe_allow_html=True)
+
 
 # --- 9. RENDER PAGE ---
 if st.session_state.get("show_emergency_page"):
