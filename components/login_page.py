@@ -6,127 +6,137 @@ def show_login_page():
     st.markdown(
         """
         <style>
-        /* --- Import Google Font --- */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-
-        /* --- Animation Keyframes --- */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap');
+        @keyframes floatHearts {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-120px) scale(1.3); opacity: 0; }
         }
-
-        /* --- Sleek Dark Theme --- */
-        html, body {
+        body, html {
             height: 100%;
             min-height: 100vh;
-            background-color: #121212;
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ffe0f0 0%, #ffd6e0 100%);
+            font-family: 'Baloo 2', cursive;
         }
-
         [data-testid="stSidebar"] { display: none; }
         [data-testid="stHeader"] { display: none; }
-
         .block-container {
-            background-color: #1E1E1E;
-            border-radius: 16px;
+            background: #fff0f6;
+            border-radius: 24px;
             max-width: 420px;
             margin: auto;
             margin-top: 60px;
             padding: 2.5rem 3rem;
-            border: 1px solid #2D2D2D;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            animation: fadeIn 0.5s ease-out;
+            border: 2px solid #ffb6d5;
+            box-shadow: 0 10px 40px rgba(255, 182, 213, 0.3);
+            animation: fadeIn 0.7s ease-out;
         }
-
         .auth-title {
             text-align: center;
-            font-size: 2.25rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            color: #F5F5F5;
+            color: #ff69b4;
             margin-bottom: 0.5rem;
+            font-family: 'Baloo 2', cursive;
+            letter-spacing: 1px;
         }
-
         .subtitle {
             text-align: center;
-            font-size: 1rem;
-            color: #8A8A8A;
+            font-size: 1.1rem;
+            color: #ffb6d5;
             margin-bottom: 2.5rem;
+            font-family: 'Baloo 2', cursive;
         }
-
         .auth-input input {
             width: 100%;
             padding: 0.8rem 1rem;
             margin-bottom: 1.25rem;
-            border-radius: 8px;
-            border: 1px solid #333333;
-            background-color: #252525;
-            color: #E0E0E0;
+            border-radius: 12px;
+            border: 1.5px solid #ffb6d5;
+            background-color: #fff6fa;
+            color: #ff69b4;
             font-size: 1rem;
+            font-family: 'Baloo 2', cursive;
             transition: all 0.2s ease-in-out;
         }
-
         .auth-input input::placeholder {
-            color: #6c6c6c;
+            color: #ffb6d5;
         }
-
         .auth-input input:focus {
             outline: none;
-            border-color: #10B981;
-            background-color: #1E1E1E;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+            border-color: #ff69b4;
+            background-color: #ffe0f0;
+            box-shadow: 0 0 0 3px rgba(255, 182, 213, 0.3);
         }
-
         .auth-button {
             display: flex;
             justify-content: center;
             width: 100%;
         }
-
         .auth-button button {
             width: 100%;
             padding: 0.85rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
             border: none;
-            color: #121212;
+            color: #fff0f6;
             margin-top: 0.5rem;
             cursor: pointer;
-            background-color: #10B981;
-            transition: background-color 0.2s ease;
+            background: linear-gradient(90deg, #ffb6d5 0%, #ff69b4 100%);
+            box-shadow: 0 2px 8px rgba(255, 182, 213, 0.2);
+            transition: background 0.2s ease;
         }
-
         .auth-button button:hover {
-            background-color: #14D396;
+            background: linear-gradient(90deg, #ff69b4 0%, #ffb6d5 100%);
         }
-
         .switch-link {
             display: flex;
             justify-content: center;
             width: 100%;
             margin-top: 1.5rem;
         }
-
         .switch-link button {
             background: none;
-            color: #8A8A8A;
+            color: #ff69b4;
             border: none;
-            font-size: 0.95rem;
+            font-size: 1rem;
             text-decoration: none;
             cursor: pointer;
+            font-family: 'Baloo 2', cursive;
             transition: color 0.2s;
         }
-
         .switch-link button:hover {
-            color: #10B981;
+            color: #ffb6d5;
         }
+        /* Floating hearts animation */
+        .floating-hearts {
+            position: fixed;
+            left: 50%;
+            top: 80px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            left: calc(50% - 20px);
+            width: 40px;
+            height: 40px;
+            background: url('https://cdn-icons-png.flaticon.com/512/616/616494.png') no-repeat center center;
+            background-size: contain;
+            animation: floatHearts 3s infinite;
+        }
+        .heart:nth-child(2) { left: calc(50% - 60px); animation-delay: 0.5s; }
+        .heart:nth-child(3) { left: calc(50% + 20px); animation-delay: 1s; }
+        .heart:nth-child(4) { left: calc(50% - 100px); animation-delay: 1.5s; }
+        .heart:nth-child(5) { left: calc(50% + 60px); animation-delay: 2s; }
         </style>
+        <div class="floating-hearts">
+            <div class="heart"></div>
+            <div class="heart"></div>
+            <div class="heart"></div>
+            <div class="heart"></div>
+            <div class="heart"></div>
+        </div>
         """,
         unsafe_allow_html=True
     )
