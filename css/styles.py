@@ -59,7 +59,8 @@ def apply_custom_css():
             --radius: 12px;
             --radius-lg: 22px;
             --radius-xl: 36px;
-            --glass-effect: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+            --glass-effect: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.15));
+            --message-glass: linear-gradient(135deg, rgba(255, 88, 216, 0.873), rgba(255, 88, 216, 0.484));
             --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }}
 
@@ -521,8 +522,8 @@ def apply_custom_css():
         
         /* Bot message styling */
         .bot-message {{
-            background: var(--glass-effect);
-            background-color: var(--surface-alt);
+            background: var(--message-glass);
+            background-color: var(--message-glass);
             color: #efeef9;
             border: 1.25px solid var(--border);
             margin-left: 0;

@@ -30,7 +30,7 @@ if not st.session_state.authenticated:
 
 # --- TOP RIGHT BUTTONS: THEME TOGGLE & LOGOUT ---
 if st.session_state.get("authenticated", False):
-    col_spacer, col_theme, col_emergency, col_logout = st.columns([0.7, 0.1, 0.5, 0.3])
+    col_spacer, col_theme, col_emergency, col_about, col_logout = st.columns([0.7, 0.1, 0.35, 0.2, 0.2])
     with col_spacer:
         pass
     with col_theme:
@@ -43,6 +43,9 @@ if st.session_state.get("authenticated", False):
         if st.button("🚨 Emergency Help", key="emergency_main_btn", use_container_width=True, type="secondary"):
             st.session_state.show_emergency_page = True
             st.rerun()
+    with col_about:
+        if st.button("ℹ️ About", key="about_btn", use_container_width=True):
+            st.switch_page("pages/About.py")
     with col_logout:
         if st.button("Logout", key="logout_btn", use_container_width=True):
             for key in ["authenticated", "user_email", "user_name", "show_signup"]:
