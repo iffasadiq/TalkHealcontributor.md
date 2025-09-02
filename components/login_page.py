@@ -20,15 +20,38 @@ def show_login_page():
         [data-testid="stSidebar"] { display: none; }
         [data-testid="stHeader"] { display: none; }
         .block-container {
-            background: #fff0f6;
-            border-radius: 24px;
+            background: linear-gradient(135deg, #fff0f6 60%, #ffe0f0 100%);
+            border-radius: 32px;
             max-width: 420px;
             margin: auto;
             margin-top: 60px;
-            padding: 2.5rem 3rem;
-            border: 2px solid #ffb6d5;
-            box-shadow: 0 10px 40px rgba(255, 182, 213, 0.3);
+            padding: 2.7rem 3rem 2.2rem 3rem;
+            border: 2.5px solid #ffb6d5;
+            box-shadow: 0 0 32px 8px #ffd6e0, 0 10px 40px rgba(255, 182, 213, 0.35);
             animation: fadeIn 0.7s ease-out;
+            transition: box-shadow 0.2s;
+        }
+        .block-container:hover {
+            box-shadow: 0 0 48px 16px #ffb6d5, 0 10px 40px rgba(255, 182, 213, 0.45);
+        }
+        .logo-animated {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.7rem;
+        }
+        .logo-animated img {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            box-shadow: 0 0 32px 8px #ffb6d5, 0 2px 16px #ffd6e0;
+            background: radial-gradient(circle at 60% 40%, #ffe0f0 70%, #ffb6d5 100%);
+            padding: 8px;
+            animation: floatLogo 2s infinite alternate ease-in-out;
+        }
+        @keyframes floatLogo {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-12px); }
         }
         .auth-title {
             text-align: center;
@@ -74,20 +97,27 @@ def show_login_page():
         }
         .auth-button button {
             width: 100%;
-            padding: 0.85rem;
-            border-radius: 12px;
+            padding: 0.95rem;
+            border-radius: 18px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.18rem;
             border: none;
             color: #fff0f6;
             margin-top: 0.5rem;
             cursor: pointer;
             background: linear-gradient(90deg, #ffb6d5 0%, #ff69b4 100%);
-            box-shadow: 0 2px 8px rgba(255, 182, 213, 0.2);
-            transition: background 0.2s ease;
+            box-shadow: 0 2px 12px rgba(255, 182, 213, 0.22);
+            transition: background 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .auth-button button::after {
+            content: \" 💖\";
+            font-size: 1.1rem;
+            margin-left: 6px;
         }
         .auth-button button:hover {
             background: linear-gradient(90deg, #ff69b4 0%, #ffb6d5 100%);
+            box-shadow: 0 4px 24px rgba(255, 182, 213, 0.32);
         }
         .switch-link {
             display: flex;
@@ -109,34 +139,7 @@ def show_login_page():
             color: #ffb6d5;
         }
         /* Floating hearts animation */
-        .floating-hearts {
-            position: fixed;
-            left: 50%;
-            top: 80px;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .heart {
-            position: absolute;
-            left: calc(50% - 20px);
-            width: 40px;
-            height: 40px;
-            background: url('https://cdn-icons-png.flaticon.com/512/616/616494.png') no-repeat center center;
-            background-size: contain;
-            animation: floatHearts 3s infinite;
-        }
-        .heart:nth-child(2) { left: calc(50% - 60px); animation-delay: 0.5s; }
-        .heart:nth-child(3) { left: calc(50% + 20px); animation-delay: 1s; }
-        .heart:nth-child(4) { left: calc(50% - 100px); animation-delay: 1.5s; }
-        .heart:nth-child(5) { left: calc(50% + 60px); animation-delay: 2s; }
         </style>
-        <div class="floating-hearts">
-            <div class="heart"></div>
-            <div class="heart"></div>
-            <div class="heart"></div>
-            <div class="heart"></div>
-            <div class="heart"></div>
-        </div>
         """,
         unsafe_allow_html=True
     )
@@ -145,10 +148,11 @@ def show_login_page():
         st.session_state.show_signup = False
 
     is_signup = st.session_state.show_signup
-    title = "Create Your Account" if is_signup else "Welcome Back"
-    subtitle_text = "Join TalkHeal to get started" if is_signup else "Login to continue your journey"
+    title = "Create Your Account" if is_signup else "Welcome Back Healer!!"
+    subtitle_text = "Join TalkHeal to get started 🩷" if is_signup else "Login to continue your journey 🩷"
 
-    st.markdown(f'<div class="auth-title">{title}</div>', unsafe_allow_html=True)
+    st.markdown('<div class="logo-animated"><img src="https://raw.githubusercontent.com/eccentriccoder01/TalkHeal/main/static_files/TalkHealLogo.png" alt="Logo"/></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="auth-title" style="color:#ffb6d5;">{title}</div>', unsafe_allow_html=True)
     st.markdown(f'<div class="subtitle">{subtitle_text}</div>', unsafe_allow_html=True)
 
     form_container = st.container()
