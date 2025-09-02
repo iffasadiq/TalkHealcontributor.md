@@ -53,15 +53,15 @@ def show_login_page():
             0% { transform: translateY(0); }
             100% { transform: translateY(-12px); }
         }
-            .auth-title {
-                text-align: center;
-                font-size: 2.5rem;
-                font-weight: 800;
-                color: #ff69b4;
-                margin-bottom: 0.5rem;
-                font-family: 'Baloo 2', cursive;
-                letter-spacing: 1px;
-            }
+        .auth-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ff69b4;
+            margin-bottom: 0.5rem;
+            font-family: 'Baloo 2', cursive;
+            letter-spacing: 1px;
+        }
         .subtitle {
             text-align: center;
             font-size: 1.1rem;
@@ -111,7 +111,7 @@ def show_login_page():
             position: relative;
         }
         .auth-button button::after {
-            content: " 💖";
+            content: \" 💖\";
             font-size: 1.1rem;
             margin-left: 6px;
         }
@@ -139,7 +139,7 @@ def show_login_page():
             color: #ffb6d5;
         }
         /* Floating hearts animation */
-            </style>
+        </style>
         """,
         unsafe_allow_html=True
     )

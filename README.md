@@ -1,68 +1,44 @@
-<div align="center"><img src="/static_files/TalkHealLogo.png" style="width: 220px; height: 220px;" /></div>
+  <div align="center">
+    <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
+  </div>
+
+<div align="center"><img src="static_files/TalkHealLogo.png" style="width: 220px; height: 220px;" /></div>
 
 # <div align="center">TALKHEAL</div>
 
+  <div align="center">
+    <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
+  </div>
+
 ## 🧠 Your AI-Powered Mental Health Companion
 
-**TalkHeal** is an empathetic, intelligent, and interactive mental health support assistant built using **Python** and **Streamlit**. Designed with compassion and care at its core, it offers 24/7 support, emotional journaling, resource guidance, and AI-powered conversations powered by Google’s Gemini.
+**TalkHeal** is an empathetic, intelligent, and interactive mental health support assistant. Built with **Python** and **Streamlit**, it provides a safe, non-judgmental space for users to track their emotional well-being, learn coping strategies, and access professional guidance when needed. It offers 24/7 support, emotional journaling, resource guidance, and AI-powered conversations powered by Google’s Gemini.
 
 ---
 
-## ✨ Features
+### Vision: A Compassionate Path to Mental Well-being
 
-### 🗣️ Conversational AI Support
+Mental health is a fundamental component of overall health and well-being, underpinning our ability to cope with life's stresses, realize our potential, and contribute to our communities. In today's fast-paced world, challenges such as economic downturns, social isolation, and rapid lifestyle changes can undermine mental health. Many people face serious conditions like depression and anxiety, which are increasingly common globally and can lead to significant distress and impairment in daily functioning.
 
-* Gemini-powered chatbot for mental health companionship
-* Empathetic and encouraging tone—never clinical or diagnostic
-* Smart conversation history with multi-threaded support
-* **Chatbot personality tone selector**:  
-  *Compassionate Listener*, *Motivating Coach*, *Wise Friend*, *Neutral Therapist*, *Mindfulness Guide*
+The vision for TalkHeal is to address these challenges by providing accessible, precise, and personalized mental health support through the seamless integration of technology and human-centric design. We believe that every individual deserves a safe space to explore their emotions and access tools that empower their wellness journey. TalkHeal is more than just a chatbot; it is a holistic mental health companion designed to fill a crucial gap in care and support.
 
-### 📘 Resource & Crisis Help
+#### The TalkHeal Difference
 
-* Emergency Help Button — instantly access local support via Google Maps
-* International helpline directory and global mental health resources
-* Mental health resource library with live search
+* **Empathetic Conversations, Anytime, Anywhere**: Many people are reluctant to talk about their feelings due to stigma or embarrassment. TalkHeal offers a private, non-judgmental space where users can engage in supportive conversations 24/7. The ability to choose an AI personality—from a "Compassionate Listener" to a "Motivating Coach"—ensures that the interaction is tailored to what the user needs most at that moment. This personalized approach helps build trust and encourages users to be open and honest about their experiences.
 
-### 🧪 Science-Backed Assessments
+* **Proactive Self-Management**: TalkHeal empowers users to take an active role in their well-being. The Mood Dashboard helps them identify patterns and triggers in their emotional life, providing insights that can inform healthier choices. Tools like the Focus Session, Breathing Exercises, and Yoga Recommendations offer practical coping strategies to manage stress, anxiety, and frustration in real-time. The goal is to move beyond simply reacting to distress and instead build psychological resilience and proactive wellness habits.
 
-* Integrated **PsyToolkit**-verified mental health quizzes for self-evaluation
+* **Connecting to Real-World Support**: While TalkHeal provides a valuable first step, it is not a substitute for professional care. Our vision includes acting as a bridge to professional help. The platform includes a Doctor Specialist Recommender to help users understand potential symptoms and find a suitable professional, as well as a Crisis Help page that provides immediate access to local and international hotlines in case of a mental health emergency. This two-pronged approach ensures that users are always supported, whether through our digital tools or by connecting with human professionals.
 
-### 💖 Mood Tracking, Journaling & Insights
-
-* Mood slider with five emotional states, detailed entries with notes and activities
-* AI-assisted coping tips and micro-journaling with guided reflection prompts
-* Interactive dashboard with mood history, trend analysis, and personalized insights based on emotional patterns
-
-###🧘 Focus Sessions
-
-* Customizable focus timers (5 min to custom durations) with calming audio (piano, nature, or silence)
-* Includes visual breathing animation, motivational quotes, and session controls (pause/resume/end)
-
-### 📌 Smart Prompts
-
-* Instant-start suggestions like “Feeling overwhelmed” or “How to manage stress?”
-* Direct conversion of journal thoughts into chatbot prompts
-
-### 🎨 Themes & UI
-
-* Multiple soothing themes: **Light**, **Calm Blue**, **Mint**, **Lavender**, **Pink**, and **Dark**
-* 3D-inspired soft pink and magenta UI for a mentally soothing experience
-* Smooth transitions and responsive design for mobile and desktop
-
----
+In essence, TalkHeal aims to destigmatize mental health, promote self-awareness, and make evidence-based support accessible to everyone. By integrating compassionate AI with a comprehensive toolkit of wellness resources, TalkHeal seeks to become a trusted companion on the journey toward a healthier and more balanced life.
 
 ## 🚀 Live Demo
 
-### 🎯 **Experience TalkHeal live now!**  
-🔗 [https://TalkHeal.streamlit.app](https://TalkHeal.streamlit.app)
+Experience TalkHeal live here: 
+👉 [![**TalkHeal**](https://img.shields.io/badge/View-Live%20Demo-magenta?style=for-the-badge)](https://TalkHeal.app/)
 
----
-
-## 📊 Project Stats
-
-<div align="center">
-<p>
+ <div align="center">
+ <p>
 
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 ![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat)
@@ -72,29 +48,115 @@
 ![GitHub Contributors](https://img.shields.io/github/contributors/eccentriccoder01/TalkHeal)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/eccentriccoder01/TalkHeal)
 ![GitHub Repo Size](https://img.shields.io/github/repo-size/eccentriccoder01/TalkHeal)
-![GitHub Total Lines](https://sloc.xyz/github/eccentriccoder01/TalkHeal)
 ![Github](https://img.shields.io/github/license/eccentriccoder01/TalkHeal)
 ![GitHub Issues](https://img.shields.io/github/issues/eccentriccoder01/TalkHeal)
 ![GitHub Closed Issues](https://img.shields.io/github/issues-closed-raw/eccentriccoder01/TalkHeal)
 ![GitHub Pull Requests](https://img.shields.io/github/issues-pr/eccentriccoder01/TalkHeal)
 ![GitHub Closed Pull Requests](https://img.shields.io/github/issues-pr-closed/eccentriccoder01/TalkHeal)
+ </p>
+ </div>
 
-</p>
+<div align="center">
+  <img src="static_files/Home_Pink.png" alt="Home Pink" width="600"/>
+  <br>
+</div>
+
+## ✨ Features 
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="400">
+</div>
+
+### 🗣️ Conversational AI Support
+
+* **Gemini-powered chatbot**: The core of the app is an AI companion built on **Google's Gemini** models (`gemini-2.5-pro` and `gemini-2.0-flash`).
+* **Chatbot Personality Tone Selector**: You can personalize the AI's approach by choosing from five distinct tones: **Compassionate Listener**, **Motivating Coach**, **Wise Friend**, **Neutral Therapist**, and **Mindfulness Guide**.
+* **Session Management**: The app allows you to create, title, and manage multiple chat sessions, which are saved in JSON files for persistence and privacy via IP-based isolation.
+* **Session Feedback & Emotional Closure**: After a chat session, you can provide feedback on your experience and receive an emotional closure message.
+
+<div align="center">
+  <img src="static_files/Conversation.png" width="600"/>
+  <br>
+</div>
+
+### 💖 Mood Tracking, Journaling & Insights
+
+* **Interactive Mood Dashboard**: Track your emotional state with a five-level mood scale and visualize your mood history, trends, and patterns over time with interactive charts. The dashboard analyses mood by day of the week, time of day, and common contexts or activities.
+* **Personal Journaling**: Write and save private journal entries to a secure SQLite database. The app analyzes the sentiment of each entry (Positive, Neutral, Negative) and allows you to filter and review past thoughts.
+* **AI-Assisted Coping Tips**: Based on your selected mood, the app provides instant coping tips and micro-journaling prompts to guide your reflection.
+
+### 🧘 Self-Help & Wellness Tools
+
+* **Yoga Recommendations**: An innovative tool that analyzes your emotional state and generates tailored yoga pose recommendations with step-by-step instructions in a structured JSON format.
+
+<div align="center">
+  <img src="static_files/Yoga.png" width="600"/>
+  <br>
+</div>
+
+* **Focus Sessions**: Use a customizable timer for a Pomodoro session or a mindful break. Sessions come with a visual breathing animation, motivational quotes, and optional calming background audio.
+
+<div align="center">
+  <img src="static_files/Tools.png" width="600"/>
+  <br>
+</div>
+
+* **Breathing Exercises**: A simple and guided exercise with a visual animation to help you relax and regulate your breathing.
+
+<div align="center">
+  <img src="static_files/Breathing.png" width="600"/>
+  <br>
+</div>
+
+* **Quick Coping Cards**: Instantly generate randomized coping strategies for grounding, mindfulness, movement, reflection, and creative expression. You can save your favorites for later use.
+
+<div align="center">
+  <img src="static_files/Quick Coping.png" width="600"/>
+  <br>
+</div>
+
+* **Wellness Hub**: A central hub providing simple wellness tips across five categories: Mind, Body, Nutrition, Sleep, and Stress Relief. It also includes a quick self-check, a daily planner, and a mood tracker.
+
+<div align="center">
+  <img src="static_files/Wellness Hub.png" width="600"/>
+  <br>
+</div>
+
+### 📘 Resource & Crisis Help
+
+* **Emergency Help**: An "Emergency Help" page provides immediate access to local crisis support by dynamically searching for resources based on your location. It also lists a comprehensive directory of global crisis hotlines.
+
+<div align="center">
+  <img src="static_files/Emergency.png" width="600"/>
+  <br>
+</div>
+
+* **Doctor Specialist Recommender**: This tool uses multiple machine learning models (e.g., Logistic Regression, SVM, Random Forest) to suggest potential diseases based on user-input symptoms and recommends a suitable medical specialist.
+
+<div align="center">
+  <img src="static_files/Specialist.png" width="600"/>
+  <br>
+</div>
+
+* **Mental Health Quizzes**: Integrated PsyToolkit-verified quizzes (GAD-7, PHQ-9, WHO-5) for self-evaluation of anxiety, depression, and overall well-being.
+
+<div align="center">
+  <img src="static_files/Quizzes.png" width="600"/>
+  <br>
+</div>
+
+### 🎨 Themes & UI
+
+* **Dynamic Theme System**: Choose from multiple soothing color palettes and switch between **Light** and **Dark** modes with a single click.
+* **Glassmorphic Design**: The UI features a 3D-inspired glassmorphic style with blurred, translucent containers and smooth transitions for a visually calming experience.
+* **Customizable User Profile**: Create a user profile with a name and profile picture, and set your preferred font size for the entire application.
+
+<div align="center">
+  <img src="static_files/Home_Dark.png" width="200"/></a>
+  <img src="static_files/Home_Blue.png" width="200"/></a>
+  <img src="static_files/Home_Mint.png" width="200"/></a>
 </div>
 
 ---
-
-> 💡 **PRs Welcome!** We love contributions. Check out the [Contribution Guidelines](CONTRIBUTING.md) to get started.
-
-## 📸 Screenshots
-
-<div align="center">
-  <img src="static_files/light_ss.jpg" alt="Main Screenshot" width="600"/>
-  <br>
-  <img src="static_files/dark_ss.jpg" width="200"/></a>
-  <img src="static_files/blue_ss.jpg" width="200"/></a>
-  <img src="static_files/lav_ss.jpg" width="200"/></a>
-</div>
 
 ## 🗄️ Database Setup
 
@@ -120,11 +182,14 @@ This will create:
 
 For a detailed walkthrough of TalkHeal's features and how to use them, check out this video:
 
-**[Insert YouTube Video Link Here]**
+**[Video Coming Soon]**
 
 ---
 
 ## 📁 Project Structure
+
+<details>
+<summary><strong>🗂️ Click to view detailed project architecture</strong></summary>
 
 ```bash
 TalkHeal/
@@ -201,6 +266,9 @@ TalkHeal/
 └── users.db                    # Database for user authentication
 
 ```
+
+</details>
+
 ---
 
 
@@ -210,7 +278,13 @@ TalkHeal/
 ![CSS](https://img.shields.io/badge/CSS-38B2AC?style=for-the-badge&logo=css&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-4EA94B?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Gemini](https://img.shields.io/badge/Gemini-3448C5?style=for-the-badge&logo=google&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-0099FF?style=for-the-badge&logo=streamlit&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Pygame](https://img.shields.io/badge/Pygame-4C79A5?style=for-the-badge&logo=pygame&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-092500?style=for-the-badge&logo=langchain&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-2780E3?style=for-the-badge&logo=plotly&logoColor=white)
+![Bcrypt](https://img.shields.io/badge/bcrypt-000000?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
 ---
 
@@ -235,8 +309,7 @@ TalkHeal/
    Go to your Streamlit [Secrets Settings](https://streamlit.io/cloud) and add:
 
    ```toml
-   [gemini]
-   api_key = "YOUR_GOOGLE_GEMINI_API_KEY"
+   GEMINI_API_KEY = "YOUR_GOOGLE_GEMINI_API_KEY"
    ```
 
 4. **Run the app:**
@@ -251,6 +324,10 @@ TalkHeal/
 Report bugs and  issues or propose improvements through our GitHub repository.
 
 ## Contribution Guidelines 📑
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284145-bf2c01a8-c448-4f1a-b911-996024c84606.gif" width="400">
+</div>
 
 - Firstly Star(⭐) the Repository
 - Fork the Repository and create a new branch for any updates/changes/issue you are working on.
@@ -282,4 +359,6 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 Developed by [Eccentric Explorer](https://eccentriccoder01.github.io/Me)
 
-Feel free to reach out with any questions or feedback\!
+Feel free to reach out with any questions or feedback\! Thanks for reading, here's a cookiepookie:
+
+![Cat](https://github.com/XevenTech/xeventech/blob/main/cat.gif?raw=true "Thank You")
