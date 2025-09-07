@@ -258,8 +258,24 @@ def render_ambient_sounds():
             st.markdown("• Enhances mindfulness and focus")
             st.markdown("• Creates a therapeutic environment")
 
+# Renders the sidebar with a pinned messages count and a button to navigate to the Pinned Messages page
+
 def render_sidebar():
     """Renders the left sidebar with organized sections."""
+    if "pinned_messages" in st.session_state and st.session_state.pinned_messages:
+        pin_count = len(st.session_state.pinned_messages)
+        st.markdown(f"""
+        <div style="background-color: rgba(255,255,255,0.2); padding: 8px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+            📌 <strong>{pin_count}</strong> pinned message{'s' if pin_count != 1 else ''}
+        </div>
+        """, unsafe_allow_html=True)
+        
+
+    # Pinned Messages navigation
+    if st.button("📌 View Pinned Messages", use_container_width=True):
+        st.session_state.active_page = "PinnedMessages"
+        st.rerun()
+
     
     with st.sidebar:
         # Theme Settings Section
@@ -287,7 +303,7 @@ def render_sidebar():
                 <span class="theme-name">{current_theme['name']} Mode</span>
             </div>
             """, unsafe_allow_html=True)
-
+            
             # Theme toggle button
             button_text = "🌙 Switch to Dark" if not is_dark else "☀️ Switch to Light"
             button_type = "primary" if not is_dark else "secondary"

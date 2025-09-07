@@ -2,6 +2,22 @@ import streamlit as st
 import google.generativeai as genai
 from auth.auth_utils import init_db
 from components.login_page import show_login_page
+from core.utils import save_conversations, load_conversations
+
+
+# HANDLES ALL SESSION STATE VALUES
+def init_session_state(): 
+    defaults = { "chat_history": [],
+                "conversations": load_conversations(), 
+                "active_conversation": 0, 
+                "selected_tone": "Compassionate Listener",
+                "show_emergency_page": False,
+                "show_focus_session": False,
+                "show_mood_dashboard": False } 
+    for key, value in defaults.items(): 
+        if key not in st.session_state: 
+            st.session_state[key] = value 
+init_session_state()
 
 st.set_page_config(page_title="TalkHeal", page_icon="💬", layout="wide")
 
@@ -89,6 +105,11 @@ if "mental_disorders" not in st.session_state:
     ]
 if "selected_tone" not in st.session_state:
     st.session_state.selected_tone = "Compassionate Listener"
+if "pinned_messages" not in st.session_state:
+    st.session_state.pinned_messages = []
+
+if "active_page" not in st.session_state:
+    st.session_state.active_page = "TalkHeal"  # default
 
 # --- 2. SET PAGE CONFIG ---
 apply_global_font_size()
@@ -220,6 +241,19 @@ elif st.session_state.get("show_focus_session"):
 elif st.session_state.get("show_mood_dashboard"):
     with main_area:
         render_mood_dashboard()
+
+# Handles rendering the "Pinned Messages" page.
+elif st.session_state.active_page == "PinnedMessages":
+    with main_area:
+        from pages.Pinned_msg import render_pinned_messages_page
+
+        # Back to Home Button
+        if st.button("⬅ Back to Home", key="back_to_home_btn"):
+            st.session_state.active_page = "TalkHeal"
+            st.rerun()
+
+        render_pinned_messages_page()
+
 else:
     with main_area:
         # Render the beautiful feature cards layout
