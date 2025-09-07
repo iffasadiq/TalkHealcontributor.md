@@ -19,6 +19,7 @@ def init_session_state():
             st.session_state[key] = value 
 init_session_state()
 
+st.set_page_config(page_title="TalkHeal", page_icon="💬", layout="wide")
 
 no_sidebar_style = """
     <style>
