@@ -21,11 +21,6 @@ def set_background(image_path):
             background-attachment: fixed;
         }}
 
-        /* Main content transparency */
-        .block-container {{
-            background-color: rgba(255, 255, 255, 0);
-        }}
-
         /* Sidebar: brighter translucent background */
         [data-testid="stSidebar"] {{
             background-color: rgba(255, 255, 255, 0.6);
