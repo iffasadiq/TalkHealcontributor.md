@@ -463,13 +463,14 @@ def toggle_pin_message(msg, convo_id):
             "sender": msg.get("sender", ""),   # keep if you want filtering
             "convo_id": convo_id
         })
+        
 # Displays chat messages with styled bubbles and pin/unpin functionality
 def render_chat_interface():
     inject_custom_css()
-    
+
     if st.session_state.active_conversation >= 0:
         active_convo = st.session_state.conversations[st.session_state.active_conversation]
-        
+
         if not active_convo["messages"]:
             st.markdown(f"""
 <div class="welcome-message" style="padding:12px; border-radius:10px; background-color: #f0f0f0; margin-bottom: 20px;">
@@ -478,22 +479,21 @@ def render_chat_interface():
     <div class="message-time" style="font-size:10px; text-align:right; margin-top: 8px;">{get_current_time()}</div>
 </div>
             """, unsafe_allow_html=True)
-        
-        # Create a centered container for all messages
-        st.markdown('<div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">', unsafe_allow_html=True)
-        
+
+        # Start the chat container (no fixed max-width wrapper)
+        st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+
         for i, msg in enumerate(active_convo["messages"]):
             # Check if this message is pinned
             pinned = any(
-                m["message"] == msg["message"] and 
-                m.get("convo_id") == st.session_state.active_conversation
+                m["message"] == msg["message"]
+                and m.get("convo_id") == st.session_state.active_conversation
                 for m in st.session_state.pinned_messages
             )
             pin_label = "📍" if pinned else "📌"
-            
-            # Create message container with proper flex layout
+
             if msg["sender"] == "user":
-                # User message aligned to right with pin button
+                # User message aligned right
                 col1, col2, col3 = st.columns([2, 7, 1])
                 with col2:
                     st.markdown(f"""
@@ -519,18 +519,15 @@ def render_chat_interface():
 </div>
                     """, unsafe_allow_html=True)
                 with col3:
-                    # Pin button aligned to top of message
-                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)  # Top margin to align with message
+                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
                     if st.button(pin_label, key=f"pin_{i}", help="Pin/Unpin this message"):
                         toggle_pin_message(msg, st.session_state.active_conversation)
                         st.rerun()
-            
             else:
-                # Bot message aligned to left with pin button
+                # Bot message aligned left
                 col1, col2, col3 = st.columns([1, 7, 2])
                 with col1:
-                    # Pin button aligned to top of message
-                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)  # Top margin to align with message
+                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
                     if st.button(pin_label, key=f"pin_{i}", help="Pin/Unpin this message"):
                         toggle_pin_message(msg, st.session_state.active_conversation)
                         st.rerun()
@@ -557,9 +554,10 @@ def render_chat_interface():
     </div>
 </div>
                     """, unsafe_allow_html=True)
-        
-        # Close the centered container
+
+        # Close chat container
         st.markdown('</div>', unsafe_allow_html=True)
+        
 # Quickly lists all pinned messages for reference
 def render_pinned_messages():
     if st.session_state.pinned_messages:

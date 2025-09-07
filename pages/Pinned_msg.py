@@ -21,17 +21,19 @@ def set_background(image_path):
             background-attachment: fixed;
         }}
 
-        /* Main content transparency */
-        .block-container {{
-            background-color: rgba(255, 255, 255, 0);
-        }}
-
         /* Sidebar: brighter translucent background */
         [data-testid="stSidebar"] {{
             background-color: rgba(255, 255, 255, 0.6);
             color: black;
         }}
 
+        .block-container {{
+            background-color: rgba(255, 255, 255, 0);
+            max-width: 100% !important;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }}
+        
         /* Header bar: fully transparent */
         [data-testid="stHeader"] {{
             background-color: rgba(0, 0, 0, 0);
