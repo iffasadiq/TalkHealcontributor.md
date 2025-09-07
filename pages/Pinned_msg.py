@@ -27,6 +27,13 @@ def set_background(image_path):
             color: black;
         }}
 
+        .block-container {{
+            background-color: rgba(255, 255, 255, 0);
+            max-width: 100% !important;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }}
+        
         /* Header bar: fully transparent */
         [data-testid="stHeader"] {{
             background-color: rgba(0, 0, 0, 0);
