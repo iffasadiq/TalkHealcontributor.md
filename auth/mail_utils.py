@@ -21,7 +21,7 @@ def send_reset_email(to_email, token):
     msg.set_content(
         f"Use this link to reset your password:\n\n"
         f"{reset_link}\n\n"
-        f"This link will expire in 1 hour."
+        f"This link will expire in 15 mins."
     )
     try:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
