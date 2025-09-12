@@ -242,7 +242,7 @@ if __name__ == "__main__":
         else:
             show_login_page()
     else:
-        st.title(f"🎉 Welcome, {st.session_state.user_name}!")
+        user_name = st.session_state.user_profile.get("name", "User")
         st.success("You're logged in!")
         if st.button("Logout"):
             st.session_state.authenticated = False
