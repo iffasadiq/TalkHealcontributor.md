@@ -154,7 +154,8 @@ def render_feature_cards():
     st.markdown(f"""
     <div class="hero-welcome-section">
         <div class="hero-content">
-            <h1 class="hero-title">Welcome to TalkHeal, {st.session_state.user_name}! 💬</h1>
+            <h1 class="hero-title">Welcome to TalkHeal, 
+            {st.session_state.user_profile.get("name", "User")}! 💬</h1>
             <p class="hero-subtitle">Your Mental Health Companion 💙</p>
         </div>
     </div>

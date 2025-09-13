@@ -1,4 +1,5 @@
 import streamlit as st
+from datetime import datetime
 from auth.auth_utils import register_user, authenticate_user , check_user
 from auth.mail_utils import send_reset_email
 from auth.jwt_utils import create_reset_token
@@ -257,8 +258,15 @@ def show_login_page():
                     success, user = authenticate_user(email, password)
                     if success:
                         st.session_state.authenticated = True
-                        st.session_state.user_name = user['name']
+                        st.session_state.user_profile = {
+                            "name": user.get("name", ""),
+                            "email": user.get("email", email),
+                            "profile_picture": user.get("photo", None),
+                            "join_date": user.get("join_date", datetime.now().strftime("%B %Y")),
+                            "font_size": user.get("font_size", "Medium")
+                        }
                         st.rerun()
+                                        
                     else:
                         st.error("Invalid email or password.")
             st.markdown('</div>', unsafe_allow_html=True)
