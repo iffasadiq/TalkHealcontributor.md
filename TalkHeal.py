@@ -1,5 +1,4 @@
 import streamlit as st
-import google.generativeai as genai
 from auth.auth_utils import init_db
 from components.login_page import show_login_page
 from core.utils import save_conversations, load_conversations
@@ -69,7 +68,6 @@ if st.session_state.get("authenticated", False):
                     del st.session_state[key]
             st.rerun()
 
-from core.utils import save_conversations, load_conversations
 from core.config import configure_gemini, PAGE_CONFIG
 from core.utils import get_current_time, create_new_conversation
 from css.styles import apply_custom_css
