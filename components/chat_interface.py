@@ -211,34 +211,7 @@ def inject_custom_css():
     """, unsafe_allow_html=True)
 
 
-# Inject JS to get user's local time zone
-def set_user_time_in_session():
-    if "user_time_offset" not in st.session_state:
-        components.html("""
-            <script>
-            const offset = new Date().getTimezoneOffset(); 
-            const time = new Date().toLocaleString();      
-            const data = {offset: offset, time: time};
-            window.parent.postMessage({type: 'USER_TIME', data: data}, '*');
-            </script>
-        """, height=0)
-
-        st.markdown("""
-        <script>
-        window.addEventListener("message", (event) => {
-            if (event.data.type === "USER_TIME") {
-                const payload = JSON.stringify(event.data.data);
-                fetch("/", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: payload
-                }).then(() => location.reload());
-            }
-        });
-        </script>
-        """, unsafe_allow_html=True)
-
-#set_user_time_in_session()
+# Note: Removed unused set_user_time_in_session (dead code)
 
 def show_session_feedback():
     st.markdown("---")

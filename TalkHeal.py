@@ -1,5 +1,4 @@
 import streamlit as st
-import google.generativeai as genai
 from auth.auth_utils import init_db
 from components.login_page import show_login_page
 from core.utils import save_conversations, load_conversations
@@ -56,20 +55,19 @@ if st.session_state.get("authenticated", False):
             st.session_state.theme_changed = True
             st.rerun()
     with col_emergency:
-        if st.button("🚨 Emergency Help", key="emergency_main_btn", use_container_width=True, type="secondary"):
+        if st.button("🚨 Emergency Help", key="emergency_main_btn", help="Open crisis resources", use_container_width=True, type="secondary"):
             st.session_state.show_emergency_page = True
             st.rerun()
     with col_about:
-        if st.button("ℹ️ About", key="about_btn", use_container_width=True):
+        if st.button("ℹ️ About", key="about_btn", help="About TalkHeal", use_container_width=True):
             st.switch_page("pages/About.py")
     with col_logout:
-        if st.button("Logout", key="logout_btn", use_container_width=True):
+        if st.button("Logout", key="logout_btn", help="Sign out", use_container_width=True):
             for key in ["authenticated", "user_email", "user_name", "show_signup"]:
                 if key in st.session_state:
                     del st.session_state[key]
             st.rerun()
 
-from core.utils import save_conversations, load_conversations
 from core.config import configure_gemini, PAGE_CONFIG
 from core.utils import get_current_time, create_new_conversation
 from css.styles import apply_custom_css

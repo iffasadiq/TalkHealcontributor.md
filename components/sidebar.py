@@ -1,14 +1,12 @@
 import streamlit as st
-import webbrowser
 from datetime import datetime
-from core.utils import create_new_conversation, get_current_time
+from core.utils import create_new_conversation
 from core.theme import get_current_theme, toggle_theme, set_palette, PALETTES
 from components.mood_dashboard import render_mood_dashboard_button, MoodTracker
-from components.profile import initialize_profile_state, render_profile_section
+from components.profile import render_profile_section
 from streamlit_js_eval import streamlit_js_eval
 import requests
 import random
-from datetime import datetime
 
 # --- Structured Emergency Resources ---
 GLOBAL_RESOURCES = [
