@@ -109,6 +109,17 @@ if "pinned_messages" not in st.session_state:
 if "active_page" not in st.session_state:
     st.session_state.active_page = "TalkHeal"  # default
 
+# --- Footer Navigation State ---
+if "show_privacy_policy" not in st.session_state:
+    st.session_state.show_privacy_policy = False
+
+if st.session_state.show_privacy_policy:
+    from pages.PrivacyPolicy import show as show_privacy
+    show_privacy()
+    from components.footer import show_footer
+    show_footer()
+    st.stop()
+
 # --- 2. SET PAGE CONFIG ---
 apply_global_font_size()
 
@@ -320,6 +331,10 @@ else:
         render_chat_interface()
         handle_chat_input(model, system_prompt=get_tone_prompt())
         render_session_controls()
+
+        # --- Footer ---
+        from components.footer import show_footer
+        show_footer()
 
 # --- 10. SCROLL SCRIPT ---
 st.markdown("""
