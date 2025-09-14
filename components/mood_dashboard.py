@@ -6,6 +6,9 @@ from datetime import datetime, timedelta
 import json
 import os
 from collections import Counter, defaultdict
+from components.analytics import analyze_mood_trends, analyze_activity_mood_correlation
+from components.predictive_analytics import predict_mood_trends
+from components.weather_correlation import render_weather_mood_analysis
 
 class MoodTracker:
     def __init__(self):
@@ -94,6 +97,47 @@ class MoodTracker:
         df['date'] = pd.to_datetime(df['date'])
         return df.sort_values('datetime')
     
+    def export_mood_data_csv(self, days=None):
+        """Export mood data as CSV string for the specified number of days"""
+        if days is not None:
+            df = self.get_mood_dataframe(days)
+        else:
+            # Export all data
+            if not st.session_state.mood_data:
+                return ""
+            df = pd.DataFrame(st.session_state.mood_data)
+            df['datetime'] = pd.to_datetime(df['timestamp'])
+            df['date'] = pd.to_datetime(df['date'])
+            df = df.sort_values('datetime')
+        
+        if df.empty:
+            return ""
+        
+        # Convert activities list to comma-separated string for CSV
+        df_export = df.copy()
+        df_export['activities'] = df_export['activities'].apply(lambda x: ', '.join(x) if isinstance(x, list) else str(x))
+        
+        # Select and reorder columns for export
+        export_columns = ['date', 'time', 'day_of_week', 'mood_level', 'notes', 'context_reason', 'activities', 'timestamp']
+        df_export = df_export[export_columns]
+        
+        return df_export.to_csv(index=False)
+    
+    def export_mood_data_json(self, days=None):
+        """Export mood data as JSON string for the specified number of days"""
+        if days is not None:
+            df = self.get_mood_dataframe(days)
+            if df.empty:
+                return "[]"
+            export_data = df.to_dict('records')
+        else:
+            # Export all data
+            if not st.session_state.mood_data:
+                return "[]"
+            export_data = st.session_state.mood_data
+        
+        return json.dumps(export_data, indent=2)
+    
     def get_mood_numeric(self, mood_level):
         """Convert mood level to numeric value for analysis"""
         mood_mapping = {
@@ -115,6 +159,107 @@ class MoodTracker:
             "great": "🌟 Great"
         }
         return mood_labels.get(mood_level, mood_level)
+    
+    def export_mood_data_csv(self, days=None):
+        """Export mood data as CSV string for download"""
+        if not st.session_state.mood_data:
+            return ""
+        
+        # Filter data if days specified
+        data_to_export = st.session_state.mood_data
+        if days is not None:
+            cutoff_date = datetime.now() - timedelta(days=days)
+            data_to_export = [
+                entry for entry in st.session_state.mood_data
+                if datetime.fromisoformat(entry["timestamp"]) >= cutoff_date
+            ]
+        
+        if not data_to_export:
+            return ""
+        
+        # Convert to DataFrame for easy CSV export
+        df = pd.DataFrame(data_to_export)
+        
+        # Add numeric mood column for analysis
+        df['mood_numeric'] = df['mood_level'].apply(self.get_mood_numeric)
+        df['mood_label'] = df['mood_level'].apply(self.get_mood_label)
+        
+        # Convert activities list to string for CSV compatibility
+        df['activities'] = df['activities'].apply(lambda x: ', '.join(x) if isinstance(x, list) else str(x))
+        
+        # Reorder columns for better readability
+        columns_order = ['date', 'time', 'day_of_week', 'mood_level', 'mood_label', 'mood_numeric', 
+                        'notes', 'context_reason', 'activities', 'timestamp']
+        df = df[columns_order]
+        
+        # Convert to CSV string
+        return df.to_csv(index=False)
+    
+    def export_mood_data_json(self, days=None):
+        """Export mood data as JSON string for download"""
+        if not st.session_state.mood_data:
+            return "[]"
+        
+        # Filter data if days specified
+        data_to_export = st.session_state.mood_data
+        if days is not None:
+            cutoff_date = datetime.now() - timedelta(days=days)
+            data_to_export = [
+                entry for entry in st.session_state.mood_data
+                if datetime.fromisoformat(entry["timestamp"]) >= cutoff_date
+            ]
+        
+        if not data_to_export:
+            return "[]"
+        
+        # Add additional computed fields for analysis
+        enhanced_data = []
+        for entry in data_to_export:
+            enhanced_entry = entry.copy()
+            enhanced_entry['mood_numeric'] = self.get_mood_numeric(entry['mood_level'])
+            enhanced_entry['mood_label'] = self.get_mood_label(entry['mood_level'])
+            enhanced_data.append(enhanced_entry)
+        
+        # Sort by timestamp (most recent first)
+        enhanced_data.sort(key=lambda x: x['timestamp'], reverse=True)
+        
+        return json.dumps(enhanced_data, indent=2)
+    
+    def get_export_summary(self, days=None):
+        """Get summary of data being exported"""
+        if not st.session_state.mood_data:
+            return {"total_entries": 0, "date_range": "No data", "file_size": "0 KB"}
+        
+        # Filter data if days specified
+        data_to_export = st.session_state.mood_data
+        if days is not None:
+            cutoff_date = datetime.now() - timedelta(days=days)
+            data_to_export = [
+                entry for entry in st.session_state.mood_data
+                if datetime.fromisoformat(entry["timestamp"]) >= cutoff_date
+            ]
+        
+        if not data_to_export:
+            return {"total_entries": 0, "date_range": "No data in range", "file_size": "0 KB"}
+        
+        total_entries = len(data_to_export)
+        
+        # Get date range
+        timestamps = [datetime.fromisoformat(entry["timestamp"]) for entry in data_to_export]
+        start_date = min(timestamps).strftime("%Y-%m-%d")
+        end_date = max(timestamps).strftime("%Y-%m-%d")
+        date_range = f"{start_date} to {end_date}"
+        
+        # Estimate file size (rough calculation)
+        json_size = len(self.export_mood_data_json(days)) / 1024  # KB
+        csv_size = len(self.export_mood_data_csv(days)) / 1024    # KB
+        
+        return {
+            "total_entries": total_entries,
+            "date_range": date_range,
+            "json_size": ".1f",
+            "csv_size": ".1f"
+        }
 
 def render_mood_dashboard():
     """Render the main mood tracking dashboard"""
@@ -145,6 +290,13 @@ def render_mood_dashboard():
     """, unsafe_allow_html=True)
     
     st.markdown("## 📊 Mood Tracking Insights Dashboard")
+    
+    # Back to main page button
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col1:
+        if st.button("⬅️ Back to Main", use_container_width=True):
+            st.session_state.show_mood_dashboard = False
+            st.rerun()
     
     # Initialize mood tracker
     if "mood_tracker" not in st.session_state:
@@ -361,6 +513,115 @@ def render_mood_history(tracker):
                         st.markdown(f'<div style="color: black;">• {activities}</div>', unsafe_allow_html=True)
                 else:
                     st.markdown('<div style="color: black;"><strong>Activities:</strong> None recorded</div>', unsafe_allow_html=True)
+    
+    # Data Export Section
+    st.markdown("---")
+    st.markdown("#### 📥 Export Your Mood Data")
+    
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
+        export_format = st.selectbox(
+            "Export Format",
+            ["CSV", "JSON"],
+            help="Choose the format for your exported data"
+        )
+    
+    with col2:
+        export_period = st.selectbox(
+            "Time Period",
+            ["All Data", "Last 7 days", "Last 30 days", "Last 90 days"],
+            help="Choose which data to export"
+        )
+    
+    # Export buttons
+    col1, col2, col3 = st.columns([1, 1, 2])
+    
+    with col1:
+        if st.button("📊 Preview Data", use_container_width=True):
+            # Show preview of data to be exported
+            if export_period == "All Data":
+                preview_df = tracker.get_mood_dataframe(365)  # All data
+            else:
+                days_map = {"Last 7 days": 7, "Last 30 days": 30, "Last 90 days": 90}
+                preview_df = tracker.get_mood_dataframe(days_map[export_period])
+            
+            if not preview_df.empty:
+                st.success(f"📊 Ready to export {len(preview_df)} mood entries")
+                
+                # Show summary
+                col_a, col_b, col_c = st.columns(3)
+                with col_a:
+                    st.metric("Entries", len(preview_df))
+                with col_b:
+                    date_range = f"{preview_df['date'].min().strftime('%Y-%m-%d')} to {preview_df['date'].max().strftime('%Y-%m-%d')}"
+                    st.metric("Date Range", date_range)
+                with col_c:
+                    avg_mood = preview_df['mood_level'].apply(tracker.get_mood_numeric).mean()
+                    st.metric("Avg Mood", f"{avg_mood:.1f}/5")
+                
+                # Show sample of data
+                st.markdown("**Sample Data:**")
+                preview_cols = ['date', 'time', 'mood_level', 'notes', 'context_reason']
+                st.dataframe(preview_df[preview_cols].head(3), use_container_width=True)
+            else:
+                st.warning("No data available for the selected period")
+    
+    with col2:
+        export_button_text = f"📥 Export as {export_format}"
+        if st.button(export_button_text, use_container_width=True, type="primary"):
+            # Get the data to export
+            if export_period == "All Data":
+                if export_format == "CSV":
+                    export_data = tracker.export_mood_data_csv()
+                    file_extension = "csv"
+                    mime_type = "text/csv"
+                else:  # JSON
+                    export_data = tracker.export_mood_data_json()
+                    file_extension = "json"
+                    mime_type = "application/json"
+            else:
+                days_map = {"Last 7 days": 7, "Last 30 days": 30, "Last 90 days": 90}
+                days = days_map[export_period]
+                if export_format == "CSV":
+                    export_data = tracker.export_mood_data_csv(days)
+                    file_extension = "csv"
+                    mime_type = "text/csv"
+                else:  # JSON
+                    export_data = tracker.export_mood_data_json(days)
+                    file_extension = "json"
+                    mime_type = "application/json"
+            
+            if export_data:
+                # Create filename with timestamp
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                filename = f"mood_data_{export_period.lower().replace(' ', '_')}_{timestamp}.{file_extension}"
+                
+                # Create download button
+                st.download_button(
+                    label=f"⬇️ Download {filename}",
+                    data=export_data,
+                    file_name=filename,
+                    mime=mime_type,
+                    use_container_width=True
+                )
+                
+                st.success(f"✅ Ready to download {filename}")
+                
+                # Show file size estimate
+                file_size_kb = len(export_data.encode('utf-8')) / 1024
+                st.info(f"📁 File size: {file_size_kb:.1f} KB")
+            else:
+                st.error("❌ No data available to export")
+    
+    with col3:
+        st.markdown("""
+        **💡 Export Tips:**
+        - CSV format works well with Excel, Google Sheets
+        - JSON format preserves all data structure
+        - Use "All Data" for complete backup
+        - Exported files include all mood details and activities
+        """)
 
 def render_mood_analytics(tracker):
     """Render mood analytics and statistics"""
@@ -592,6 +853,106 @@ def render_mood_insights(tracker):
     
     df['mood_numeric'] = df['mood_level'].apply(tracker.get_mood_numeric)
     
+    # Advanced Analytics Integration
+    st.markdown("#### 🔍 Advanced Mood Analytics")
+    
+    # Prepare data for analytics module
+    analytics_df = df[['timestamp', 'mood_numeric']].copy()
+    analytics_df.columns = ['timestamp', 'mood_score']
+    
+    # Get insights from analytics module
+    analytics_results = analyze_mood_trends(analytics_df)
+    
+    # Display insights
+    if analytics_results['insights']:
+        st.markdown("**📊 Key Insights:**")
+        for insight in analytics_results['insights']:
+            st.info(insight)
+    
+    # Display recommendations
+    if analytics_results['recommendations']:
+        st.markdown("**💡 Personalized Recommendations:**")
+        for rec in analytics_results['recommendations']:
+            st.success(rec)
+    
+    # Display chart
+    if analytics_results['charts']:
+        st.markdown("**📈 Mood Trend Analysis:**")
+        with st.container():
+            st.markdown("""
+            <div style="
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+                padding: 20px;
+                margin: 10px 0;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            ">
+            """, unsafe_allow_html=True)
+            st.plotly_chart(analytics_results['charts'][0], use_container_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Predictive Analytics Section
+    st.markdown("#### 🔮 Mood Predictions & Alerts")
+    
+    # Get predictive results
+    predictive_results = predict_mood_trends(analytics_df, forecast_days=7, alert_threshold=2.8)
+    
+    if predictive_results['forecast'] is not None:
+        # Display alerts
+        if predictive_results['alerts']:
+            st.markdown("**🚨 Predictive Alerts:**")
+            for alert in predictive_results['alerts']:
+                if "High Risk" in alert:
+                    st.error(alert)
+                else:
+                    st.warning(alert)
+        else:
+            st.success("✅ No significant mood dips predicted in the next 7 days!")
+        
+        # Display forecast chart
+        if predictive_results['charts']:
+            st.markdown("**📊 7-Day Mood Forecast:**")
+            with st.container():
+                st.markdown("""
+                <div style="
+                    background: rgba(255, 255, 255, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin: 10px 0;
+                    backdrop-filter: blur(10px);
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                ">
+                """, unsafe_allow_html=True)
+                st.plotly_chart(predictive_results['charts'][0], use_container_width=True)
+                st.markdown("</div>", unsafe_allow_html=True)
+        
+        # Model information
+        st.markdown(f"**🤖 Model Info:** {predictive_results['model_info']}")
+        
+        # Forecast summary
+        forecast_avg = predictive_results['forecast'].mean()
+        historical_avg = predictive_results.get('historical_avg', 3.0)
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Historical Avg Mood", f"{historical_avg:.1f}/5")
+        with col2:
+            st.metric("Predicted Avg Mood", f"{forecast_avg:.1f}/5", 
+                     f"{forecast_avg - historical_avg:+.1f}")
+        with col3:
+            dip_count = len(predictive_results['dips'])
+            st.metric("Predicted Dips", dip_count)
+            
+    else:
+        st.info(f"🤔 {predictive_results['model_info']}")
+    
+    st.markdown("---")
+    
     # Most frequent mood
     st.markdown("#### 🎯 Most Frequent Mood")
     mood_counts = df['mood_level'].value_counts()
@@ -666,35 +1027,47 @@ def render_mood_insights(tracker):
             st.write(f"**Best mood context:** {best_context} ({context_mood_analysis.loc[best_context, 'mean']:.1f}/5)")
             st.write(f"**Challenging mood context:** {worst_context} ({context_mood_analysis.loc[worst_context, 'mean']:.1f}/5)")
     
-    # Activity insights
-    if 'activities' in df.columns:
-        all_activities = []
-        activity_mood_data = []
-        
-        for _, row in df.iterrows():
-            if 'activities' in row and row['activities']:
-                activities = row['activities']
-                if isinstance(activities, list):
-                    for activity in activities:
-                        all_activities.append(activity)
-                        activity_mood_data.append({'activity': activity, 'mood': row['mood_numeric']})
-                else:
-                    # Handle non-list activities
-                    all_activities.append(str(activities))
-                    activity_mood_data.append({'activity': str(activities), 'mood': row['mood_numeric']})
-        
-        if activity_mood_data:
-            activity_df = pd.DataFrame(activity_mood_data)
-            activity_mood_analysis = activity_df.groupby('activity')['mood'].agg(['mean', 'count']).sort_values('mean', ascending=False)
-            
-            if not activity_mood_analysis.empty:
-                best_activity = activity_mood_analysis.index[0]
-                st.write(f"**Best mood activity:** {best_activity} ({activity_mood_analysis.loc[best_activity, 'mean']:.1f}/5)")
-                
-                # Show correlation between activities and mood
-                st.markdown("**Activity-Mood Correlation:**")
-                for activity, stats in activity_mood_analysis.head(3).iterrows():
-                    st.write(f"• {activity}: {stats['mean']:.1f}/5 average mood ({stats['count']} times)")
+    # Advanced Activity-Mood Correlation Analysis
+    st.markdown("#### 🏃‍♂️ Activity-Mood Correlation Analysis")
+    
+    # Get activity correlation results
+    activity_results = analyze_activity_mood_correlation(df)
+    
+    # Display activity insights
+    if activity_results['activity_insights']:
+        for insight in activity_results['activity_insights']:
+            if "Top 3" in insight or "strongest positive impact" in insight:
+                st.success(insight)
+            else:
+                st.info(insight)
+    
+    # Display activity recommendations
+    if activity_results['activity_recommendations']:
+        st.markdown("**💡 Activity Recommendations:**")
+        for rec in activity_results['activity_recommendations']:
+            st.success(rec)
+    
+    # Display activity correlation chart
+    if activity_results['activity_chart'] is not None:
+        st.markdown("**📊 Activity-Mood Correlation Chart:**")
+        with st.container():
+            st.markdown("""
+            <div style="
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+                padding: 20px;
+                margin: 10px 0;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            ">
+            """, unsafe_allow_html=True)
+            st.plotly_chart(activity_results['activity_chart'], use_container_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
+    
+    # Weather-Mood Correlation Analysis
+    st.markdown("---")
+    render_weather_mood_analysis(df)
     
     # Recommendations
     st.markdown("#### 💭 Personalized Recommendations")
