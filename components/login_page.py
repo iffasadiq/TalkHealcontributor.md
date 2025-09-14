@@ -253,7 +253,9 @@ def show_login_page():
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
             if st.button("Login", key="login_submit"):
                 if not email or not password:
-                    st.warning("Please enter your email and password.")
+                    # FIX START: Changed st.warning to st.error for better user feedback
+                    st.error("Please enter your email and password.")
+                    # FIX END
                 else:
                     success, user = authenticate_user(email, password)
                     if success:
