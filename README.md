@@ -2,7 +2,35 @@
     <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
   </div>
 
-<div align="center"><img src="static_files/TalkHealLogo.png" style="width: 220px; height: 220px;" /></div>
+<div a### 🎨 Themes & UI
+
+* **Dynamic Theme System**: Choose from multiple soothing color palettes and switch between **Light** and **Dark** modes with a single click.
+* **Glassmorphic Design**: The UI features a 3D-inspired glassmorphic style with blurred, translucent containers and smooth transitions for a visually calming experience.
+* **Customizable User Profile**: Create a user profile with a name and profile picture, and set your preferred font size for the entire application.
+
+<div align="center">
+  <img src="static_files/Home_Dark.png" width="200"/></a>
+  <img src="static_files/Home_Blue.png" width="200"/></a>
+  <img src="static_files/Home_Mint.png" width="200"/></a>
+</div>
+
+### 📊 Enhanced Mood Tracking Features
+
+* **📥 Data Export**: Export your mood data as CSV or JSON files with customizable time periods (last 7 days, 30 days, 90 days, or all time) for personal records or analysis in other tools.
+
+* **📈 Activity-Mood Correlation Analysis**: Advanced statistical analysis to identify which activities most positively impact your mood, with personalized recommendations and interactive correlation charts.
+
+* **🔮 Predictive Analytics**: Machine learning-powered mood prediction using historical data, activity patterns, and environmental factors to forecast future mood states.
+
+* **🌤️ Weather Correlation**: Analyze how weather conditions affect your mood patterns, with insights into weather-mood relationships and seasonal trends.
+
+* **📊 Comprehensive Dashboard**: Enhanced mood dashboard with interactive charts, trend analysis, activity effectiveness metrics, and personalized wellness insights.
+
+* **🎯 Goal Setting Integration**: Set and track mood improvement goals with progress monitoring and achievement tracking.
+
+---
+
+## 🚀 Live Demoimg src="static_files/TalkHealLogo.png" style="width: 220px; height: 220px;" /></div>
 
 # <div align="center">TALKHEAL</div>
 
@@ -78,11 +106,34 @@ Experience TalkHeal live here:
   <br>
 </div>
 
-### 💖 Mood Tracking, Journaling & Insights
+### 💖 Advanced Mood Tracking, Journaling & Insights
 
-* **Interactive Mood Dashboard**: Track your emotional state with a five-level mood scale and visualize your mood history, trends, and patterns over time with interactive charts. The dashboard analyses mood by day of the week, time of day, and common contexts or activities.
-* **Personal Journaling**: Write and save private journal entries to a secure SQLite database. The app analyzes the sentiment of each entry (Positive, Neutral, Negative) and allows you to filter and review past thoughts.
-* **AI-Assisted Coping Tips**: Based on your selected mood, the app provides instant coping tips and micro-journaling prompts to guide your reflection.
+* **📝 Comprehensive Mood Entry Form**: Track your emotional state with a detailed form including mood level, context reasons, daily activities, and personal notes. Get instant personalized coping suggestions based on your entries.
+
+* **📊 Interactive Mood Dashboard**: Visualize your mood history, trends, and patterns with interactive charts. The dashboard provides deep analytics including mood by day of the week, time of day, and contextual patterns.
+
+* **🎯 Activity-Mood Correlation Analysis**: Discover which activities most positively impact your mood through advanced statistical analysis. Get personalized recommendations for mood-boosting activities based on your historical data.
+
+* **📈 Predictive Mood Analytics**: Leverage machine learning algorithms to forecast your mood trends for the next 7 days. Receive early warnings about potential mood dips and get proactive coping strategies.
+
+* **🌤️ Weather-Mood Correlation**: Analyze how weather conditions affect your mood patterns. Understand environmental factors that influence your emotional well-being.
+
+* **📥 Data Export & Backup**: Export your mood data in CSV or JSON formats for personal records, analysis in other tools, or data portability. Choose from different time periods (7/30/90 days or all data).
+
+* **📈 Real-time Statistics**: View live mood statistics including average mood, total entries, most frequent mood, and mood stability metrics with visual progress indicators.
+
+* **🔄 Seamless Navigation**: Easy switching between main page mood entry and comprehensive dashboard analysis with "View Mood Dashboard" and "Back to Main" buttons.
+
+* **📊 Advanced Filtering**: Filter mood data by time periods, mood levels, activities, and contexts for detailed pattern analysis.
+
+* **💡 Personalized Insights**: Receive AI-powered insights about your mood patterns, activity effectiveness, and personalized recommendations for better emotional well-being.
+
+* **📱 Responsive Charts**: Interactive visualizations including line charts, bar charts, correlation plots, and trend analysis with modern, responsive design.
+
+<div align="center">
+  <img src="static_files/Home_Pink.png" alt="Enhanced Mood Dashboard" width="600"/>
+  <br>
+</div>
 
 ### 🧘 Self-Help & Wellness Tools
 
@@ -208,15 +259,18 @@ TalkHeal/
 ├── components/
 │   ├── Breathing_Exercise.py
 │   ├── __init__.py
+│   ├── analytics.py             # 🆕 Advanced mood analytics & activity correlation
 │   ├── chat_interface.py
 │   ├── emergency_page.py
 │   ├── focus_session.py
 │   ├── header.py
 │   ├── login_page.py
-│   ├── mood_dashboard.py
+│   ├── mood_dashboard.py        # Enhanced with export, correlation & predictive features
+│   ├── predictive_analytics.py  # 🆕 ML-based mood prediction algorithms
 │   ├── profile.py
 │   ├── sidebar.py
-│   └── theme_toggle.py
+│   ├── theme_toggle.py
+│   └── weather_correlation.py   # 🆕 Weather-mood correlation analysis
 ├── core/
 │   ├── __init__.py
 │   ├── config.py                # Central app configuration
@@ -225,6 +279,7 @@ TalkHeal/
 ├── css/
 │   └── styles.py
 ├── data/
+│   ├── mood_data.json           # 🆕 User mood data storage
 │   └── Yoga.json                # Yoga session data (poses, flows)
 ├── favicon/
 │   ├── apple-touch-icon.png
@@ -248,23 +303,24 @@ TalkHeal/
 ├── MOOD_TRACKING_README.md     # Info about the mood tracking feature
 ├── README.md                   # Main project documentation
 ├── TalkHeal.pptx               # Presentation for TalkHeal
-├── TalkHeal.py                 # 🔷 Main app entry point (Streamlit)
+├── TalkHeal.py                 # 🔷 Main app entry point (Streamlit) - Enhanced
 ├── TalkHealLogo.png
 ├── blue.png
 ├── blue_ss.jpg
 ├── dark.png
 ├── dark_ss.jpg
 ├── generate_audio.py           # Script to convert text to speech/audio
+├── generate_sample_mood_data.py # 🆕 Sample mood data generator
 ├── journals.db                 # Database of user journal entries
 ├── lav_ss.jpg
 ├── lavender.png
 ├── light_ss.jpg
 ├── mint.png
-├── requirements.txt            # Python package dependencies
+├── requirements.txt            # Python package dependencies - Updated
 ├── streamlit.toml              # Streamlit configuration
+├── test_analytics.py           # 🆕 Analytics testing utilities
 ├── test_mood_dashboard.py      # Test cases for mood dashboard
 └── users.db                    # Database for user authentication
-
 ```
 
 </details>
@@ -285,6 +341,35 @@ TalkHeal/
 ![LangChain](https://img.shields.io/badge/LangChain-092500?style=for-the-badge&logo=langchain&logoColor=white)
 ![Plotly](https://img.shields.io/badge/Plotly-2780E3?style=for-the-badge&logo=plotly&logoColor=white)
 ![Bcrypt](https://img.shields.io/badge/bcrypt-000000?style=for-the-badge&logo=nodedotjs&logoColor=white)
+
+## 🏗️ Technical Architecture
+
+### Core Components
+
+* **Main Application** (`TalkHeal.py`): Entry point with enhanced mood tracking form and navigation
+* **Authentication System** (`auth/`): User management with JWT tokens and secure password hashing
+* **Mood Analytics Engine** (`components/analytics.py`): Statistical analysis and correlation algorithms
+* **Predictive Models** (`components/predictive_analytics.py`): ML-based mood forecasting
+* **Weather Integration** (`components/weather_correlation.py`): Environmental factor analysis
+* **Dashboard Interface** (`components/mood_dashboard.py`): Interactive data visualization and export
+
+### Data Flow
+
+1. **User Input** → Mood entries with activities, context, and notes
+2. **Data Processing** → Pandas DataFrame manipulation and cleaning
+3. **Statistical Analysis** → Correlation analysis and trend identification
+4. **ML Prediction** → Time series forecasting and pattern recognition
+5. **Visualization** → Interactive Plotly charts and export capabilities
+6. **Storage** → JSON/CSV export and SQLite persistence
+
+### Recent Enhancements
+
+* ✅ **Data Export Feature**: CSV/JSON export with time filtering
+* ✅ **Activity-Mood Correlation**: Statistical analysis of activity effectiveness
+* ✅ **Predictive Analytics**: ML-powered mood forecasting
+* ✅ **Weather Correlation**: Environmental impact analysis
+* ✅ **Enhanced Dashboard**: Comprehensive mood tracking interface
+* 🔄 **Goal Setting**: Mood improvement goals and progress tracking (planned)
 
 ---
 
@@ -317,6 +402,38 @@ TalkHeal/
    ```bash
    streamlit run TalkHeal.py
    ```
+
+---
+
+## 📦 Dependencies & Libraries
+
+TalkHeal uses a comprehensive set of Python libraries to provide its features:
+
+### Core Dependencies
+- **Streamlit** - Web framework for the interactive UI
+- **Google Generative AI** - Powers the AI conversation capabilities
+- **LangChain** - Framework for building AI applications
+
+### Data & Analytics
+- **Pandas** - Data manipulation and analysis for mood tracking
+- **Plotly** - Interactive charts and visualizations
+- **NumPy** - Numerical computing for statistical analysis
+- **Scikit-learn** - Machine learning algorithms for mood prediction
+- **Statsmodels** - Statistical modeling and analysis
+- **Prophet** - Time series forecasting for mood trends
+
+### Additional Features
+- **Pillow** - Image processing for UI elements
+- **Requests** - HTTP requests for external APIs
+- **GeoPy** - Geolocation services
+- **TextBlob** - Sentiment analysis for mood detection
+- **Transformers** - Advanced NLP models
+- **PyTorch** - Deep learning framework
+- **Meteostat** - Weather data integration
+- **TimezoneFinder** - Time zone detection
+- **PyJWT** - JSON Web Token handling for authentication
+- **bcrypt** - Password hashing
+- **pygame** - Audio playback for relaxation features
 
 ---
 
@@ -362,3 +479,47 @@ Developed by [Eccentric Explorer](https://eccentriccoder01.github.io/Me)
 Feel free to reach out with any questions or feedback\! Thanks for reading, here's a cookiepookie:
 
 ![Cat](https://github.com/XevenTech/xeventech/blob/main/cat.gif?raw=true "Thank You")
+
+---
+
+## 📋 Recent Updates & Changelog
+
+### v2.1.0 - Enhanced Mood Tracking & Analytics (Latest)
+
+**New Features:**
+- 📥 **Data Export Feature**: Export mood data as CSV/JSON with customizable time periods
+- 📈 **Activity-Mood Correlation Analysis**: Advanced statistical analysis of activity effectiveness
+- 🔮 **Predictive Analytics**: ML-powered mood forecasting using historical patterns
+- 🌤️ **Weather Correlation**: Analyze weather impact on mood patterns
+- 📊 **Enhanced Dashboard**: Comprehensive mood tracking with interactive visualizations
+- 🎯 **Goal Setting Integration**: Set and track mood improvement goals
+
+**Technical Improvements:**
+- Added comprehensive analytics engine (`components/analytics.py`)
+- Implemented predictive modeling (`components/predictive_analytics.py`)
+- Integrated weather data analysis (`components/weather_correlation.py`)
+- Enhanced mood dashboard with export capabilities
+- Updated dependencies for advanced analytics (scikit-learn, statsmodels, prophet)
+- Added sample data generator for testing
+
+**Files Added/Modified:**
+- `components/analytics.py` - New analytics engine
+- `components/predictive_analytics.py` - New ML prediction module
+- `components/weather_correlation.py` - New weather analysis
+- `components/mood_dashboard.py` - Enhanced with export features
+- `TalkHeal.py` - Enhanced mood entry form
+- `data/mood_data.json` - New data storage
+- `requirements.txt` - Updated dependencies
+- `README.md` - Comprehensive documentation updates
+
+**Bug Fixes:**
+- Improved data validation and error handling
+- Enhanced UI responsiveness for analytics charts
+- Fixed timezone handling for weather correlation
+
+---
+
+<div align="center">
+  <p>Made with ❤️ by the TalkHeal Team</p>
+  <p>⭐ Star this repository if you found it helpful!</p>
+</div>
