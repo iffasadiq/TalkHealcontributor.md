@@ -1,13 +1,13 @@
   <div align="center">
-    <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
+    <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" alt="Animated decorative line divider" width="600">
   </div>
 
-<div align="center"><img src="static_files/TalkHealLogo.png" style="width: 220px; height: 220px;" /></div>
+<div align="center"><img src="static_files/TalkHealLogo.png" alt="TalkHeal Logo - AI-Powered Mental Health Companion" style="width: 220px; height: 220px;" /></div>
 
 # <div align="center">TALKHEAL</div>
 
   <div align="center">
-    <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="600">
+    <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" alt="Animated decorative line divider" width="600">
   </div>
 
 ## 🧠 Your AI-Powered Mental Health Companion
@@ -57,13 +57,13 @@ Experience TalkHeal live here:
  </div>
 
 <div align="center">
-  <img src="static_files/Home_Pink.png" alt="Home Pink" width="600"/>
+  <img src="static_files/Home_Pink.png" alt="TalkHeal main dashboard interface with pink theme showing welcome message and navigation options" width="600"/>
   <br>
 </div>
 
 ## ✨ Features 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="400">
+  <img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" alt="Animated features showcase divider" width="400">
 </div>
 
 ### 🗣️ Conversational AI Support
@@ -74,7 +74,7 @@ Experience TalkHeal live here:
 * **Session Feedback & Emotional Closure**: After a chat session, you can provide feedback on your experience and receive an emotional closure message.
 
 <div align="center">
-  <img src="static_files/Conversation.png" width="600"/>
+  <img src="static_files/Conversation.png" alt="TalkHeal chat interface showing AI conversation with personality tone selector and message history" width="600"/>
   <br>
 </div>
 
@@ -89,35 +89,35 @@ Experience TalkHeal live here:
 * **Yoga Recommendations**: An innovative tool that analyzes your emotional state and generates tailored yoga pose recommendations with step-by-step instructions in a structured JSON format.
 
 <div align="center">
-  <img src="static_files/Yoga.png" width="600"/>
+  <img src="static_files/Yoga.png" alt="Yoga recommendations page displaying personalized yoga poses with instructions based on emotional state" width="600"/>
   <br>
 </div>
 
 * **Focus Sessions**: Use a customizable timer for a Pomodoro session or a mindful break. Sessions come with a visual breathing animation, motivational quotes, and optional calming background audio.
 
 <div align="center">
-  <img src="static_files/Tools.png" width="600"/>
+  <img src="static_files/Tools.png" alt="Self-help tools page featuring focus sessions, timers, and mindfulness exercises" width="600"/>
   <br>
 </div>
 
 * **Breathing Exercises**: A simple and guided exercise with a visual animation to help you relax and regulate your breathing.
 
 <div align="center">
-  <img src="static_files/Breathing.png" width="600"/>
+  <img src="static_files/Breathing.png" alt="Guided breathing exercise interface with visual animation and breathing pattern instructions" width="600"/>
   <br>
 </div>
 
 * **Quick Coping Cards**: Instantly generate randomized coping strategies for grounding, mindfulness, movement, reflection, and creative expression. You can save your favorites for later use.
 
 <div align="center">
-  <img src="static_files/Quick Coping.png" width="600"/>
+  <img src="static_files/Quick Coping.png" alt="Quick coping cards feature showing randomized coping strategies for stress management" width="600"/>
   <br>
 </div>
 
 * **Wellness Hub**: A central hub providing simple wellness tips across five categories: Mind, Body, Nutrition, Sleep, and Stress Relief. It also includes a quick self-check, a daily planner, and a mood tracker.
 
 <div align="center">
-  <img src="static_files/Wellness Hub.png" width="600"/>
+  <img src="static_files/Wellness Hub.png" alt="Wellness resource hub displaying tips for mind, body, nutrition, sleep, and stress relief" width="600"/>
   <br>
 </div>
 
@@ -126,21 +126,21 @@ Experience TalkHeal live here:
 * **Emergency Help**: An "Emergency Help" page provides immediate access to local crisis support by dynamically searching for resources based on your location. It also lists a comprehensive directory of global crisis hotlines.
 
 <div align="center">
-  <img src="static_files/Emergency.png" width="600"/>
+  <img src="static_files/Emergency.png" alt="Emergency help page showing crisis support resources and global mental health hotlines" width="600"/>
   <br>
 </div>
 
 * **Doctor Specialist Recommender**: This tool uses multiple machine learning models (e.g., Logistic Regression, SVM, Random Forest) to suggest potential diseases based on user-input symptoms and recommends a suitable medical specialist.
 
 <div align="center">
-  <img src="static_files/Specialist.png" width="600"/>
+  <img src="static_files/Specialist.png" alt="Doctor specialist recommender tool showing symptom input and medical specialist suggestions" width="600"/>
   <br>
 </div>
 
 * **Mental Health Quizzes**: Integrated PsyToolkit-verified quizzes (GAD-7, PHQ-9, WHO-5) for self-evaluation of anxiety, depression, and overall well-being.
 
 <div align="center">
-  <img src="static_files/Quizzes.png" width="600"/>
+  <img src="static_files/Quizzes.png" alt="Mental health assessment quizzes including GAD-7, PHQ-9, and WHO-5 self-evaluation tools" width="600"/>
   <br>
 </div>
 
@@ -151,9 +151,9 @@ Experience TalkHeal live here:
 * **Customizable User Profile**: Create a user profile with a name and profile picture, and set your preferred font size for the entire application.
 
 <div align="center">
-  <img src="static_files/Home_Dark.png" width="200"/></a>
-  <img src="static_files/Home_Blue.png" width="200"/></a>
-  <img src="static_files/Home_Mint.png" width="200"/></a>
+  <img src="static_files/Home_Dark.png" alt="TalkHeal interface in dark theme mode" width="200"/></a>
+  <img src="static_files/Home_Blue.png" alt="TalkHeal interface in blue theme variation" width="200"/></a>
+  <img src="static_files/Home_Mint.png" alt="TalkHeal interface in mint green theme variation" width="200"/></a>
 </div>
 
 ---
@@ -326,7 +326,7 @@ Report bugs and  issues or propose improvements through our GitHub repository.
 ## Contribution Guidelines 📑
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/74038190/212284145-bf2c01a8-c448-4f1a-b911-996024c84606.gif" width="400">
+  <img src="https://user-images.githubusercontent.com/74038190/212284145-bf2c01a8-c448-4f1a-b911-996024c84606.gif" alt="Animated contribution guidelines divider" width="400">
 </div>
 
 - Firstly Star(⭐) the Repository
