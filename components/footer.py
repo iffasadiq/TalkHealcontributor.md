@@ -1,12 +1,11 @@
 import streamlit as st
 
 def show_footer():
-    st.markdown(
-        '''
+    st.markdown('''
         <style>
         .footer {
             width: 100%;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.15);
             color: #d14a7a;
             padding: 2rem 0 1rem 0;
             margin-top: 3rem;
@@ -36,6 +35,7 @@ def show_footer():
             text-decoration: none;
             transition: color 0.2s;
             font-family: 'Baloo 2', cursive;
+            cursor: pointer;
         }
         .footer-col a:hover {
             color: #ff69b4;
@@ -67,42 +67,40 @@ def show_footer():
         }
         </style>
         <div class="footer">
-            <div style="max-width: 1100px; margin: auto; background: rgba(255, 240, 246, 0.85); border-radius: 18px; box-shadow: 0 2px 18px 0 rgba(255,182,213,0.14); padding: 0.7rem 2.5rem 0.5rem 2.5rem;">
-                <div class="footer-content">
-                    <div class="footer-col">
-                        <h4>Legal</h4>
-                        <a href="#">Privacy Policy</a><br>
-                        <a href="#">Terms of Service</a><br>
-                        <a href="#">Disclaimer</a><br>
-                        <a href="#">Cookie Policy</a><br>
-                        <a href="#">Copyright Notice</a>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Company</h4>
-                        <a href="#">Blog</a><br>
-                        <a href="#">Careers</a><br>
-                        <a href="#">Contact Us</a>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Support</h4>
-                        <a href="#">Help Center</a><br>
-                        <a href="#">FAQs</a>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Features</h4>
-                        <a href="#">App Overview</a>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Community & Social</h4>
-                        <a href="#">Community</a><br>
-                        <a href="#">Social Media</a><br>
-                        <a href="#">Newsletter Signup</a>
-                    </div>
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="/PrivacyPolicy" target="_self">Privacy Policy</a><br>
+                    <a href="/TermsOfService" target="_self">Terms of Service</a><br>
+                    <a href="/Disclaimer" target="_self">Disclaimer</a><br>
+                    <a href="/CookiePolicy" target="_self">Cookie Policy</a><br>
+                    <a href="/CopyrightNotice" target="_self">Copyright Notice</a>
                 </div>
-                <div class="footer-tagline">Healing starts here ✨</div>
-                <div class="footer-copyright">&copy; 2025 TalkHeal. All rights reserved.</div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="/Blog" target="_self">Blog</a><br>
+                    <a href="/Careers" target="_self">Careers</a><br>
+                    <a href="/ContactUs" target="_self">Contact Us</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="/HelpCenter" target="_self">Help Center</a><br>
+                    <a href="/FAQs" target="_self">FAQs</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Features</h4>
+                    <a href="/AppOverview" target="_self">App Overview</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Community & Social</h4>
+                    <a href="/Community" target="_self">Community</a><br>
+                    <a href="/SocialMedia" target="_self">Social Media</a><br>
+                    <a href="/NewsletterSignup" target="_self">Newsletter Signup</a>
+                </div>
             </div>
+            <div class="footer-tagline">Healing starts here ✨</div>
+            <div class="footer-copyright">&copy; 2025 TalkHeal. All rights reserved.</div>
         </div>
-        ''', unsafe_allow_html=True)
+    ''', unsafe_allow_html=True)
 
 # Example usage: show_footer() at the end of your main app page

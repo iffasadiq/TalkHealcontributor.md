@@ -22,12 +22,7 @@ init_session_state()
 
 st.set_page_config(page_title="TalkHeal", page_icon="💬", layout="wide")
 
-no_sidebar_style = """
-    <style>
-        div[data-testid="stSidebarNav"] {display: none;}
-    </style>
-"""
-st.markdown(no_sidebar_style, unsafe_allow_html=True)
+
 
 # --- DB Initialization ---
 if "db_initialized" not in st.session_state:
@@ -110,6 +105,17 @@ if "pinned_messages" not in st.session_state:
 
 if "active_page" not in st.session_state:
     st.session_state.active_page = "TalkHeal"  # default
+
+# --- Footer Navigation State ---
+if "show_privacy_policy" not in st.session_state:
+    st.session_state.show_privacy_policy = False
+
+if st.session_state.show_privacy_policy:
+    from pages.PrivacyPolicy import show as show_privacy
+    show_privacy()
+    from components.footer import show_footer
+    show_footer()
+    st.stop()
 
 # --- 2. SET PAGE CONFIG ---
 apply_global_font_size()
@@ -462,6 +468,10 @@ else:
         render_chat_interface()
         handle_chat_input(model, system_prompt=get_tone_prompt())
         render_session_controls()
+
+        # --- Footer ---
+        from components.footer import show_footer
+        show_footer()
 
 # --- 10. SCROLL SCRIPT ---
 st.markdown("""
