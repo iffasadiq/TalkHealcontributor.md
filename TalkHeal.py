@@ -2,6 +2,8 @@ import streamlit as st
 from auth.auth_utils import init_db
 from components.login_page import show_login_page
 from core.utils import save_conversations, load_conversations
+from components.mood_dashboard import MoodTracker, render_mood_dashboard
+import plotly.express as px
 
 
 # HANDLES ALL SESSION STATE VALUES
@@ -69,7 +71,7 @@ from css.styles import apply_custom_css
 from components.header import render_header
 from components.sidebar import render_sidebar
 from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
-from components.mood_dashboard import render_mood_dashboard
+from components.mood_dashboard import MoodTracker
 from components.emergency_page import render_emergency_page
 from components.focus_session import render_focus_session
 from components.profile import apply_global_font_size
@@ -297,27 +299,167 @@ else:
         </div>
         """, unsafe_allow_html=True)
         
-        mood_options = ['Very Sad 😢', 'Sad 😔', 'Neutral 😐', 'Happy 😊', 'Very Happy 😄']
-        mood = st.slider(
-            'Select your current mood',
-            min_value=1, max_value=5, value=3, step=1,
-            format="",
-            help="This helps personalize your AI conversation"
-        )
+        # Initialize mood tracker if not already done
+        if "mood_tracker" not in st.session_state:
+            st.session_state.mood_tracker = MoodTracker()
         
-        coping_tips = {
-            1: "🤗 It's okay to feel this way. Try some deep breathing exercises to find calm.",
-            2: "📝 Consider writing down your thoughts in the journal to process your feelings.",
-            3: "🚶‍♀️ A short walk or some light stretching might help you feel balanced.",
-            4: "✨ Great to hear you're feeling happy! Share something positive in your journal.",
-            5: "🌟 You're shining today! Keep spreading that positivity with a kind act."
-        }
+        tracker = st.session_state.mood_tracker
         
-        col_mood, col_tip = st.columns([1, 2])
-        with col_mood:
-            st.markdown(f"**Current mood**: {mood_options[mood-1]}")
-        with col_tip:
-            st.info(coping_tips.get(mood, 'Let\'s explore how you\'re feeling.'))
+        # Mood Entry Form
+        with st.form("mood_entry_form"):
+            st.markdown("### � Record Your Mood")
+            
+            # Mood Level Selection
+            mood_options = {
+                "very_low": "� Very Low",
+                "low": "😔 Low", 
+                "okay": "� Okay",
+                "good": "😊 Good",
+                "great": "�😄 Great"
+            }
+            
+            selected_mood = st.selectbox(
+                "How are you feeling right now?",
+                options=list(mood_options.keys()),
+                format_func=lambda x: mood_options[x],
+                help="Select your current emotional state"
+            )
+            
+            # Context/Reason
+            context_options = [
+                "Work/School related",
+                "Family matters",
+                "Health concerns",
+                "Social interactions",
+                "Financial stress",
+                "Weather/environment",
+                "Sleep quality",
+                "Physical activity",
+                "Food/Nutrition",
+                "Personal achievement",
+                "Relationship issues",
+                "Future worries",
+                "Other"
+            ]
+            
+            context_reason = st.selectbox(
+                "What's influencing your mood today?",
+                options=context_options,
+                help="Understanding context helps provide better support"
+            )
+            
+            # Activities
+            activity_options = [
+                "Exercise/Physical activity",
+                "Meditation/Mindfulness",
+                "Reading",
+                "Writing/Journaling",
+                "Socializing",
+                "Hobbies/Creative work",
+                "Watching TV/Movies",
+                "Gaming",
+                "Cooking/Eating",
+                "Shopping",
+                "Housework/Chores",
+                "Learning/Education",
+                "Music/Audio",
+                "Nature/Outdoors",
+                "Resting/Sleeping",
+                "Other"
+            ]
+            
+            selected_activities = st.multiselect(
+                "What activities have you done today?",
+                options=activity_options,
+                help="Select all that apply"
+            )
+            
+            # Notes
+            mood_notes = st.text_area(
+                "Additional notes (optional)",
+                height=100,
+                placeholder="Share any thoughts, feelings, or details about your day...",
+                help="This helps your AI companion understand you better"
+            )
+            
+            # Submit button
+            submitted = st.form_submit_button("💾 Save Mood Entry")
+            
+            if submitted:
+                try:
+                    # Save the mood entry
+                    tracker.add_mood_entry(
+                        mood_level=selected_mood,
+                        notes=mood_notes,
+                        context_reason=context_reason,
+                        activities=selected_activities
+                    )
+                    
+                    st.success("✅ Your mood has been recorded successfully!")
+                    
+                    # Show personalized response based on mood
+                    mood_responses = {
+                        "very_low": "🤗 I'm here for you. Consider reaching out to a trusted friend or professional if you need support.",
+                        "low": "📝 Journaling your thoughts might help process your feelings. Would you like to talk about what's bothering you?",
+                        "okay": "🚶‍♀️ A short walk or some light stretching might help you feel more balanced.",
+                        "good": "✨ Great to hear you're feeling good! What positive things happened today?",
+                        "great": "🌟 You're shining today! Keep spreading that positivity with a kind act."
+                    }
+                    
+                    st.info(mood_responses.get(selected_mood, "Thanks for sharing how you're feeling!"))
+                    
+                except Exception as e:
+                    st.error(f"❌ Error saving mood entry: {str(e)}")
+        
+        # Quick Mood Stats
+        st.markdown("---")
+        st.markdown("### 📊 Your Recent Mood Summary")
+        
+        try:
+            # Get recent mood data
+            recent_df = tracker.get_mood_dataframe(days=7)
+            
+            if not recent_df.empty:
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    avg_mood = recent_df['mood_level'].apply(tracker.get_mood_numeric).mean()
+                    st.metric("Average Mood (7 days)", f"{avg_mood:.1f}/5")
+                
+                with col2:
+                    total_entries = len(recent_df)
+                    st.metric("Entries This Week", total_entries)
+                
+                with col3:
+                    most_common = recent_df['mood_level'].mode().iloc[0] if not recent_df.empty else "N/A"
+                    st.metric("Most Common Mood", tracker.get_mood_label(most_common))
+                
+                # Quick chart
+                st.markdown("#### Mood Trend (Last 7 Days)")
+                fig = px.line(recent_df, x='date', y=recent_df['mood_level'].apply(tracker.get_mood_numeric), 
+                             markers=True, line_shape='linear')
+                fig.update_layout(
+                    xaxis_title="Date",
+                    yaxis_title="Mood Level",
+                    yaxis=dict(tickmode='array', tickvals=[1,2,3,4,5], 
+                              ticktext=['Very Low', 'Low', 'Okay', 'Good', 'Great']),
+                    height=200
+                )
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.info("📝 Start tracking your mood to see insights here!")
+                
+        except Exception as e:
+            st.warning("Unable to load mood statistics. This is normal if you haven't tracked your mood yet.")
+        
+        st.markdown("---")
+        
+        # Mood Dashboard Access
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button("📊 View Mood Dashboard", use_container_width=True, type="primary"):
+                st.session_state.show_mood_dashboard = True
+                st.rerun()
         
         st.markdown("---")
         

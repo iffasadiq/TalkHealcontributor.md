@@ -20,3 +20,10 @@ pandas
 numpy
 python-dotenv
 PyJWT
+statsmodels
+prophet
+timezonefinder
+meteostat
+textblob
+transformers
+torch
