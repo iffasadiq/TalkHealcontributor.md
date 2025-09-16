@@ -4,7 +4,7 @@ def show():
     st.markdown("""
         <div style='background: linear-gradient(135deg, #ffe4f0 0%, #fff 100%); border-radius: 18px; box-shadow: 0 2px 18px 0 rgba(209,74,122,0.12); padding: 2.5rem 2.5rem 2rem 2.5rem; margin: 2rem auto; max-width: 900px;'>
             <h2 style='color: #d14a7a; font-family: Baloo 2, cursive;'>TalkHeal Blog</h2>
-            <p style='color: #222; font-size: 1.1rem;'>
+            <div style='color: #000; font-size: 1.1rem;'>
                 Welcome to the TalkHeal Blog!<br><br>
                 Here you'll find articles, tips, and stories about mental wellness, coping strategies, and community updates.<br><br>
                 <b>Latest Posts:</b><br>
@@ -16,7 +16,7 @@ def show():
                 <br>
                 Stay tuned for more updates and resources.<br><br>
                 <i>Content coming soon!</i>
-            </p>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
