@@ -293,13 +293,6 @@ def show_login_page():
                 st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
-            # Google Login Button (still a placeholder)
-            st.markdown('<div class="auth-button">', unsafe_allow_html=True)
-            if st.button("Continue with Google"):
-                st.info("Google Login Clicked!")
-            st.markdown('</div>', unsafe_allow_html=True)
-            # --- YOUR NEW CODE ENDS HERE ---
-
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
             if st.button("Forget Password?", key="switch_to_forget_page"):
                 st.session_state.show_signup = False
