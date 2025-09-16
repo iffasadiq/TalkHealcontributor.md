@@ -117,7 +117,7 @@ def show_login_page():
             position: relative;
         }
         .auth-button button::after {
-            content: \" 💖\";
+            content: " 💖";
             font-size: 1.1rem;
             margin-left: 6px;
         }
@@ -269,6 +269,28 @@ def show_login_page():
                                         
                     else:
                         st.error("**Invalid email or password.**")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+            # --- YOUR NEW CODE STARTS HERE ---
+            st.write("--- or ---")
+
+            # Guest Login Button with Full Logic
+            st.markdown('<div class="auth-button">', unsafe_allow_html=True)
+            if st.button("Login as Guest"):
+                # Set the authentication flag to True, just like in a real login
+                st.session_state.authenticated = True
+                
+                # Create a simple, fake user profile for the Guest
+                st.session_state.user_profile = {
+                    "name": "Guest Healer",
+                    "email": "guest@talkheal.app",
+                    "profile_picture": None,
+                    "join_date": datetime.now().strftime("%B %Y"),
+                    "font_size": "Medium"
+                }
+                
+                # Rerun the app to enter the main dashboard
+                st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
