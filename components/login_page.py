@@ -197,7 +197,7 @@ def show_login_page():
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
             if st.button("Sign Up", key="signup_submit"):
                 if not name or not email or not password:
-                    st.warning("Please fill out all fields.")
+                    st.error("**Please fill out all fields.**")
                 else:
                     success, message = register_user(name, email, password)
                     if success:
@@ -219,7 +219,7 @@ def show_login_page():
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
             if st.button("Send Reset Link", key="forget_submit"):
                 if not email :
-                    st.warning("Please fill out email id")
+                    st.error("**Please fill out email id**")
                 else:
                     success, updated_at = check_user(email)
                     if success:
@@ -230,9 +230,9 @@ def show_login_page():
                             st.session_state.notify_page=True
                             st.rerun()
                         else:
-                            st.error("Error while Sending Email!")
+                            st.error("**Error while Sending Email!**")
                     else:
-                        st.error("User does not exist ! Please Sign Up First")
+                        st.error("**User does not exist ! Please Sign Up First**")
             st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown('<div class="switch-link">', unsafe_allow_html=True)
@@ -253,7 +253,7 @@ def show_login_page():
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
             if st.button("Login", key="login_submit"):
                 if not email or not password:
-                    st.warning("Please enter your email and password.")
+                    st.error("**Please enter your email and password.**")
                 else:
                     success, user = authenticate_user(email, password)
                     if success:
@@ -268,7 +268,7 @@ def show_login_page():
                         st.rerun()
                                         
                     else:
-                        st.error("Invalid email or password.")
+                        st.error("**Invalid email or password.**")
             st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
