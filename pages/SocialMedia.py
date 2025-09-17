@@ -5,7 +5,7 @@ def show():
     st.markdown("""
         <div style='background: linear-gradient(135deg, #ffe4f0 0%, #fff 100%); border-radius: 18px; box-shadow: 0 2px 18px 0 rgba(209,74,122,0.12); padding: 2.5rem 2.5rem 2rem 2.5rem; margin: 2rem auto; max-width: 900px;'>
             <h2 style='color: #d14a7a; font-family: Baloo 2, cursive;'>Connect with TalkHeal on Social Media</h2>
-            <p style='color: #222; font-size: 1.1rem;'>
+            <div style='color: #222; font-size: 1.1rem;'>
                 Stay updated, inspired, and engaged!<br><br>
                 <b>Follow us for:</b>
                 <ul>
@@ -24,13 +24,8 @@ def show():
                 </ul>
                 <br>
                 <i>Join our online family and be part of the movement for better mental wellness!</i>
-            </p>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
 show()
-import streamlit as st
-
-def show():
-    st.title("Social Media")
-    st.write("Connect with TalkHeal on social media. Links coming soon.")
