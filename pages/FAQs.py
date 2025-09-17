@@ -9,7 +9,7 @@ st.markdown("""
 st.markdown("""
     <div style='background-color: #fff; border-radius: 10px; box-shadow: 0 2px 8px #d6336c22; padding: 2rem; margin-bottom: 2rem;'>
         <h3 style='color: #d6336c;'>Welcome to TalkHeal!</h3>
-        <p style='color: #222;'>
+        <div style='color: #222;'>
             TalkHeal is your trusted companion for mental wellness, designed to empower you on your journey to emotional health. Our platform combines science-backed tools, expert resources, and a supportive community to help you thrive every day.<br><br>
             <b>Key Features:</b>
             <ul>
@@ -29,6 +29,6 @@ st.markdown("""
             </ul>
             <br>
             <b>Start your journey with TalkHeal and discover a happier, healthier you!</b>
-        </p>
+        </div>
     </div>
 """, unsafe_allow_html=True)
