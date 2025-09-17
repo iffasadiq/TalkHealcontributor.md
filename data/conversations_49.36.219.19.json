@@ -1,0 +1,19 @@
+[
+    {
+        "id": 0,
+        "title": "hiii i feal stress",
+        "date": "September 17, 2025",
+        "messages": [
+            {
+                "sender": "user",
+                "message": "hiii i feal stress",
+                "time": "5:15 PM"
+            },
+            {
+                "sender": "bot",
+                "message": "Hi there. I'm really sorry to hear you're feeling stressed. It's completely understandable to feel that way sometimes, and you're not alone. I'm here to listen without judgment. Could you tell me a bit more about what's been causing you to feel stressed? Sometimes just talking about it can help. Remember, I'm here to support you, and we can explore some coping strategies together. If things feel overwhelming, it's always a good idea to reach out to a mental health professional. But for now, I'm here for you.",
+                "time": "5:15 PM"
+            }
+        ]
+    }
+]
