@@ -1,250 +1,273 @@
-# FileName:goal_setting.py
-# FileContents:
 import streamlit as st
-from datetime import datetime, timedelta
 import json
 import os
-import google.generativeai as genai
-from google.generativeai import types as genai_types
-#from google.generativeai.types import GenerationError
-from core import config # Assuming config.py is in the core directory and has the configure function
-def generate_1_week_plan(user_goal):
-    """
-    Uses the Gemini API to generate a 1-week daily plan based on user goal.
-    """
-    model = config.configure_gemini()
-    if model is None:
-        st.error("Gemini API is not configured. Cannot generate plan.")
-        return ["Could not generate a plan. Please check API configuration."]
+from datetime import datetime
+from core.utils import get_ai_response
 
-    system_prompt = """
-    You are an AI assistant specialized in mental health and wellness goal setting.
-    Your task is to create a personalized 1-week daily plan (7 days) for a user based on their mental health goal.
-    Each day should have a specific, actionable step related to the goal.
-    The plan should be encouraging, realistic, and focus on small, manageable steps.
-    Provide only the plan as a list of daily actions, without any introductory or concluding remarks.
-    Each item in the list should start with the day of the week, followed by a colon and the action.
-    Example format:
-    Monday: Practice 10 minutes of deep breathing.
-    Tuesday: Take a 20-minute walk outdoors.
-    Wednesday: Write down 3 things you are grateful for.
-    ...
-    """
-
-    try:
-        response = model.generate_content([
-            {"role": "system", "parts": [system_prompt]},
-            {"role": "user", "parts": [f"Generate a 1-week plan for the goal: '{user_goal}'"]}
-        ])
-        
-        # Assuming the response text is a string with each day's plan on a new line
-        plan_text = response.text.strip()
-        if plan_text:
-            # Split the response into individual plan steps
-            generated_plan = [step.strip() for step in plan_text.split('\n') if step.strip()]
-            return generated_plan
-        else:
-            return ["Could not generate a plan. The AI returned an empty response."]
-
-    except ValueError as e:
-        st.error(f"Invalid input or model configuration issue: {e}")
-        return ["Could not generate a plan due to an internal error."]
-    except genai_types.BlockedPromptException:
-        st.error("Content policy violation. Please rephrase your goal.")
-        return ["Could not generate a plan due to content policy. Please try a different goal."]
-    #except GenerationError as e: # Add this specific exception handler
-       # st.error(f"Failed to generate response from AI: {e}")
-       # return ["Could not generate a plan. Please try again later."]
-    except Exception as e:
-        st.error(f"An unexpected error occurred with the AI: {e}")
-        return ["An unexpected error occurred while generating the plan."]
-class GoalTracker:
+class GoalPlanner:
     def __init__(self):
-        self.data_file = "data/goals_data.json"
+        self.goals_file = "data/user_goals.json"
         self.ensure_data_directory()
-        self.load_goals_data()
+        self.load_goals()
     
     def ensure_data_directory(self):
         os.makedirs("data", exist_ok=True)
     
-    def load_goals_data(self):
-        if os.path.exists(self.data_file):
+    def load_goals(self):
+        if os.path.exists(self.goals_file):
             try:
-                with open(self.data_file, 'r') as f:
-                    st.session_state.goals_data = json.load(f)
-            except json.JSONDecodeError:
-                st.session_state.goals_data = []
+                with open(self.goals_file, 'r') as f:
+                    st.session_state.user_goals = json.load(f)
+            except:
+                st.session_state.user_goals = []
         else:
-            st.session_state.goals_data = []
+            st.session_state.user_goals = []
     
-    def save_goals_data(self):
-        with open(self.data_file, 'w') as f:
-            json.dump(st.session_state.goals_data, f, indent=2)
-            
-    def add_goal(self, goal_statement, plan):
-        start_date = datetime.now()
-        end_date = start_date + timedelta(weeks=1)
-        new_goal = {
-            "id": str(datetime.now().timestamp()),
-            "goal_statement": goal_statement,
-            "plan": plan,
-            "start_date": start_date.isoformat(),
-            "end_date": end_date.isoformat(),
-            "progress": ["pending"] * len(plan),
-            "status": "active",
-            "created_at": datetime.now().isoformat()
+    def save_goals(self):
+        with open(self.goals_file, 'w') as f:
+            json.dump(st.session_state.user_goals, f, indent=2)
+    
+    def create_goal(self, prompt, plan_content, goal_type="ai_generated"):
+        goal = {
+            "id": len(st.session_state.user_goals) + 1,
+            "prompt": prompt,
+            "goal_type": goal_type, # New field to distinguish AI vs. Manual
+            "created_date": datetime.now().isoformat(),
+            "completed": False,
+            "progress": 0,
+            "milestones": [] # Milestones might be used for AI, or adapted for manual
         }
-        st.session_state.goals_data.append(new_goal)
-        self.save_goals_data()
-        return new_goal
-
-    def update_progress(self, goal_id, step_index, status):
-        for goal in st.session_state.goals_data:
+        
+        if goal_type == "ai_generated":
+            goal["plan"] = plan_content # AI-generated plan is a single string
+        elif goal_type == "manual_weekly":
+            goal["weekly_tasks"] = plan_content # Manual plan is a dictionary of tasks
+        
+        st.session_state.user_goals.append(goal)
+        self.save_goals()
+    
+    def delete_goal(self, goal_id):
+        st.session_state.user_goals = [g for g in st.session_state.user_goals if g["id"] != goal_id]
+        self.save_goals()
+    
+    def update_progress(self, goal_id, progress):
+        for goal in st.session_state.user_goals:
             if goal["id"] == goal_id:
-                if 0 <= step_index < len(goal["progress"]):
-                    goal["progress"][step_index] = status
-                    if all(s == "completed" for s in goal["progress"]):
-                        goal["status"] = "completed"
-                    elif any(s == "completed" for s in goal["progress"]):
-                        goal["status"] = "active"
-                    self.save_goals_data()
-                    return True
-        return False
+                goal["progress"] = progress
+                if progress >= 100:
+                    goal["completed"] = True
+                self.save_goals()
+                break
 
-    def update_goal_status(self, goal_id, status):
-        for goal in st.session_state.goals_data:
-            if goal["id"] == goal_id:
-                goal["status"] = status
-                self.save_goals_data()
-                return True
-        return False
+def generate_ai_goal_plan(prompt):
+    """Generate a mental health goal plan using AI"""
+    system_prompt = """You are a mental health coach specializing in creating actionable, 
+    compassionate goal plans. Create a structured 4-week plan with weekly milestones based 
+    on the user's mental health goal. Include specific, measurable actions and emphasize 
+    self-compassion. Format with clear sections and bullet points."""
+    
+    user_prompt = f"Create a mental health goal plan for: {prompt}"
+    
+    try:
+        response = get_ai_response(f"{system_prompt}\n\n{user_prompt}", "openrouter/claude-sonnet-4")
+        return response
+    except Exception as e:
+        return f"I couldn't generate a plan right now. Please try again later. Error: {str(e)}"
 
-def render_goal():
-    st.markdown("## 🎯AI Based Mental Health Planner")
-    st.markdown("Enter your mental health goal below, and get a personalized 1-week plan.")
-
-    if "goal_tracker" not in st.session_state:
-        st.session_state.goal_tracker = GoalTracker()
-
-    tracker = st.session_state.goal_tracker
-
-    if "goal_input_cleared" not in st.session_state:
-        st.session_state.goal_input_cleared = False
-
-    if st.button("← Back to Chat", type="primary"):
-        st.session_state.show_goal_setting = False
-        st.session_state.goal_input_cleared = False
-        st.experimental_rerun()
-
-    st.markdown("---")
-
-    goal_input_value = "" if st.session_state.goal_input_cleared else st.session_state.get("new_goal_input", "")
-
-    goal_statement = st.text_input(
-        "Your mental health goal (e.g., 'reduce stress', 'make me happy', 'improve mental health','mental health exercise'):",
-        value=goal_input_value,
-        key="new_goal_input"
+def render_goal_creation():
+    """Render the goal creation interface"""
+    st.markdown("### 🎯 Create New Mental Health Goal")
+    
+    goal_creation_method = st.radio(
+        "How would you like to create your goal?",
+        ["✨ Generate Plan with AI", "✍️ Create Manual One-Week Plan"],
+        key="goal_creation_method",
+        horizontal=True
     )
 
-    if st.button("Generate 1-Week Plan", type="secondary"):
-        if goal_statement.strip():
-            with st.spinner("Generating your personalized 1-week plan..."):
-                plan = generate_1_week_plan(goal_statement)
-                if plan and "Could not generate a plan" not in plan[0]: # Check if plan generation was successful
-                    tracker.add_goal(goal_statement, plan)
-                    st.success("✅ Your 1-week plan has been generated and added!")
-                    st.session_state.goal_input_cleared = True
-                    st.experimental_rerun()
-                else:
-                    st.error("Failed to generate a plan. Please try again or rephrase your goal.")
-        else:
-            st.warning("Please enter your goal.")
-
-    st.markdown("---")
-
-    # Show active goals with progress tracking (similar to previous example)
-    st.subheader("🚀 Your Active Goals")
-    active_goals = [g for g in st.session_state.goals_data if g["status"] == "active"]
-
-    if not active_goals:
-        st.info("No active goals yet. Create one above!")
-    else:
-        for goal in active_goals:
-            current_date = datetime.now()
-            start_dt = datetime.fromisoformat(goal["start_date"])
-            end_dt = datetime.fromisoformat(goal["end_date"])
-            days_left = (end_dt - current_date).days
-            progress_percentage = (goal["progress"].count("completed") / len(goal["plan"])) * 100 if goal["plan"] else 0
-
-            with st.expander(f"🎯 **{goal['goal_statement']}** (Ends: {end_dt.strftime('%b %d')}, {days_left} days left)", expanded=True):
-                st.progress(progress_percentage / 100, text=f"Progress: {progress_percentage:.0f}%")
-                st.markdown(f"**Plan Start Date:** {start_dt.strftime('%B %d, %Y')}")
-                st.markdown(f"**Plan End Date:** {end_dt.strftime('%B %d, %Y')}")
+    if goal_creation_method == "✨ Generate Plan with AI":
+        with st.form(key="ai_goal_creation_form"):
+            goal_prompt = st.text_area(
+                "Describe your mental health goal for AI generation:",
+                placeholder="e.g., Reduce stress, Improve sleep, Build better habits, Increase happiness...",
+                height=100,
+                key="ai_goal_prompt"
+            )
+            
+            submitted = st.form_submit_button("✨ Generate Plan", type="primary")
+        
+        if submitted and goal_prompt.strip():
+            with st.spinner("🧠 Creating your personalized mental health plan..."):
+                ai_plan = generate_ai_goal_plan(goal_prompt)
                 
-                st.markdown("#### Your 1-Week Step-by-Step Plan:")
-                for step_idx, step in enumerate(goal["plan"]):
-                    col1, col2 = st.columns([0.8, 0.2])
+                if "Error" not in ai_plan:
+                    # Initialize goal planner and save the new goal
+                    planner = GoalPlanner()
+                    planner.create_goal(goal_prompt, ai_plan, goal_type="ai_generated")
+                    
+                    st.success("✅ Your AI-generated mental health plan has been created!")
+                    st.markdown("---")
+                    st.markdown("### 📋 Your Generated Plan")
+                    st.markdown(ai_plan)
+                    
+                    # Option to start a new plan or view all plans
+                    col1, col2 = st.columns(2)
                     with col1:
-                        st.markdown(f"- {step}")
+                        if st.button("➕ Create Another Plan", use_container_width=True):
+                            st.session_state.show_goal_creation = True
+                            st.rerun()
                     with col2:
-                        current_status = goal["progress"][step_idx]
-                        new_status = st.selectbox(
-                            "Status",
-                            ["pending", "completed", "skipped"],
-                            index=["pending", "completed", "skipped"].index(current_status),
-                            key=f"progress_select_{goal['id']}_{step_idx}",
-                            label_visibility="collapsed"
-                        )
-                        if new_status != current_status:
-                            tracker.update_progress(goal["id"], step_idx, new_status)
-                            st.experimental_rerun()
+                        if st.button("📊 View All Plans", use_container_width=True):
+                            st.session_state.show_goal_management = True
+                            st.rerun()
+                else:
+                    st.error(ai_plan)
+
+    elif goal_creation_method == "✍️ Create Manual One-Week Plan":
+        st.markdown("---")
+        st.markdown("### 📝 Design Your One-Week Goal")
+        with st.form(key="manual_goal_creation_form"):
+            manual_goal_name = st.text_input(
+                "Give your one-week goal a name:",
+                placeholder="e.g., My Week of Mindfulness, Stress-Free Week",
+                key="manual_goal_name"
+            )
+            
+            st.markdown("#### Daily Tasks (One task per line)")
+            daily_tasks = {}
+            days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+            for day in days_of_week:
+                daily_tasks[day] = st.text_area(
+                    f"Tasks for {day}:",
+                    placeholder=f"e.g., 1. Meditate for 10 min\n2. Go for a walk",
+                    height=80,
+                    key=f"manual_task_{day}"
+                )
+            
+            manual_submitted = st.form_submit_button("💾 Save Manual Plan", type="primary")
+        
+        if manual_submitted and manual_goal_name.strip():
+            # Prepare plan content for manual goal
+            plan_content = {day: tasks.strip().split('\n') for day, tasks in daily_tasks.items()}
+            
+            planner = GoalPlanner()
+            planner.create_goal(manual_goal_name, plan_content, goal_type="manual_weekly")
+            
+            st.success("✅ Your manual one-week plan has been created!")
+            st.markdown("---")
+            st.markdown("### 📋 Your Manual Plan Overview")
+            st.markdown(f"**Goal:** {manual_goal_name}")
+            for day, tasks in plan_content.items():
+                if tasks and tasks[0]: # Check if there are actual tasks
+                    st.markdown(f"**{day}:**")
+                    for task in tasks:
+                        st.markdown(f"- {task}")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                if st.button("➕ Create Another Plan", use_container_width=True):
+                    st.session_state.show_goal_creation = True
+                    st.rerun()
+            with col2:
+                if st.button("📊 View All Plans", use_container_width=True):
+                    st.session_state.show_goal_management = True
+                    st.rerun()
+        elif manual_submitted:
+            st.error("Please provide a name for your manual goal.")
+
+
+def render_goal_management():
+    """Render the goal management interface"""
+    st.markdown("### 📊 Your Mental Health Goals")
+    
+    if "user_goals" not in st.session_state or not st.session_state.user_goals:
+        st.info("You haven't created any mental health goals yet.")
+        if st.button("➕ Create Your First Goal", type="primary"):
+            st.session_state.show_goal_creation = True
+            st.rerun()
+        return
+    
+    planner = GoalPlanner()
+    
+    for goal in st.session_state.user_goals:
+        with st.expander(f"🎯 {goal['prompt'][:50]}...", expanded=False):
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                # Progress tracking
+                progress = st.slider(
+                    "Progress",
+                    0, 100, goal["progress"],
+                    key=f"progress_{goal['id']}",
+                    help="Track your progress toward this goal"
+                )
                 
-                st.markdown("---")
-                col_actions = st.columns(3)
-                with col_actions[0]:
-                    if st.button("Mark as Completed", key=f"complete_goal_{goal['id']}", type="success"):
-                        tracker.update_goal_status(goal["id"], "completed")
-                        st.success(f"Goal '{goal['goal_statement']}' marked as completed!")
-                        st.experimental_rerun()
-                with col_actions[1]:
-                    if st.button("Abandon Goal", key=f"abandon_goal_{goal['id']}", type="warning"):
-                        tracker.update_goal_status(goal["id"], "abandoned")
-                        st.warning(f"Goal '{goal['goal_statement']}' marked as abandoned.")
-                        st.experimental_rerun()
-                with col_actions[2]:
-                    if st.button("Delete Goal", key=f"delete_goal_{goal['id']}", type="danger"):
-                        st.session_state.goals_data = [g for g in st.session_state.goals_data if g["id"] != goal["id"]]
-                        tracker.save_goals_data()
-                        st.error(f"Goal '{goal['goal_statement']}' deleted.")
-                        st.experimental_rerun()
-
-    st.markdown("---")
-
-    # Completed & Abandoned Goals
-    st.subheader("Archive: Completed & Abandoned Goals")
-    completed_abandoned_goals = [g for g in st.session_state.goals_data if g["status"] in ["completed", "abandoned"]]
-
-    if not completed_abandoned_goals:
-        st.info("No completed or abandoned goals yet.")
-    else:
-        for goal in completed_abandoned_goals:
-            status_emoji = "✅" if goal["status"] == "completed" else "❌"
-            with st.expander(f"{status_emoji} **{goal['goal_statement']}** ({goal['status'].capitalize()})"):
-                st.markdown(f"**Created On:** {datetime.fromisoformat(goal['created_at']).strftime('%B %d, %Y')}")
-                st.markdown(f"**Status:** {goal['status'].capitalize()}")
-                st.markdown("#### Original Plan:")
-                for step in goal["plan"]:
-                    st.markdown(f"- {step}")
+                if progress != goal["progress"]:
+                    planner.update_progress(goal["id"], progress)
+                    st.rerun()
                 
-                col1, col2 = st.columns(2)
-                with col1:
-                    if st.button("Reactivate Goal", key=f"reactivate_goal_{goal['id']}", type="secondary"):
-                        tracker.update_goal_status(goal["id"], "active")
-                        st.info(f"Goal '{goal['goal_statement']}' reactivated.")
-                        st.experimental_rerun()
-                with col2:
-                    if st.button("Delete Goal", key=f"delete_archived_goal_{goal['id']}", type="danger"):
-                        st.session_state.goals_data = [g for g in st.session_state.goals_data if g["id"] != goal["id"]]
-                        tracker.save_goals_data()
-                        st.error(f"Goal '{goal['goal_statement']}' deleted.")
-                        st.experimental_rerun()
+                # Display the plan based on goal_type
+                st.markdown("### 📝 Your Plan")
+                if goal.get("goal_type") == "ai_generated":
+                    st.markdown(goal["plan"])
+                elif goal.get("goal_type") == "manual_weekly":
+                    st.markdown(f"**Goal Name:** {goal['prompt']}")
+                    for day, tasks in goal["weekly_tasks"].items():
+                        if tasks and tasks[0]: # Check if there are actual tasks
+                            st.markdown(f"**{day}:**")
+                            for task in tasks:
+                                st.markdown(f"- {task}")
+                        else:
+                            st.markdown(f"**{day}:** No tasks assigned.")
+                else:
+                    st.markdown("Plan type not recognized.")
+                
+            with col2:
+                # Goal metadata and actions
+                st.metric("Progress", f"{goal['progress']}%")
+                status = "✅ Completed" if goal["completed"] else "🟡 In Progress"
+                st.write(status)
+                
+                created_date = datetime.fromisoformat(goal["created_date"]).strftime("%b %d, %Y")
+                st.caption(f"Created: {created_date}")
+                
+                # Delete button
+                if st.button("🗑️ Delete", key=f"delete_{goal['id']}", use_container_width=True):
+                    planner.delete_goal(goal["id"])
+                    st.rerun()
+    
+    # Add new goal button
+    if st.button("➕ Add New Goal", type="primary"):
+        st.session_state.show_goal_creation = True
+        st.rerun()
+
+def render_goal_planning():
+    """Main function to render the goal planning feature"""
+    # Initialize session state variables
+    if "show_goal_creation" not in st.session_state:
+        st.session_state.show_goal_creation = False
+    if "show_goal_management" not in st.session_state:
+        st.session_state.show_goal_management = True
+       
+    # Back button to home
+    if st.button("← Back to Home", type="primary"):
+        st.session_state.show_goal_planning = False
+        st.session_state.active_page = "TalkHeal" # This will trigger the main page rendering
+        st.rerun()
+    # Main header
+    st.markdown("""
+    <div class="main-header">
+        <h1>🎯 Mental Health Goal Planning</h1>
+        <p>Set goals, create actionable plans, and track your progress</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Navigation tabs
+    tab1, tab2 = st.tabs(["📋 Manage Goals", "➕ Create New Goal"])
+    
+    with tab1:
+        render_goal_management()
+    
+    with tab2:
+        render_goal_creation()
+
