@@ -22,6 +22,49 @@ GLOBAL_RESOURCES = [
      "url": "https://www.childhelplineinternational.org/"}
 ]
 
+# --- SIDEBAR NAVIGATION ---
+def render_sidebar_navigation():
+    """Render the main navigation buttons in sidebar"""
+    st.sidebar.markdown("### 🧭 Navigation")
+    
+    # Chat Interface Button
+    if st.sidebar.button("💬 Chat Interface", use_container_width=True, type="secondary"):
+        st.session_state.show_chat_interface = True
+        st.session_state.show_mood_dashboard = False
+        st.session_state.show_focus_session = False
+        st.session_state.show_emergency_page = False
+        st.session_state.show_goal_planning = False
+        st.rerun()
+
+    # Mood Dashboard Button
+    if st.sidebar.button("📊 Mood Dashboard", use_container_width=True, type="secondary"):
+        st.session_state.show_mood_dashboard = True
+        st.session_state.show_chat_interface = False
+        st.session_state.show_focus_session = False
+        st.session_state.show_emergency_page = False
+        st.session_state.show_goal_planning = False
+        st.rerun()
+
+    # Focus Session Button
+    if st.sidebar.button("⏱️ Focus Session", use_container_width=True, type="secondary"):
+        st.session_state.show_focus_session = True
+        st.session_state.show_chat_interface = False
+        st.session_state.show_mood_dashboard = False
+        st.session_state.show_emergency_page = False
+        st.session_state.show_goal_planning = False
+        st.rerun()
+
+    # NEW: Goal Planning Button
+    if st.sidebar.button("🎯 Goal Planning", use_container_width=True, type="secondary"):
+        st.session_state.show_goal_planning = True
+        st.session_state.show_chat_interface = False
+        st.session_state.show_mood_dashboard = False
+        st.session_state.show_focus_session = False
+        st.session_state.show_emergency_page = False
+        st.rerun()
+
+    st.sidebar.markdown("---")
+
 def get_country_from_coords(lat, lon):
     try:
         url = f"https://geocode.maps.co/reverse?lat={lat}&lon={lon}"
@@ -260,6 +303,10 @@ def render_ambient_sounds():
 
 def render_sidebar():
     """Renders the left sidebar with organized sections."""
+    
+    # Render the navigation buttons at the top
+    render_sidebar_navigation()
+    
     if "pinned_messages" in st.session_state and st.session_state.pinned_messages:
         pin_count = len(st.session_state.pinned_messages)
         st.markdown(f"""
@@ -268,7 +315,6 @@ def render_sidebar():
         </div>
         """, unsafe_allow_html=True)
         
-
     # Pinned Messages navigation
     if st.button("📌 View Pinned Messages", use_container_width=True):
         st.session_state.active_page = "PinnedMessages"
