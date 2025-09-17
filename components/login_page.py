@@ -1,4 +1,5 @@
 import streamlit as st
+from datetime import datetime
 from auth.auth_utils import register_user, authenticate_user , check_user
 from auth.mail_utils import send_reset_email
 from auth.jwt_utils import create_reset_token
@@ -116,7 +117,7 @@ def show_login_page():
             position: relative;
         }
         .auth-button button::after {
-            content: \" 💖\";
+            content: " 💖";
             font-size: 1.1rem;
             margin-left: 6px;
         }
@@ -196,7 +197,7 @@ def show_login_page():
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
             if st.button("Sign Up", key="signup_submit"):
                 if not name or not email or not password:
-                    st.warning("Please fill out all fields.")
+                    st.error("**Please fill out all fields.**")
                 else:
                     success, message = register_user(name, email, password)
                     if success:
@@ -218,7 +219,7 @@ def show_login_page():
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
             if st.button("Send Reset Link", key="forget_submit"):
                 if not email :
-                    st.warning("Please fill out email id")
+                    st.error("**Please fill out email id**")
                 else:
                     success, updated_at = check_user(email)
                     if success:
@@ -229,9 +230,9 @@ def show_login_page():
                             st.session_state.notify_page=True
                             st.rerun()
                         else:
-                            st.error("Error while Sending Email!")
+                            st.error("**Error while Sending Email!**")
                     else:
-                        st.error("User does not exist ! Please Sign Up First")
+                        st.error("**User does not exist ! Please Sign Up First**")
             st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown('<div class="switch-link">', unsafe_allow_html=True)
@@ -252,15 +253,44 @@ def show_login_page():
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)
             if st.button("Login", key="login_submit"):
                 if not email or not password:
-                    st.warning("Please enter your email and password.")
+                    st.error("**Please enter your email and password.**")
                 else:
                     success, user = authenticate_user(email, password)
                     if success:
                         st.session_state.authenticated = True
-                        st.session_state.user_name = user['name']
+                        st.session_state.user_profile = {
+                            "name": user.get("name", ""),
+                            "email": user.get("email", email),
+                            "profile_picture": user.get("photo", None),
+                            "join_date": user.get("join_date", datetime.now().strftime("%B %Y")),
+                            "font_size": user.get("font_size", "Medium")
+                        }
                         st.rerun()
+                                        
                     else:
-                        st.error("Invalid email or password.")
+                        st.error("**Invalid email or password.**")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+            # --- YOUR NEW CODE STARTS HERE ---
+            st.write("--- or ---")
+
+            # Guest Login Button with Full Logic
+            st.markdown('<div class="auth-button">', unsafe_allow_html=True)
+            if st.button("Login as Guest"):
+                # Set the authentication flag to True, just like in a real login
+                st.session_state.authenticated = True
+                
+                # Create a simple, fake user profile for the Guest
+                st.session_state.user_profile = {
+                    "name": "Guest Healer",
+                    "email": "guest@talkheal.app",
+                    "profile_picture": None,
+                    "join_date": datetime.now().strftime("%B %Y"),
+                    "font_size": "Medium"
+                }
+                
+                # Rerun the app to enter the main dashboard
+                st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown('<div class="auth-button">', unsafe_allow_html=True)

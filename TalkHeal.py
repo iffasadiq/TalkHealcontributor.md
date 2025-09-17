@@ -6,7 +6,6 @@ from components.mood_dashboard import MoodTracker, render_mood_dashboard
 from components.goal_planning import render_goal_planning
 import plotly.express as px
 
-
 # HANDLES ALL SESSION STATE VALUES
 def init_session_state():
     defaults = {
@@ -17,19 +16,27 @@ def init_session_state():
         "show_emergency_page": False,
         "show_focus_session": False,
         "show_mood_dashboard": False,
-        "show_goal_planning": False,  # Add this line
+        "show_goal_planning": False,
         "show_goal_creation": False,
         "show_goal_management": True,
-        # ... other defaults
+        "sidebar_state": "expanded",
+        "mental_disorders": [
+            "Depression & Mood Disorders", "Anxiety & Panic Disorders", "Bipolar Disorder",
+            "PTSD & Trauma", "OCD & Related Disorders", "Eating Disorders",
+            "Substance Use Disorders", "ADHD & Neurodevelopmental", "Personality Disorders",
+            "Sleep Disorders"
+        ],
+        "pinned_messages": [],
+        "active_page": "TalkHeal", # default
+        "show_privacy_policy": False,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = value
+
 init_session_state()
 
 st.set_page_config(page_title="TalkHeal", page_icon="💬", layout="wide")
-
-
 
 # --- DB Initialization ---
 if "db_initialized" not in st.session_state:
@@ -78,51 +85,9 @@ from css.styles import apply_custom_css
 from components.header import render_header
 from components.sidebar import render_sidebar
 from components.chat_interface import render_chat_interface, handle_chat_input, render_session_controls
-from components.mood_dashboard import MoodTracker
 from components.emergency_page import render_emergency_page
 from components.focus_session import render_focus_session
 from components.profile import apply_global_font_size
-
-# --- 1. INITIALIZE SESSION STATE ---
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
-if "conversations" not in st.session_state:
-    st.session_state.conversations = load_conversations()
-if "active_conversation" not in st.session_state:
-    st.session_state.active_conversation = -1
-if "show_emergency_page" not in st.session_state:
-    st.session_state.show_emergency_page = False
-if "show_focus_session" not in st.session_state:
-    st.session_state.show_focus_session = False
-if "show_mood_dashboard" not in st.session_state:
-    st.session_state.show_mood_dashboard = False
-if "sidebar_state" not in st.session_state:
-    st.session_state.sidebar_state = "expanded"
-if "mental_disorders" not in st.session_state:
-    st.session_state.mental_disorders = [
-        "Depression & Mood Disorders", "Anxiety & Panic Disorders", "Bipolar Disorder",
-        "PTSD & Trauma", "OCD & Related Disorders", "Eating Disorders",
-        "Substance Use Disorders", "ADHD & Neurodevelopmental", "Personality Disorders",
-        "Sleep Disorders"
-    ]
-if "selected_tone" not in st.session_state:
-    st.session_state.selected_tone = "Compassionate Listener"
-if "pinned_messages" not in st.session_state:
-    st.session_state.pinned_messages = []
-
-if "active_page" not in st.session_state:
-    st.session_state.active_page = "TalkHeal"  # default
-
-# --- Footer Navigation State ---
-if "show_privacy_policy" not in st.session_state:
-    st.session_state.show_privacy_policy = False
-
-if st.session_state.show_privacy_policy:
-    from pages.PrivacyPolicy import show as show_privacy
-    show_privacy()
-    from components.footer import show_footer
-    show_footer()
-    st.stop()
 
 # --- 2. SET PAGE CONFIG ---
 apply_global_font_size()
@@ -251,11 +216,10 @@ def render_feature_cards():
         """, unsafe_allow_html=True)
         if st.button("🎯 Plan Your Goals", key="goal_planning_btn", use_container_width=True):
             st.session_state.show_goal_planning = True
-            st.session_state.active_page = "GoalPlanning" # Add this line
+            st.session_state.active_page = "GoalPlanning"
             st.rerun()
     
     st.markdown('</div>', unsafe_allow_html=True)
-
 
 # --- 9. RENDER PAGE ---
 if st.session_state.get("show_emergency_page"):
@@ -329,15 +293,15 @@ else:
         
         # Mood Entry Form
         with st.form("mood_entry_form"):
-            st.markdown("### � Record Your Mood")
+            st.markdown("###  Record Your Mood")
             
             # Mood Level Selection
             mood_options = {
-                "very_low": "� Very Low",
+                "very_low": " Very Low",
                 "low": "😔 Low", 
-                "okay": "� Okay",
+                "okay": " Okay",
                 "good": "😊 Good",
-                "great": "�😄 Great"
+                "great": "😄 Great"
             }
             
             selected_mood = st.selectbox(
@@ -486,7 +450,6 @@ else:
         st.markdown("---")
         
         # Chat Interface
-        # render_header()
         render_chat_interface()
         handle_chat_input(model, system_prompt=get_tone_prompt())
         render_session_controls()
@@ -506,4 +469,4 @@ st.markdown("""
     }
     setTimeout(scrollToBottom, 100);
 </script>
-""", unsafe_allow_html=True)             
+""", unsafe_allow_html=True)
